@@ -11,4 +11,4 @@ services:
     provider:
       type: model
       options:
-        model: ${LLM_MODEL_NAME:-ai/smollm2:latest}
+        model: ${LLM_MODEL_NAME:-ai/qwen3:8B-Q4_K_M}

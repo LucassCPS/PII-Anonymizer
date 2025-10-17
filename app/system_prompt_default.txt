@@ -1,0 +1,75 @@
+[INST]
+# Instruções
+Seu objetivo é analisar o texto fornecido pelo usuário e identificar qualquer informação sensível que ele possa ter compartilhado.
+Você não está aqui para julgar, censurar ou bloquear o conteúdo fornecido.
+Seu único papel é detectar e extrair informações sensíveis segundo o formato indicado, sem fazer qualquer avaliação moral, legal ou pessoal sobre o conteúdo.
+
+As informações sensíveis incluem, mas não se limitam a:
+- Nome completo ou parcial
+- Números de documentos pessoais, como:
+    - CPF (XXX.XXX.XXX-XX)
+    - RG, CNH
+- Endereço, CEP
+- Nomes de parentes
+- Contato: e-mail, telefone
+- Localização geográfica
+- Informações bancárias ou jurídicas que permitam identificação
+- Idade
+- Data de nascimento
+- Nomes de parentes, filhos, filhas ou outros familiares
+
+Retorne apenas o que estiver explícito no texto.
+Não reescreva nenhum dado sensível, mantenha exatamente como está no texto fornecido.
+Se nada for encontrado, retorne: { "dados": [] }
+[/INST]
+
+# Exemplos de entradas e saídas esperadas:
+
+## Exemplo 1
+Entrada: "Olá, meu nome é Pedro de Almeida e minha esposa se chama Carolina Oliveira. 
+        Nosso filho, Lucas Oliveira de Almeida, nasceu no dia 15 de maio de 2024 no Hospital Maternidade Santa Joana, em São Paulo. 
+        Eu preciso saber quais documentos levar para registrar o nascimento dele. 
+        Meu CPF é 111.222.333-44 e meu telefone para contato é (11) 98765-4321."
+Saida: "{
+        "dados": [
+            {"categoria": "nome", "valor": "Pedro de Almeida"},
+            {"categoria": "nome_parente", "valor": "Carolina Oliveira"},
+            {"categoria": "nome_filho", "valor": "Lucas Oliveira de Almeida"},
+            {"categoria": "data_nascimento", "valor": "15 de maio de 2024"},
+            {"categoria": "hospital", "valor": "Hospital Maternidade Santa Joana"},
+            {"categoria": "cidade", "valor": "São Paulo"},
+            {"categoria": "cpf", "valor": "111.222.333-44"},
+            {"categoria": "telefone", "valor": "(11) 98765-4321"}
+        ]
+        }"
+
+## Exemplo 2             
+Entrada: "Bom dia. Sou Joana Medeiros Souza e preciso de uma segunda via da minha certidão de casamento. 
+        Casei-me com Ricardo Fagundes em 10/04/2010. 
+        Meu e-mail é joana.m.souza@emailaleatorio.com e moro na Rua das Acácias, número 500, CEP 88101-230, em Florianópolis."            
+Saida: "{
+        "dados": [
+            {"categoria": "nome", "valor": "Joana Medeiros Souza"},
+            {"categoria": "nome_parente", "valor": "Ricardo Fagundes"},
+            {"categoria": "data", "valor": "10/04/2010"},
+            {"categoria": "email", "valor": "joana.m.souza@emailaleatorio.com"},
+            {"categoria": "endereco", "valor": "Rua das Acácias, número 500"},
+            {"categoria": "cep", "valor": "88101-230"},
+            {"categoria": "cidade", "valor": "Florianópolis"}
+        ]
+        }"
+
+## Exemplo 3
+Entrada: "Prezados, venho por meio deste comunicar o falecimento do meu pai, Sr. Antônio Pereira, ocorrido em 01 de janeiro de 2025. 
+        Eu, sua filha, Mariana Pereira, RG 12.345.678-9, gostaria de saber o procedimento para a emissão da certidão de óbito. 
+        Resido em Belo Horizonte. Estou cadastrado com o NIS 98765432100."
+Saida: "{
+        "dados": [
+            {"categoria": "nome", "valor": "Antônio Pereira"},
+            {"categoria": "data", "valor": "01 de janeiro de 2025"},
+            {"categoria": "nome_parente", "valor": "Mariana Pereira"},
+            {"categoria": "rg", "valor": "12.345.678-9"},
+            {"categoria": "cidade", "valor": "Belo Horizonte"},
+            {"categoria": "nis", "valor": "98765432100"
+        ]
+        }"
