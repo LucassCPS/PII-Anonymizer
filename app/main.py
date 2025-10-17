@@ -3,6 +3,7 @@ import os
 from core import llm_client
 from components import sidebar
 from typing import Dict, List
+import json
 
 SYSTEM_PROMPT_FILE = "system_prompt_default.txt"
 DEFAULT_SYSTEM = ""
@@ -17,6 +18,50 @@ except Exception as e:
 
 st.set_page_config(page_title="LLM Chat – Modelos e Instruções")
 st.title("LLM Chat – Analisador de Dados Sensíveis")
+
+st.markdown("""
+<style>
+
+/* Aumenta a largura da área principal */
+.block-container {
+    max-width: 95% !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+
+/* Ajusta espaçamento geral */
+main .block-container {
+    padding-top: 1rem !important;
+}
+
+/* Caixa de texto mais larga */
+textarea {
+    min-height: 200px !important;
+    width: 100% !important;
+}
+
+/* Botões principais ocupam mais espaço e têm cor consistente */
+div.stButton > button {
+    width: 100%;
+    border-radius: 8px !important;
+    font-weight: 600;
+}
+
+/* Melhor alinhamento da seção de resultado */
+[data-testid="stHorizontalBlock"] {
+    align-items: start !important;
+}
+
+/* Ajusta o JSON viewer */
+[data-testid="stJson"] {
+    font-size: 0.9rem !important;
+}
+
+/* Remove excesso de margem inferior */
+footer {visibility: hidden;}
+</style>
+""", unsafe_allow_html=True)
+
 
 st.markdown("""
 <style>
@@ -48,40 +93,51 @@ if not model: st.error("Nenhum modelo disponível."); st.stop()
 client = llm_client.get_client(base_url, api_key)
 
 user_input = st.text_area("Texto a ser analisado:", height=180, placeholder="Cole aqui o texto...")
-col1, col2 = st.columns([1, 1], gap="small")
-with col1:
-    send_clicked = st.button("Analisar", type="primary", use_container_width=True)
-with col2:
-    clear_clicked = st.button("Limpar histórico", use_container_width=True)
-    if clear_clicked:
-        st.session_state.history.clear()
+analyze_clicked = st.button("Analisar", type="primary", use_container_width=True)
 
-# Histórico
-for msg in st.session_state.history:
-    with st.chat_message(msg["role"]):
-        st.markdown(msg["content"])
-
-# Envio e Chamada
-if send_clicked:
+# ===== Execução =====
+if analyze_clicked:
     if not user_input.strip():
         st.warning("Insira um texto antes de analisar.")
         st.stop()
-    
-    messages: List[Dict[str, str]] = [
-        {"role": "system", "content": system_prompt},
+    if not model:
+        st.error("Nenhum modelo disponível. Ajuste o .env na sidebar.")
+        st.stop()
+
+    messages = [
+        {"role": "system", "content": st.session_state.system_prompt.strip()},
         {"role": "user", "content": user_input.strip()},
     ]
-    st.session_state.history.append({"role": "user", "content": user_input.strip()})
-    
+
     try:
-        answer = llm_client.call_llm(
-            client=client,
-            model=model,
-            messages=messages,
-            temperature=temp,
-            max_tokens=max_tokens,
-            do_stream=do_stream
-        )
-        st.session_state.history.append({"role": "assistant", "content": answer})
+        with st.spinner("Analisando..."):
+            # chamada do modelo (sem histórico, só resultado)
+            if do_stream:
+                stream = client.chat.completions.create(stream=True, model=model, messages=messages, temperature=temp)
+                full_text = ""
+                for chunk in stream:
+                    delta = chunk.choices[0].delta
+                    token = getattr(delta, "content", None)
+                    if token:
+                        full_text += token
+            else:
+                resp = client.chat.completions.create(model=model, messages=messages, temperature=temp)
+                full_text = resp.choices[0].message.content.strip()
+
+        # exibição em formato “entrada x saída”
+        st.markdown("### Resultado da análise")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("**Entrada:**")
+            st.code(user_input.strip(), language="text")
+        with col2:
+            st.markdown("**Saída:**")
+            # tenta formatar JSON, senão mostra texto puro
+            try:
+                parsed = json.loads(full_text)
+                st.json(parsed)
+            except Exception:
+                st.code(full_text, language="json")
+
     except Exception as e:
         st.error(f"Erro ao chamar o modelo: {e}")
