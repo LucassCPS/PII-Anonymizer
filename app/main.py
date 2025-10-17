@@ -21,43 +21,35 @@ st.title("LLM Chat – Analisador de Dados Sensíveis")
 
 st.markdown("""
 <style>
-
-/* Aumenta a largura da área principal */
 .block-container {
     max-width: 95% !important;
     padding-left: 2rem !important;
     padding-right: 2rem !important;
 }
 
-/* Ajusta espaçamento geral */
 main .block-container {
     padding-top: 1rem !important;
 }
 
-/* Caixa de texto mais larga */
 textarea {
     min-height: 200px !important;
     width: 100% !important;
 }
 
-/* Botões principais ocupam mais espaço e têm cor consistente */
 div.stButton > button {
     width: 100%;
     border-radius: 8px !important;
     font-weight: 600;
 }
 
-/* Melhor alinhamento da seção de resultado */
 [data-testid="stHorizontalBlock"] {
     align-items: start !important;
 }
 
-/* Ajusta o JSON viewer */
 [data-testid="stJson"] {
     font-size: 0.9rem !important;
 }
 
-/* Remove excesso de margem inferior */
 footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
@@ -95,7 +87,6 @@ client = llm_client.get_client(base_url, api_key)
 user_input = st.text_area("Texto a ser analisado:", height=180, placeholder="Cole aqui o texto...")
 analyze_clicked = st.button("Analisar", type="primary", use_container_width=True)
 
-# ===== Execução =====
 if analyze_clicked:
     if not user_input.strip():
         st.warning("Insira um texto antes de analisar.")
@@ -111,7 +102,6 @@ if analyze_clicked:
 
     try:
         with st.spinner("Analisando..."):
-            # chamada do modelo (sem histórico, só resultado)
             if do_stream:
                 stream = client.chat.completions.create(stream=True, model=model, messages=messages, temperature=temp)
                 full_text = ""
@@ -124,7 +114,6 @@ if analyze_clicked:
                 resp = client.chat.completions.create(model=model, messages=messages, temperature=temp)
                 full_text = resp.choices[0].message.content.strip()
 
-        # exibição em formato “entrada x saída”
         st.markdown("### Resultado da análise")
         col1, col2 = st.columns(2)
         with col1:
@@ -132,7 +121,6 @@ if analyze_clicked:
             st.code(user_input.strip(), language="text")
         with col2:
             st.markdown("**Saída:**")
-            # tenta formatar JSON, senão mostra texto puro
             try:
                 parsed = json.loads(full_text)
                 st.json(parsed)
