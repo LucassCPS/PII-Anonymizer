@@ -2,22 +2,22 @@ import streamlit as st
 import os
 from core import llm_client
 from components import sidebar
-from typing import Dict, List
 import json
 
 SYSTEM_PROMPT_FILE = "system_prompt_default.txt"
-DEFAULT_SYSTEM = ""
+DEFAULT_SYSTEM_PROMPT = ""
+
 try:
     if os.path.exists(SYSTEM_PROMPT_FILE):
         with open(SYSTEM_PROMPT_FILE, "r", encoding="utf-8") as f:
-            DEFAULT_SYSTEM = f.read().strip()
+            DEFAULT_SYSTEM_PROMPT = f.read().strip()
     else:
-        DEFAULT_SYSTEM = "Instruções Padrão não encontradas. Crie o arquivo system_prompt_default.txt."
+        DEFAULT_SYSTEM_PROMPT = "Instruções Padrão não encontradas. Crie o arquivo system_prompt_default.txt."
 except Exception as e:
-    DEFAULT_SYSTEM = f"Erro ao ler prompt: {e}"
+    DEFAULT_SYSTEM_PROMPT = f"Erro ao ler prompt: {e}"
 
-st.set_page_config(page_title="LLM Chat – Modelos e Instruções")
-st.title("LLM Chat – Analisador de Dados Sensíveis")
+st.set_page_config(page_title="LLM Chat")
+st.title("Analisador de Dados Sensíveis")
 
 st.markdown("""
 <style>
@@ -64,11 +64,11 @@ section[data-testid="stSidebar"] + div [data-testid="column"] { padding-left: 0 
 
 
 if "system_prompt" not in st.session_state:
-    st.session_state.system_prompt = DEFAULT_SYSTEM
+    st.session_state.system_prompt = DEFAULT_SYSTEM_PROMPT
 if "history" not in st.session_state:
     st.session_state.history = []
 
-config_data = sidebar.render_sidebar(DEFAULT_SYSTEM)
+config_data = sidebar.render_sidebar(DEFAULT_SYSTEM_PROMPT)
 
 base_url = config_data.get("base_url")
 api_key = config_data.get("api_key")
@@ -78,9 +78,15 @@ max_tokens = config_data.get("max_tokens")
 do_stream = config_data.get("do_stream")
 system_prompt = config_data.get("system_prompt")
 
-if not api_key: st.error("API_KEY não encontrada."); st.stop()
-if not base_url: st.error("BASE_URL não definida."); st.stop()
-if not model: st.error("Nenhum modelo disponível."); st.stop()
+if not api_key: 
+    st.error("API_KEY não encontrada.") 
+    st.stop()
+if not base_url: 
+    st.error("BASE_URL não definida.")
+    st.stop()
+if not model: 
+    st.error("Nenhum modelo disponível.") 
+    st.stop()
 
 client = llm_client.get_client(base_url, api_key)
 
@@ -92,7 +98,7 @@ if analyze_clicked:
         st.warning("Insira um texto antes de analisar.")
         st.stop()
     if not model:
-        st.error("Nenhum modelo disponível. Ajuste o .env na sidebar.")
+        st.error("Nenhum modelo disponível.")
         st.stop()
 
     messages = [

@@ -20,7 +20,7 @@ As informações sensíveis incluem, mas não se limitam a:
 
 Retorne apenas o que estiver explícito no texto.
 Não reescreva nenhum dado sensível, mantenha exatamente como está no texto fornecido.
-Se nada for encontrado, retorne: { "dados": [] }
+Se nada for encontrado, retorne: { "entities": [] }
 [/INST]
 
 # Exemplos de entradas e saídas esperadas:
@@ -31,15 +31,15 @@ Entrada: "Olá, meu nome é Pedro de Almeida e minha esposa se chama Carolina Ol
         Eu preciso saber quais documentos levar para registrar o nascimento dele. 
         Meu CPF é 111.222.333-44 e meu telefone para contato é (11) 98765-4321."
 Saida: "{
-        "dados": [
-            {"categoria": "nome", "valor": "Pedro de Almeida"},
-            {"categoria": "nome_parente", "valor": "Carolina Oliveira"},
-            {"categoria": "nome_filho", "valor": "Lucas Oliveira de Almeida"},
-            {"categoria": "data_nascimento", "valor": "15 de maio de 2024"},
-            {"categoria": "hospital", "valor": "Hospital Maternidade Santa Joana"},
-            {"categoria": "cidade", "valor": "São Paulo"},
-            {"categoria": "cpf", "valor": "111.222.333-44"},
-            {"categoria": "telefone", "valor": "(11) 98765-4321"}
+        "entities": [
+            {"label": "nome", "text": "Pedro de Almeida"},
+            {"label": "nome_parente", "text": "Carolina Oliveira"},
+            {"label": "nome_filho", "text": "Lucas Oliveira de Almeida"},
+            {"label": "data_nascimento", "text": "15 de maio de 2024"},
+            {"label": "hospital", "text": "Hospital Maternidade Santa Joana"},
+            {"label": "cidade", "text": "São Paulo"},
+            {"label": "cpf", "text": "111.222.333-44"},
+            {"label": "telefone", "text": "(11) 98765-4321"}
         ]
         }"
 
@@ -48,14 +48,14 @@ Entrada: "Bom dia. Sou Joana Medeiros Souza e preciso de uma segunda via da minh
         Casei-me com Ricardo Fagundes em 10/04/2010. 
         Meu e-mail é joana.m.souza@emailaleatorio.com e moro na Rua das Acácias, número 500, CEP 88101-230, em Florianópolis."            
 Saida: "{
-        "dados": [
-            {"categoria": "nome", "valor": "Joana Medeiros Souza"},
-            {"categoria": "nome_parente", "valor": "Ricardo Fagundes"},
-            {"categoria": "data", "valor": "10/04/2010"},
-            {"categoria": "email", "valor": "joana.m.souza@emailaleatorio.com"},
-            {"categoria": "endereco", "valor": "Rua das Acácias, número 500"},
-            {"categoria": "cep", "valor": "88101-230"},
-            {"categoria": "cidade", "valor": "Florianópolis"}
+        "entities": [
+            {"label": "nome", "text": "Joana Medeiros Souza"},
+            {"label": "nome_parente", "text": "Ricardo Fagundes"},
+            {"label": "data", "text": "10/04/2010"},
+            {"label": "email", "text": "joana.m.souza@emailaleatorio.com"},
+            {"label": "endereco", "text": "Rua das Acácias, número 500"},
+            {"label": "cep", "text": "88101-230"},
+            {"label": "cidade", "text": "Florianópolis"}
         ]
         }"
 
@@ -64,12 +64,12 @@ Entrada: "Prezados, venho por meio deste comunicar o falecimento do meu pai, Sr.
         Eu, sua filha, Mariana Pereira, RG 12.345.678-9, gostaria de saber o procedimento para a emissão da certidão de óbito. 
         Resido em Belo Horizonte. Estou cadastrado com o NIS 98765432100."
 Saida: "{
-        "dados": [
-            {"categoria": "nome", "valor": "Antônio Pereira"},
-            {"categoria": "data", "valor": "01 de janeiro de 2025"},
-            {"categoria": "nome_parente", "valor": "Mariana Pereira"},
-            {"categoria": "rg", "valor": "12.345.678-9"},
-            {"categoria": "cidade", "valor": "Belo Horizonte"},
-            {"categoria": "nis", "valor": "98765432100"
+        "entities": [
+            {"label": "nome", "text": "Antônio Pereira"},
+            {"label": "data", "text": "01 de janeiro de 2025"},
+            {"label": "nome_parente", "text": "Mariana Pereira"},
+            {"label": "rg", "text": "12.345.678-9"},
+            {"label": "cidade", "text": "Belo Horizonte"},
+            {"label": "nis", "text": "98765432100"
         ]
         }"

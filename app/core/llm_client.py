@@ -3,10 +3,10 @@ from openai import OpenAI
 from typing import Dict, List, Any
 
 @st.cache_resource
-def get_client(base_url: str, api_key: str) -> OpenAI:
+def get_client(base_url: str, api_key: str):
     return OpenAI(base_url=base_url, api_key=api_key)
 
-def call_llm(client: OpenAI, model: str, messages: List[Dict[str, str]], temperature: float, max_tokens: int, do_stream: bool) -> str:
+def call_llm(client: OpenAI, model: str, messages: List, temperature: float, max_tokens: int, do_stream: bool):
     kwargs: Dict[str, Any] = {
         "model": model,
         "messages": messages,
