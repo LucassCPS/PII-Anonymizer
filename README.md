@@ -8,7 +8,7 @@ Este projeto executa modelos de linguagem em ambiente local utilizando o **Docke
 
 Antes de iniciar, verifique se você possui os seguintes componentes instalados:
 
-- [Python 3.10+](https://www.python.org/downloads/)
+- [Python 3.11+](https://www.python.org/downloads/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [Docker Model Runner](https://docs.docker.com/ai/model-runner/)
 
@@ -89,9 +89,6 @@ project-root/
 │   ├── main.py
 │   ├── requirements.txt
 │   └── utils/
-│
-├── docs/
-│   └── references.md
 │
 └── README.md
 ```
