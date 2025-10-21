@@ -2,11 +2,10 @@ from core import config
 from tests import test
 import time
 from openai import OpenAI
-
-SYSTEM_PROMPT_FILE = "system_prompt_default.txt"
+from utils import prompts
 
 def manual_test(user_input):
-    system_prompt = config.load_system_prompt_from_file(SYSTEM_PROMPT_FILE)
+    system_prompt = config.load_system_prompt_from_file(prompts.get_few_shot_prompt())
     base_url, api_key, models = config.load_env_and_models()
 
     client = OpenAI(base_url=base_url, api_key=api_key)
@@ -34,10 +33,7 @@ def manual_test(user_input):
         print(f"An error occurred: {e}")
 
 def full_test():
-    #test.test_case_01()
-    #test.test_case_02()
-    test.test_case_03()
+    test.test_case()
 
 if __name__ == "__main__":
-    #simple_test("")
     full_test()
