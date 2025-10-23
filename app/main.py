@@ -1,39 +1,28 @@
-from core import config
 from tests import test
-import time
-from openai import OpenAI
+from core.config import ModelEnum, load_model, load_api_key, load_base_url
 from utils import prompts
+from openai import OpenAI
+from pathlib import Path
 
-def manual_test(user_input):
-    system_prompt = config.load_system_prompt_from_file(prompts.get_few_shot_prompt())
-    base_url, api_key, models = config.load_env_and_models()
-
-    client = OpenAI(base_url=base_url, api_key=api_key)
-
-    messages = [{"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_input}]
-
-    try:
-        start_time = time.time()
-        response = client.chat.completions.create(
-            model=models["MODEL_QWEN3_8B"],
-            messages=messages,
-            temperature=0.3
-        )
-        end_time = time.time()
-
-        print(f"\nResponse:\n {response.choices[0].message.content}")
-        print(f"\nReasoning:\n {response.choices[0].message.reasoning_content}")
-
-        generation_time_ms = response.timings['predicted_ms']
-        print(f"\n\nTime elapsed (API): {generation_time_ms:.2f} ms ({generation_time_ms / 1000:.2f} s)")
-        total_time = end_time - start_time
-        print(f"Time elapsed (End-to-End): {total_time:.2f} s")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-def full_test():
-    test.test_case()
+TEMPERATURES = [0.0 , 0.1, 0.2]
+MODELS = load_model(ModelEnum.QWEN3_06B)
+API_KEY = load_api_key()
+BASE_URL = load_base_url()
+SYSTEM_PROMPT = prompts.get_few_shot_prompt()
+NUM_ROWS_DATASET = 1
+DATASET_FILE = "gretelaigretel_pii_masking_en_v1.parquet"
 
 if __name__ == "__main__":
-    full_test()
+    dataset_path = Path(__file__).parent / "tests" / "dataset" / DATASET_FILE
+    assert dataset_path.exists(), f"Dataset not found at {dataset_path}"
+    client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
+
+    print("Modelo: ", MODELS)
+    print("Temperatura: ", TEMPERATURES[0])
+    
+    test.full_test(client=client, 
+                    dataset_path=dataset_path,
+                    num_rows_dataset=NUM_ROWS_DATASET,
+                    temp=TEMPERATURES[0],
+                    system_prompt=SYSTEM_PROMPT,
+                    model=MODELS)

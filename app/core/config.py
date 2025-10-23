@@ -1,26 +1,31 @@
 import os
+from enum import Enum
 
-def load_env_and_models():
-    base_url = ""
-    api_key = ""
-    models = {}
+class ModelEnum(Enum):
+    GEMMA3_QAT = "MODEL_GEMMA3_QAT"
+    QWEN3_06B = "MODEL_QWEN3_06B"
+    QWEN3_8B = "MODEL_QWEN3_8B"
+    SMOLL3_Q8 = "MODEL_SMOLL3_Q8"
+    SMOLL3_Q4 = "MODEL_SMOLL3_Q4"
 
-    base_url = os.getenv("BASE_URL")
-    api_key = os.getenv("API_KEY")
+def load_models():
+    models = {}    
     for k, v in os.environ.items():
         if k.startswith("MODEL_") and v:
             models[k] = v
+    return models
 
-    return base_url, api_key, models
+def load_model(model_enum: ModelEnum):
+    model_key = model_enum.value
+    model_value = os.getenv(model_key)
 
-def load_system_prompt_from_file(system_prompt_file):
-    system_prompt = ""
-    try:
-        if os.path.exists(system_prompt_file):
-            with open(system_prompt_file, "r", encoding="utf-8") as f:
-                system_prompt = f.read().strip()
-            return system_prompt
-        else:
-            print("Prompt file not found.")
-    except Exception as e:
-        print("Error while loading model instructions.")
+    if not model_value:
+        raise KeyError(f"Model '{model_key}' not found in environment variables.")
+
+    return model_value
+
+def load_api_key():
+    return os.getenv("API_KEY")
+
+def load_base_url():
+    return os.getenv("BASE_URL")
