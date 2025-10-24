@@ -1,5 +1,5 @@
 def get_zero_shot_prompt():
-    return """
+    prompt = """
         [INST]
         # Instructions
         Your task is to analyze the text provided by the user and extract any sensitive information that appears explicitly in it.
@@ -33,9 +33,10 @@ def get_zero_shot_prompt():
         Return only the JSON, with no explanations or additional text.
         [/INST]
         """
+    return prompt, "Zero-Shot"
 
 def get_few_shot_prompt():
-    return """
+    prompt = """
         [INST]
         # Instructions
         You are an information extraction system specialized in detecting and labeling personally identifiable information (PII) in text.
@@ -137,9 +138,11 @@ def get_few_shot_prompt():
             ]
         }
         """
+    return prompt, "Few-Shot"
+
 
 def get_chain_of_thought_prompt():
-    return """
+    prompt = """
         [INST]
         # Instructions
         You are a specialized information extraction system designed to detect and label personally identifiable information (PII) in text.
@@ -173,3 +176,4 @@ def get_chain_of_thought_prompt():
         Remember: perform your reasoning silently and output only valid JSON.
         [/INST]
         """
+    return prompt, "Chain-of-Thought (CoT)"

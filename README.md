@@ -72,11 +72,17 @@ Após configurar o ambiente, inicie o **Model Runner** com os modelos carregados
 
 ```bash
 docker compose build
-docker compose up
+docker compose up -d
+docker compose run --rm -T app python -u main.py
 ```
 
 Certifique-se de que o Model Runner está rodando no Docker Desktop.  
 A aplicação consumirá os modelos através das chamadas configuradas via API local.
+
+Desligue o ambiente através do comando:
+```bash
+docker compose down
+```
 
 ---
 

@@ -1,6 +1,50 @@
 import time
 import pandas as pd
 from utils import data_conversion_handler
+import re
+
+from tqdm import tqdm
+import sys
+
+def resolve_segmentation_errors(dataset_set, llm_set):
+    time_start = time.perf_counter()
+    
+    in_both, only_in_llm, only_in_dataset = compare_sets(dataset_set, llm_set)
+    
+    tp_adjusted = len(in_both)
+    fp_adjusted = len(only_in_llm)
+    fn_adjusted = len(only_in_dataset)
+
+    llm_missed_pii = list(only_in_dataset)
+    llm_extra_pii = only_in_llm.copy() 
+    
+    for fn_item in llm_missed_pii:
+        fn_canonical = re.sub(r'[\s,.-]', '', fn_item).lower()
+
+        possible_llm_components = []
+        for fp_item in llm_extra_pii:
+            if fp_item in fn_item:
+                possible_llm_components.append(fp_item)
+                
+        if possible_llm_components:
+            possible_llm_components.sort(key=lambda x: fn_item.find(x))
+
+            llm_combined_string = ' '.join(possible_llm_components)
+            
+            llm_combined_canonical = re.sub(r'[\s,.-]', '', llm_combined_string).lower()
+
+            if llm_combined_canonical == fn_canonical:
+                tp_adjusted += 1
+                fn_adjusted -= 1
+                fp_adjusted -= len(possible_llm_components)
+
+                for component in possible_llm_components:
+                    if component in llm_extra_pii:
+                         llm_extra_pii.remove(component)
+
+
+    time_spent = time.perf_counter() - time_start
+    return tp_adjusted, fp_adjusted, fn_adjusted, time_spent
 
 def call_llm(client, model, system_prompt, input_text, temp):
     messages = [
@@ -23,18 +67,15 @@ def call_llm(client, model, system_prompt, input_text, temp):
     except Exception:
         return '{ "entities": [] }', 0.0
 
-
 def compare_sets(dataset_set, llm_set_response):
     only_in_dataset = dataset_set - llm_set_response   # FN
     only_in_llm = llm_set_response - dataset_set       # FP
     in_both = dataset_set & llm_set_response           # TP
     return in_both, only_in_llm, only_in_dataset
 
-
 def compute_f1(tp, fp, fn):
     denom = (2 * tp + fp + fn)
     return (2 * tp / denom) if denom else 0.0
-
 
 def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model):
     df = pd.read_parquet(dataset_path)
@@ -42,39 +83,58 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
     total_llm_time = 0.0
     total_wall_time_start = time.perf_counter()
+    total_post_processing_time = 0.0
 
     total_dataset_pii = 0
     total_llm_pii = 0
-    total_no_response = 0 
-
+    total_no_response = 0
     tp_sum = 0
     fp_sum = 0
     fn_sum = 0
 
-    for idx, row in df.iterrows():
-        if idx >= total_rows:
-            break
+    pbar = tqdm(
+        total=total_rows,
+        desc="Executando testes",
+        unit="linha",
+        file=sys.stdout,
+        dynamic_ncols=True,
+        mininterval=0.1,
+        miniters=1,
+        disable=False,
+        ascii=True,
+        leave=True,
+        bar_format="{l_bar}{bar}{r_bar}"
+    )
+    pbar.refresh()
 
-        dataset_json = data_conversion_handler.string_list_to_json(row["entities"])
-        dataset_set = data_conversion_handler.dataset_json_to_set(dataset_json)
-        total_dataset_pii += len(dataset_set)
+    try:
+        for i, row in enumerate(df.itertuples(index=False), start=1):
+            if i > total_rows:
+                break
 
-        llm_str, call_time = call_llm(client, model, system_prompt, row["text"], temp)
-        total_llm_time += call_time
+            dataset_json = data_conversion_handler.string_list_to_json(row.entities)
+            dataset_set = data_conversion_handler.dataset_json_to_set(dataset_json)
+            total_dataset_pii += len(dataset_set)
 
-        llm_json = data_conversion_handler.string_list_to_json(llm_str)
-        llm_set = data_conversion_handler.llm_json_to_set(llm_json)
+            llm_str, call_time = call_llm(client, model, system_prompt, row.text, temp)
+            total_llm_time += call_time
 
-        # empty responses (usually the LLM couldn't get to a proper response)
-        if not llm_set:
-            total_no_response += 1
+            llm_json = data_conversion_handler.string_list_to_json(llm_str)
+            llm_set = data_conversion_handler.llm_json_to_set(llm_json)
 
-        total_llm_pii += len(llm_set)
+            if not llm_set:
+                total_no_response += 1
+            total_llm_pii += len(llm_set)
 
-        in_both, only_in_llm, only_in_dataset = compare_sets(dataset_set, llm_set)
-        tp_sum += len(in_both)
-        fp_sum += len(only_in_llm)
-        fn_sum += len(only_in_dataset)
+            tp, fp, fn, resolution_time = resolve_segmentation_errors(dataset_set, llm_set)
+            total_post_processing_time += resolution_time
+            tp_sum += tp; fp_sum += fp; fn_sum += fn
+
+            pbar.update(1)
+    finally:
+        pbar.close()
+
+    total_model_pii_adjusted = tp_sum + fp_sum
 
     total_wall_time = time.perf_counter() - total_wall_time_start
     avg_llm_time = total_llm_time / total_rows if total_rows else 0.0
@@ -96,9 +156,11 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
         "total_time": format_time(total_wall_time),
         "avg_llm_call_time": format_time(avg_llm_time),
+        "total_post_processing_time": format_time(total_post_processing_time),
 
         "total_dataset_pii": int(total_dataset_pii),
         "total_model_pii": int(total_llm_pii),
+        "total_model_pii_adjusted":  int(total_model_pii_adjusted),
         "total_missed_pii": int(fn_sum),
 
         "total_no_response": int(total_no_response),
@@ -114,10 +176,10 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
     return report
 
-
-def print_report(report: dict):
-    print("\n==== Test Execution Report ====")
+def print_report(report, prompt_type):
+    print("==== Test Execution Report ====")
     print(f"Model: {report['model']}")
+    print(f"Prompt technique: {prompt_type}")
     print(f"Temperature: {report['temperature']}")
     print(f"Dataset rows used: {report['dataset_rows_used']}\n")
 
@@ -125,13 +187,15 @@ def print_report(report: dict):
     print(f"Total time: {report['total_time']['seconds']} s "
           f"({report['total_time']['minutes']} min / {report['total_time']['hours']} h)")
     print(f"Average LLM call time: {report['avg_llm_call_time']['seconds']} s "
-          f"({report['avg_llm_call_time']['minutes']} min / {report['avg_llm_call_time']['hours']} h)\n")
+          f"({report['avg_llm_call_time']['minutes']} min / {report['avg_llm_call_time']['hours']} h)")
+    print(f"Total Post-Processing Time (Resolution): {report['total_post_processing_time']['seconds']} s\n")
 
     print("---- Sensitive Information ----")
     print(f"Total PII in dataset (expected): {report['total_dataset_pii']}")
     print(f"Total PII detected by model: {report['total_model_pii']}")
+    print(f"Total PII detected by model (adjusted): {report['total_model_pii_adjusted']}")
     print(f"Total missed PII: {report['total_missed_pii']}")
-    print(f"Total LLM empty responses (no entities found): {report['total_no_response']}\n")
+    print(f"Total LLM empty responses: {report['total_no_response']}\n")
 
     print("---- Detection Metrics ----")
     print(f"True Positives (TP): {report['tp']}   = correctly identified PII items")

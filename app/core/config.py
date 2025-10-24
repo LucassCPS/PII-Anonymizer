@@ -3,10 +3,10 @@ from enum import Enum
 
 class ModelEnum(Enum):
     GEMMA3_QAT = "MODEL_GEMMA3_QAT"
+    SMOLL3_Q4 = "MODEL_SMOLL3_Q4"
+    SMOLL3_Q8 = "MODEL_SMOLL3_Q8"
     QWEN3_06B = "MODEL_QWEN3_06B"
     QWEN3_8B = "MODEL_QWEN3_8B"
-    SMOLL3_Q8 = "MODEL_SMOLL3_Q8"
-    SMOLL3_Q4 = "MODEL_SMOLL3_Q4"
 
 def load_models():
     models = {}    

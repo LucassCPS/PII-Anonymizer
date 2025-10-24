@@ -4,7 +4,13 @@ services:
     env_file: 'backend.env'
     depends_on:
       - llm
-
+    volumes:
+      - ./reports:/app/reports
+    tty: true
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONIOENCODING=UTF-8
+      
   llm:
     provider:
       type: model
