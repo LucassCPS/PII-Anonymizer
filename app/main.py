@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 
 TEMPERATURES = [0.0 , 0.1, 0.2]
-MODEL = load_model(ModelEnum.SMOLL3_Q4)
+MODEL = load_model(ModelEnum.SMOLL3_Q8)
 API_KEY = load_api_key()
 BASE_URL = load_base_url()
 NUM_ROWS_DATASET = 1000

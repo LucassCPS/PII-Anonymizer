@@ -1,0 +1,28 @@
+==== Test Execution Report ====
+Model: ai/smollm3:Q4_K_M
+Prompt technique: Few-Shot
+Temperature: 0.1
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 5088.68 s (84.81 min / 1.41 h)
+Average LLM call time: 5.09 s (0.08 min / 0.0 h)
+Total Post-Processing Time (Resolution): 0.01 s
+
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 2301
+Total PII detected by model (adjusted): 2278
+Total missed PII: 2524
+Total LLM empty responses: 425
+
+---- Detection Metrics ----
+True Positives (TP): 1766   = correctly identified PII items
+False Positives (FP): 512  = model detected items not in the dataset
+False Negatives (FN): 2524  = model missed items that exist in the dataset
+
+Precision: 0.775241
+Recall: 0.411655
+F1-score: 0.537759
+================================
+

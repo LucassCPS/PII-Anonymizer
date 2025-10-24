@@ -1,0 +1,28 @@
+==== Test Execution Report ====
+Model: ai/smollm3:Q4_K_M
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.1
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 6623.95 s (110.4 min / 1.84 h)
+Average LLM call time: 6.62 s (0.11 min / 0.0 h)
+Total Post-Processing Time (Resolution): 0.01 s
+
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 2123
+Total PII detected by model (adjusted): 2109
+Total missed PII: 2593
+Total LLM empty responses: 434
+
+---- Detection Metrics ----
+True Positives (TP): 1697   = correctly identified PII items
+False Positives (FP): 412  = model detected items not in the dataset
+False Negatives (FN): 2593  = model missed items that exist in the dataset
+
+Precision: 0.804647
+Recall: 0.395571
+F1-score: 0.530395
+================================
+
