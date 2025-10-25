@@ -1,0 +1,28 @@
+==== Test Execution Report ====
+Model: ai/qwen3:0.6B-Q4_K_M
+Prompt technique: Few-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4797.13 s (79.95 min / 1.33 h)
+Average LLM call time: 4.8 s (0.08 min / 0.0 h)
+Total Post-Processing Time (Resolution): 0.01 s
+
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 2843
+Total PII detected by model (adjusted): 2836
+Total missed PII: 2140
+Total LLM empty responses: 222
+
+---- Detection Metrics ----
+True Positives (TP): 2150   = correctly identified PII items
+False Positives (FP): 686  = model detected items not in the dataset
+False Negatives (FN): 2140  = model missed items that exist in the dataset
+
+Precision: 0.75811
+Recall: 0.501166
+F1-score: 0.603424
+================================
+
