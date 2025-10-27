@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 
 TEMPERATURES = [0.0 , 0.1, 0.2]
-MODEL = load_model(ModelEnum.SMOLL3_Q8)
+MODEL = load_model(ModelEnum.QWEN3_06B)
 API_KEY = load_api_key()
 BASE_URL = load_base_url()
 NUM_ROWS_DATASET = 1000
@@ -20,8 +20,8 @@ if __name__ == "__main__":
     assert dataset_path.exists(), f"Dataset not found at {dataset_path}"
     client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
 
-    system_prompt, prompt_type = prompts.get_zero_shot_prompt()
-    temp_value = TEMPERATURES[0]
+    system_prompt, prompt_type = prompts.get_few_shot_prompt()
+    temp_value = TEMPERATURES[2]
 
     report = test.full_test(client=client, 
                             dataset_path=dataset_path,

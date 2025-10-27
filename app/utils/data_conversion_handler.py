@@ -18,7 +18,7 @@ def dataset_json_to_set(data):
     if not isinstance(data, list):
         raise ValueError("Input must be a list of dictionaries.")
     
-    entities = {item["entity"] for item in data if "entity" in item}
+    entities = {item["entity"] for item in data if isinstance(item, dict) and "entity" in item}
     return entities
 
 # converts the llm response json to a set data structure
@@ -26,5 +26,14 @@ def llm_json_to_set(data):
     if not isinstance(data, dict) or "entities" not in data:
         return set()
 
-    texts = {item["text"] for item in data.get("entities", []) if "text" in item}
+    texts = set()
+    for item in data.get("entities", []):
+        if isinstance(item, dict) and "text" in item:
+            text_value = item["text"]
+            if isinstance(text_value, (str, int, float, tuple)):
+                texts.add(text_value)
+            elif isinstance(text_value, list):
+                texts.add(" ".join(map(str, text_value)))
+            else:
+                continue
     return texts
