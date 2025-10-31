@@ -1,0 +1,97 @@
+==== Test Execution Report ====
+Model: ai/llama3.2:3B-Q4_K_M
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 2957.58 s (49.29 min / 0.82 h)
+Average LLM call time: 2.96 s (0.05 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3700
+Total PII detected by model (adjusted): 3678
+Total missed PII: 1270
+Total LLM empty responses: 10
+
+---- Detection Metrics ----
+True Positives (TP): 3020   = correctly identified PII items
+False Positives (FP): 658  = model detected items not in the dataset
+False Negatives (FN): 1270  = model missed items that exist in the dataset
+
+Precision: 0.821098
+Recall: 0.703963
+F1-score: 0.758032
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [101, 187, 202, 210, 259, 378, 587, 742, 900, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 101: 'FGR received: Item Code F-160489-D, Quantity: 500, Lot/Batch: L2345, Manufacturing Date: 2023-03-15.'
+
+  Line 187: 'Our program serves low-income individuals, with a focus on Deborah Shah, born on 1994-07-12, and SSN 086 147 345.'
+
+  Line 202: 'Crew Member K4938174, DOB 1966-06-30, License CERT-60787036, Medical MRN-582459, Duty: 2023-07-15, Flight 123, Dep: 0800, Arr: 1200, Aircraft: B737, Base: JFK.'
+
+  Line 210: 'Sean Tucker, Social Security Number 292-98-8825, agrees to provide services at 5 Smith via. Jesus Edwards, credit card number 4772999408539030, will be the point of contact.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 378: '**Payment Receipt**
+**Patient:** Antonio Claudia Anthony-Miller
+**MRN:** MRN-684112
+**Service Date:** 01/01/2023
+**Itemized Charges:**
+- Appointment Fee: $100.00
+- Lab Test: $50.00
+**Total:** $150.00
+**Payment Made:** $100.00
+**Remaining Balance:** $50.00'
+
+  Line 587: '**CUSTOMER AGREEMENT**
+
+THIS AGREEMENT is made and entered into on February 21, 2023, by and between Little Inc (hereinafter "Service Provider") and Kar LLC (hereinafter "Customer").
+
+Service Provider agrees to provide financial services to Customer, including but not limited to, credit card processing using the card number 30162967743354.
+
+Customer agrees to pay Service Provider a fee of 2.9% of each transaction processed, plus a monthly fee of $20.00.
+
+This Agreement may be terminated by either party upon thirty (30) days' written notice.
+
+Customer's Social Security Numbers are 055 628 820 and 274-01-4244. Customer's date of birth is 1945-02-21.'
+
+  Line 742: 'Please sign below to indicate that you have reviewed and approved the application for MED64248965, Lucy Warner, SSN 435-86-6923.'
+
+  Line 900: 'Work Permit ID: IDI8V4CRJ3SI, Issued to: [Applicant's Full Name], Date of Birth: 1915-06-18'
+
+  Line 1000: '{
+  "firstName": "Howard",
+  "lastName": "Wells-Munoz",
+  "dateOfBirth": "1957-09-08",
+  "address": "Flat 47g, Stacey plaza, O'Neillton",
+  "type": "idDocument"
+}'
+
+
+================================
+

@@ -1,0 +1,76 @@
+==== Test Execution Report ====
+Model: ai/mistral-nemo:12B-Q4_K_M
+Prompt technique: Few-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 5080.03 s (84.67 min / 1.41 h)
+Average LLM call time: 5.08 s (0.08 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 4450
+Total PII detected by model (adjusted): 4412
+Total missed PII: 1044
+Total LLM empty responses: 31
+
+---- Detection Metrics ----
+True Positives (TP): 3246   = correctly identified PII items
+False Positives (FP): 1166  = model detected items not in the dataset
+False Negatives (FN): 1044  = model missed items that exist in the dataset
+
+Precision: 0.735721
+Recall: 0.756643
+F1-score: 0.746035
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [4, 37, 94, 112, 119, 189, 230, 233, 264, 301, 310, 334, 366, 389, 398, 415, 554, 577, 625, 685, 697, 745, 813, 815, 866, 888, 900, 907, 966, 984, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 4: 'Please confirm that your vendor has implemented robust data protection measures for sensitive information such as credit card numbers (6011979587748988, 3768-7258-8504-048), Social Security Numbers (ZZ404859T, 783-81-6814), dates of birth (1939-06-07), and medical record numbers (MRN-651747).'
+
+  Line 37: '**EMPLOYMENT CONTRACT**
+
+This Employment Contract is entered into on January 1, 2023, between Jennifer Aguilar-Harris, the Employee, with Social Security Number 356 402 586 and Medical Record Number I5514722, and [Employer's Name], the Employer.'
+
+  Line 94: '**Death Certificate**
+- Full Name: [Redacted]
+- Date of Birth: 1939-10-11
+- Date of Death: [Redacted]
+- Cause of Death: [Redacted]
+- Medical Record Number: MRN-507593
+- Issuing Authority: [Redacted]'
+
+  Line 112: '**Project Overview**
+- **Title**: Echoes of Time
+- **Genre**: Sci-Fi Drama
+- **Logline**: A desperate scientist, haunted by her past, races against time to prevent a catastrophic event that threatens humanity's existence.
+
+**Cast & Crew**
+- **Director**: Chaney-Martin
+- **Producer**: Contact +44306 999 0425 or 01631030598 for details
+- **Writer**: Dr. Ada Sterling (SSN: 698-40-1059, DOB: 2017-12-26)
+
+**Story Synopsis**
+In a future where time travel is possible but strictly regulated, Dr. Ada Sterling, a brilliant and troubled physicist, discovers a temporal anomaly that signals an impending cataclysm. As she races to unravel the mystery, she must confront her own past and the ethical implications of her work.'
+
+  Line 119: 'Policy Number: Q658976, Effective Date: 2023-01-01'
+
+  Line 189: 'For off-chain storage, we'll use IPFS for large datasets like medical records (e.g., MED2660553). Access is controlled via encrypted keys, syncing with the blockchain at 70.247.134.184. Personal data like SSNs (ZZ 307539 T, 806 832 556) and date of birth (1977-10-18) are securely hashed before storage.'
+
+  Line 230: 'IND submitted by William Sehgal (MED46474053, Y-833188-U).'
+
+  Line 233: 'Runway 09/27: 8,747 ft x 150 ft, Taxiway 'E': 25 ft wide, Apron 'Alpha': 100,000 sq ft, Hangar 'H1': 30,000 sq ft, Terminal 'T1': 150,000 sq ft, Employee ID: EMP959205.'
+
+  Line 264: '**WARRANTY GRANTOR:** Joshua Miguel Hill, H.No. 58, Kunda Road, Raiganj, Bulgaria, 1-581-202-6315. **WARRANTY GRANTEE:** [Grantee's Name]. **COVERAGE:** [Product/Service Description]. **EXCLUSIONS:** [Excluded Items/Events]. **DURATION:** [Warranty Period]. **GOVERNING LAW:** [Jurisdiction]. **WARRANTY ID:** 308 318 518.'
+
+  Line 301: 'To comply with HIPAA, ensure patient medical records are protected. Access logs should be maintained for MED43455046 and J7959676. Monitor network traffic at IP addresses 52.245.60.67 and 67.132.137.203. Regularly inspect license plate 20-087234-86 for vehicle maintenance. Employee SSNs 448-01-3920 and 042 352 187 must be securely stored and accessed only when necessary.'
+... and 21 more.
+
+
+================================
+

@@ -5,24 +5,21 @@ Temperature: 0.0
 Dataset rows used: 1000
 
 ---- Execution Time ----
-Total time: 3058.55 s (50.98 min / 0.85 h)
-Average LLM call time: 3.06 s (0.05 min / 0.0 h)
-Total Post-Processing Time (Resolution): 0.01 s
-
+Total time: 4652.18 s (77.54 min / 1.29 h)
+Average LLM call time: 4.65 s (0.08 min / 0.0 h)
 ---- Sensitive Information ----
 Total PII in dataset (expected): 4290
-Total PII detected by model: 0
-Total PII detected by model (adjusted): 0
-Total missed PII: 4290
-Total LLM empty responses: 1000
+Total PII detected by model: 34
+Total PII detected by model (adjusted): 34
+Total missed PII: 4278
+Total LLM empty responses: 993
 
 ---- Detection Metrics ----
-True Positives (TP): 0   = correctly identified PII items
-False Positives (FP): 0  = model detected items not in the dataset
-False Negatives (FN): 4290  = model missed items that exist in the dataset
+True Positives (TP): 12   = correctly identified PII items
+False Positives (FP): 22  = model detected items not in the dataset
+False Negatives (FN): 4278  = model missed items that exist in the dataset
 
-Precision: 0.0
-Recall: 0.0
-F1-score: 0.0
+Precision: 0.352941
+Recall: 0.002797
+F1-score: 0.00555
 ================================
-

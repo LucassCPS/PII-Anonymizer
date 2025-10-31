@@ -1,0 +1,88 @@
+==== Test Execution Report ====
+Model: ai/smollm3:Q8_0
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.2
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 9855.09 s (164.25 min / 2.74 h)
+Average LLM call time: 9.85 s (0.16 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3394
+Total PII detected by model (adjusted): 3373
+Total missed PII: 1547
+Total LLM empty responses: 81
+
+---- Detection Metrics ----
+True Positives (TP): 2743   = correctly identified PII items
+False Positives (FP): 630  = model detected items not in the dataset
+False Negatives (FN): 1547  = model missed items that exist in the dataset
+
+Precision: 0.813223
+Recall: 0.639394
+F1-score: 0.715908
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [11, 15, 18, 34, 54, 68, 71, 162, 172, 178, 193, 197, 223, 231, 233, 252, 259, 264, 287, 305, 313, 333, 337, 340, 360, 366, 394, 398, 399, 414, 425, 442, 467, 492, 495, 499, 509, 513, 514, 543, 561, 570, 577, 593, 597, 600, 612, 624, 626, 649, 652, 655, 663, 678, 688, 709, 720, 745, 757, 762, 769, 771, 773, 807, 818, 827, 831, 839, 861, 868, 888, 900, 922, 929, 966, 968, 970, 972, 974, 996, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 11: '**Sales Order #SO20230501**
+**Date:** 05/01/2023
+**Customer Name:** CID-520460 (I987-G7946-Pu)
+**Address:** 07570 Joanna Mountains, 67789, South Barbaraton
+**Phone:** 939-227-6163 (5635402307)
+**Email:** cmiles@example.com (hgibson@example.com)
+**Order Details:**
+- SKU: AGRI001, Quantity: 10, Price: $50.00
+- SKU: FOOD002, Quantity: 5, Price: $20.00
+**Subtotal:** $650.00
+**Tax:** $45.50
+**Total:** $705.50'
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 18: '**Permit Application**
+
+**Applicant Details:**
+- First Name: Louise
+- Last Name: Clay
+- Address: H.No. 99 Seth Path, 289030, Bulandshahr
+
+**Proposed Project:**
+- Michelle Erickson-Parks proposes to construct a residential building at the above-mentioned address.
+
+**Medical Record Number (MRN):**
+- MRN-826976'
+
+  Line 34: 'During the audit period from 04.04.2015 to 04.04.2016, IP address 168.108.109.164 was found to have accessed patient record MRN-973445, which is a violation of our data privacy policy. Employee J-927907-G was logged in at the time of access.'
+
+  Line 54: 'Subject's Social Security Numbers: 522-25-8195, ZZ 45 05 74 T. Date of Birth: 2011-06-02. Medical Record Numbers: F2438543, MRN-606766. License Plate: X65240693.'
+
+  Line 68: 'Runway 12/30, 2,743 meters long, intersects taxiway Alpha at coordinates 56.553299, -26.524318.'
+
+  Line 71: 'Data categories to be transferred include date of birth (1932-10-14), health plan beneficiary numbers (G934357132, I788256308), and IP address (79.252.9.102). Social Security Number (ZZ 88 68 06 T) will not be transferred. Purpose of transfer is data processing and analytics. Retention period is five years. Data subjects retain rights to access, correct, and delete their data.'
+
+  Line 162: 'ID,AnimalType,Breed,Age,Weight,Location,HealthStatus
+71-868445-38,Cow,Holstein,5,650 lbs,North Field,Healthy
+80-757670-87,Pig,Yorkshire,3,350 lbs,South Barn,Excellent
+MRN-43994,Sheep,Merino,2,180 lbs,East Pasture,Good
+Z337082,Chicken,Rhode Island Red,1,3 lbs,Coop,Very Good
+828-35-2027,Horse,Quarter Horse,8,1200 lbs,West Stables,Stable
+jeffreylynch@example.org,Goat,Nubian,4,150 lbs,South Hill,Fine'
+
+  Line 172: '**Maintenance Request ID: MRN-613884**
+**Priority: High**
+**Due Date: 2014.03.03**
+**Description: Equipment F8649845 requires immediate maintenance.**'
+
+  Line 178: 'Route passes through (23.7698115 N, -75.441626 E) and (6.7180345, 62.699012).'
+... and 71 more.
+
+
+================================
+

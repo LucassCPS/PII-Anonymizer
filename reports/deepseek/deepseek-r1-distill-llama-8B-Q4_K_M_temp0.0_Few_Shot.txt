@@ -1,0 +1,78 @@
+==== Test Execution Report ====
+Model: ai/deepseek-r1-distill-llama:8B-Q4_K_M
+Prompt technique: Few-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 7993.35 s (133.22 min / 2.22 h)
+Average LLM call time: 7.99 s (0.13 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 4051
+Total PII detected by model (adjusted): 3939
+Total missed PII: 1119
+Total LLM empty responses: 35
+
+---- Detection Metrics ----
+True Positives (TP): 3171   = correctly identified PII items
+False Positives (FP): 768  = model detected items not in the dataset
+False Negatives (FN): 1119  = model missed items that exist in the dataset
+
+Precision: 0.805027
+Recall: 0.739161
+F1-score: 0.770689
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [59, 68, 101, 120, 157, 183, 197, 235, 259, 290, 319, 337, 361, 398, 475, 491, 506, 548, 564, 566, 572, 577, 655, 680, 705, 730, 818, 827, 830, 839, 868, 878, 968, 981, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 59: 'Dear Bradley Lopez,
+
+We are pleased to inform you that you have been promoted to a new position within our company. Your employee ID is E654828 and your date of birth is 1990-11-21. Your new role will commence on [effective date]. We look forward to your continued success with us.
+
+Sincerely,
+[Manager's Name]'
+
+  Line 68: 'Runway 12/30, 2,743 meters long, intersects taxiway Alpha at coordinates 56.553299, -26.524318.'
+
+  Line 101: 'FGR received: Item Code F-160489-D, Quantity: 500, Lot/Batch: L2345, Manufacturing Date: 2023-03-15.'
+
+  Line 120: '120.98.69.195, c3c0:719a:c766:4049:2e49:18:c77f:7776, http://www.jackson.com/, 356929026872567'
+
+  Line 157: 'CAS Number: 162.190.208.125, Chemical Name: 95.209.237.15, Molecular Formula: 207 413 469, Structural Diagram: ZZ 04 21 87 T, Date of Synthesis: 1958-10-02, Medical Record Numbers: MRN-348084, MRN-66919.'
+
+  Line 183: 'Node 108.160.74.236, joined on 2005-09-18, uses user 'lohit_9175' and device 532917416784269. Node 'caroline35' communicates with it.'
+
+  Line 197: 'This Client Certificate is valid from 2013.05.09 to 2023.05.08.'
+
+  Line 235: 'Activity: Assembly of Component X. Start Date: Monday, December 17, 1984. End Date: Tuesday, December 18, 1984. Duration: 1 day. Resource: O6953674, EMP448755. Dependencies: MED23011883, G9RH45UXJD6KS4LBZ.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 290: 'Cable ID 527916351299959, a Cat6 cable, is 50 meters long, running from switch port 1928-10-25 to device 95.153.175.153, routed through the server room.'
+... and 25 more.
+
+
+================================
+

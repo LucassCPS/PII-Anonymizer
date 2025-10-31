@@ -1,0 +1,25 @@
+==== Test Execution Report ====
+Model: ai/gemma3-qat:270M-UD-Q4_K_XL
+Prompt technique: Few-Shot
+Temperature: 0.1
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4047.95 s (67.47 min / 1.12 h)
+Average LLM call time: 4.05 s (0.07 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 37
+Total PII detected by model (adjusted): 37
+Total missed PII: 4282
+Total LLM empty responses: 994
+
+---- Detection Metrics ----
+True Positives (TP): 8   = correctly identified PII items
+False Positives (FP): 29  = model detected items not in the dataset
+False Negatives (FN): 4282  = model missed items that exist in the dataset
+
+Precision: 0.216216
+Recall: 0.001865
+F1-score: 0.003698
+================================

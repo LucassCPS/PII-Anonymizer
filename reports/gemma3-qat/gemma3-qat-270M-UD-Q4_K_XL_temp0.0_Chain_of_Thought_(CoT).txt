@@ -1,0 +1,25 @@
+==== Test Execution Report ====
+Model: ai/gemma3-qat:270M-UD-Q4_K_XL
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4801.97 s (80.03 min / 1.33 h)
+Average LLM call time: 4.8 s (0.08 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 924
+Total PII detected by model (adjusted): 922
+Total missed PII: 3920
+Total LLM empty responses: 526
+
+---- Detection Metrics ----
+True Positives (TP): 370   = correctly identified PII items
+False Positives (FP): 552  = model detected items not in the dataset
+False Negatives (FN): 3920  = model missed items that exist in the dataset
+
+Precision: 0.401302
+Recall: 0.086247
+F1-score: 0.14198
+================================

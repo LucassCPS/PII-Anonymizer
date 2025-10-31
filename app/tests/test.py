@@ -6,9 +6,7 @@ import re
 from tqdm import tqdm
 import sys
 
-def resolve_segmentation_errors(dataset_set, llm_set):
-    time_start = time.perf_counter()
-    
+def resolve_segmentation_errors(dataset_set, llm_set):   
     in_both, only_in_llm, only_in_dataset = compare_sets(dataset_set, llm_set)
     
     tp_adjusted = len(in_both)
@@ -23,7 +21,7 @@ def resolve_segmentation_errors(dataset_set, llm_set):
 
         possible_llm_components = []
         for fp_item in llm_extra_pii:
-            if fp_item in fn_item:
+            if str(fp_item) in fn_item:
                 possible_llm_components.append(fp_item)
                 
         if possible_llm_components:
@@ -42,9 +40,7 @@ def resolve_segmentation_errors(dataset_set, llm_set):
                     if component in llm_extra_pii:
                          llm_extra_pii.remove(component)
 
-
-    time_spent = time.perf_counter() - time_start
-    return tp_adjusted, fp_adjusted, fn_adjusted, time_spent
+    return tp_adjusted, fp_adjusted, fn_adjusted
 
 def call_llm(client, model, system_prompt, input_text, temp):
     messages = [
@@ -61,8 +57,7 @@ def call_llm(client, model, system_prompt, input_text, temp):
         )
         dt = time.perf_counter() - t0
 
-        output = response.choices[0].message.content.strip() if response else ""
-        output = output if output else '{ "entities": [] }'
+        output = response.choices[0].message.content.strip() if response else '{ "entities": [] }'
         return output, dt
     except Exception:
         return '{ "entities": [] }', 0.0
@@ -83,7 +78,6 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
     total_llm_time = 0.0
     total_wall_time_start = time.perf_counter()
-    total_post_processing_time = 0.0
 
     total_dataset_pii = 0
     total_llm_pii = 0
@@ -91,6 +85,9 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
     tp_sum = 0
     fp_sum = 0
     fn_sum = 0
+
+    invalid_responses = []
+    invalid_response_line_texts = []
 
     pbar = tqdm(
         total=total_rows,
@@ -119,15 +116,17 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
             llm_str, call_time = call_llm(client, model, system_prompt, row.text, temp)
             total_llm_time += call_time
 
-            llm_json = data_conversion_handler.string_list_to_json(llm_str)
+            llm_clean_resp = data_conversion_handler.clean_llm_response(llm_str)
+            llm_json = data_conversion_handler.string_list_to_json(llm_clean_resp)
             llm_set = data_conversion_handler.llm_json_to_set(llm_json)
 
             if not llm_set:
                 total_no_response += 1
+                invalid_responses.append(i)
+                invalid_response_line_texts.append(row.text)
             total_llm_pii += len(llm_set)
 
-            tp, fp, fn, resolution_time = resolve_segmentation_errors(dataset_set, llm_set)
-            total_post_processing_time += resolution_time
+            tp, fp, fn = resolve_segmentation_errors(dataset_set, llm_set)
             tp_sum += tp; fp_sum += fp; fn_sum += fn
 
             pbar.update(1)
@@ -156,7 +155,6 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
         "total_time": format_time(total_wall_time),
         "avg_llm_call_time": format_time(avg_llm_time),
-        "total_post_processing_time": format_time(total_post_processing_time),
 
         "total_dataset_pii": int(total_dataset_pii),
         "total_model_pii": int(total_llm_pii),
@@ -164,6 +162,9 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
         "total_missed_pii": int(fn_sum),
 
         "total_no_response": int(total_no_response),
+
+        "invalid_response_lines": invalid_responses,
+        "invalid_response_texts": invalid_response_line_texts,
 
         "tp": int(tp_sum),
         "fp": int(fp_sum),
@@ -188,7 +189,6 @@ def print_report(report, prompt_type):
           f"({report['total_time']['minutes']} min / {report['total_time']['hours']} h)")
     print(f"Average LLM call time: {report['avg_llm_call_time']['seconds']} s "
           f"({report['avg_llm_call_time']['minutes']} min / {report['avg_llm_call_time']['hours']} h)")
-    print(f"Total Post-Processing Time (Resolution): {report['total_post_processing_time']['seconds']} s\n")
 
     print("---- Sensitive Information ----")
     print(f"Total PII in dataset (expected): {report['total_dataset_pii']}")
@@ -205,4 +205,21 @@ def print_report(report, prompt_type):
     print(f"Precision: {report['precision']}")
     print(f"Recall: {report['recall']}")
     print(f"F1-score: {report['f1_score']}")
+    print("================================\n")
+
+    print("\n==== Dataset Lines That Returned an Empty JSON Response ====")
+    if report.get("invalid_response_lines"):
+        print("---- Empty Response Tracking ----")
+        total_empty_responses = len(report['invalid_response_lines'])
+        print(f"Line that returned the empty response: {report['invalid_response_lines']}")
+        
+        print("\nText contents that returned the empty response (first 10):")
+        for i, text in enumerate(report['invalid_response_texts']):
+            if i >= 10: 
+                print(f"... and {total_empty_responses - 10} more.")
+                break
+            print(f"\n  Line {report['invalid_response_lines'][i]}: '{text}'") 
+        print("\n")
+    else:
+        print("No lines returned the exact empty JSON response string.")
     print("================================\n")

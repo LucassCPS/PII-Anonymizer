@@ -1,0 +1,76 @@
+==== Test Execution Report ====
+Model: ai/mistral-nemo:12B-Q4_K_M
+Prompt technique: Zero-Shot
+Temperature: 0.5
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4397.1 s (73.29 min / 1.22 h)
+Average LLM call time: 4.4 s (0.07 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3584
+Total PII detected by model (adjusted): 3580
+Total missed PII: 1197
+Total LLM empty responses: 19
+
+---- Detection Metrics ----
+True Positives (TP): 3093   = correctly identified PII items
+False Positives (FP): 487  = model detected items not in the dataset
+False Negatives (FN): 1197  = model missed items that exist in the dataset
+
+Precision: 0.863966
+Recall: 0.720979
+F1-score: 0.786023
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [41, 61, 99, 102, 150, 310, 326, 350, 404, 436, 517, 524, 551, 573, 577, 589, 724, 900, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 41: 'Complaint Form - 1657795349
+Complainant: Pushti Lewis-Marshall
+Date of Birth: 1949-12-21
+Contact Number: 1 (186) 115-8024
+Issue Description: Noise complaint from Natalie's residence.'
+
+  Line 61: 'Distributor agrees to pay Producer, a company with principal place of business at 12345 Finley St, Joan Finley-Gross, SSN ZZ 32 90 72 T, a bank routing number of 988979633, within 30 days of delivery of the media content.'
+
+  Line 99: 'RADIUS Access-Request: User-Name = 'katherine53', NAS-Identifier = 'andrewmcintosh''
+
+  Line 102: 'Allergen Information for Customer ID Za-7884, delivered to 39 Christine Glade. Contact: Megan Stafford at 749-975-7244x19045 or Johal Kabir at +61.3.9817.1326, email: staffordmegan@example.net, johalkabir@example.net.'
+
+  Line 150: 'Common Name: Belgium, Organization: Saint Vincent and the Grenadines, Validity: 2023-01-01 to 2024-01-01.'
+
+  Line 310: '{
+  "msisdn": "T6763G719",
+  "activationCode": "ABC123",
+  "serviceType": "Premium"
+}'
+
+  Line 326: '**Shipment Notice**
+
+**Shipment ID:** MED90970868
+**Date:** 1978-08-26
+**Sender:** Z7455Z745
+**Receiver:** 6522 Christine Vista
+**Package Contents:** Medical Records (A7992628)'
+
+  Line 350: 'Bank routing number: 775154566. Address: 87264 Brown Bridge, Apt. 543. Treasurer: Christine H. Hines. Social Security Number: 389-98-0448.'
+
+  Line 404: 'Incident Report: On 1988/10/12 at 17:01:04, vehicle with license plate 92-329292-40 was involved in an incident. Patient transported, medical record number MRN-581295.'
+
+  Line 436: '**Withdrawal Form**
+- Student Name: Anusha Hampton-Gordon
+- Student ID: 691-61-3331
+- Date of Birth: 2002-01-01
+- Reason for Withdrawal: Transfer to another institution
+- Signature: Kevin'
+... and 9 more.
+
+
+================================
+

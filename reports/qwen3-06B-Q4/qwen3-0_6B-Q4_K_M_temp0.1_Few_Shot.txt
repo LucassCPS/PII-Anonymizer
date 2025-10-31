@@ -1,0 +1,99 @@
+==== Test Execution Report ====
+Model: ai/qwen3:0.6B-Q4_K_M
+Prompt technique: Few-Shot
+Temperature: 0.1
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 6228.96 s (103.82 min / 1.73 h)
+Average LLM call time: 6.23 s (0.1 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 2834
+Total PII detected by model (adjusted): 2829
+Total missed PII: 2188
+Total LLM empty responses: 231
+
+---- Detection Metrics ----
+True Positives (TP): 2102   = correctly identified PII items
+False Positives (FP): 727  = model detected items not in the dataset
+False Negatives (FN): 2188  = model missed items that exist in the dataset
+
+Precision: 0.743019
+Recall: 0.489977
+F1-score: 0.590532
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [1, 2, 6, 9, 15, 26, 28, 32, 44, 52, 56, 68, 72, 75, 81, 83, 90, 97, 99, 101, 110, 112, 119, 120, 123, 125, 129, 132, 136, 137, 141, 144, 147, 150, 152, 154, 160, 162, 170, 171, 172, 178, 192, 197, 198, 202, 216, 233, 235, 241, 249, 252, 256, 259, 264, 268, 272, 274, 278, 279, 281, 284, 286, 288, 290, 291, 296, 301, 306, 308, 310, 313, 316, 319, 327, 335, 336, 340, 347, 361, 362, 364, 365, 372, 377, 397, 398, 405, 407, 415, 417, 421, 426, 427, 431, 435, 438, 441, 444, 457, 465, 467, 492, 495, 499, 500, 504, 506, 508, 509, 512, 513, 514, 515, 534, 539, 543, 544, 548, 554, 557, 562, 563, 565, 570, 572, 577, 582, 583, 589, 602, 604, 606, 607, 622, 625, 627, 630, 644, 646, 647, 649, 650, 652, 653, 655, 656, 663, 671, 675, 680, 685, 687, 688, 691, 693, 694, 695, 696, 697, 705, 707, 709, 720, 729, 730, 740, 745, 746, 747, 748, 749, 752, 756, 763, 769, 778, 786, 794, 800, 810, 813, 815, 818, 820, 827, 830, 831, 834, 836, 839, 845, 851, 852, 855, 861, 866, 867, 868, 872, 878, 879, 884, 888, 894, 897, 899, 900, 907, 911, 915, 917, 923, 926, 927, 931, 932, 940, 944, 950, 957, 966, 967, 968, 969, 970, 981, 983, 984, 991, 998]
+
+Text contents that returned the empty response (first 10):
+
+  Line 1: 'Transaction details: gasLimit set to 1000000 units by tw_brian740, gasPrice set to 10 Gwei by veronicawood@example.org, contactable at +1-869-341-9301x7005, located at Suite 378, Yolanda Mountain, Burkeberg.'
+
+  Line 2: 'Unloading Plan for Shipment MRN-293104, MED25315002, dated 1989.12.22. Driver EMP730359, Vehicle KS40540825.'
+
+  Line 6: '**Online Banking Terms**
+
+**Definitions**
+- **SSN**: Social Security Number. Examples: 650-61-0187, 257 340 877
+- **Credit Card Number**: A unique identifier for your bank-issued credit card. Example: 348240812889841
+- **Date of Birth (DOB)**: Your birthdate in YYYY-MM-DD format. Example: 2008-04-28
+- **Bank Routing Number**: A nine-digit code identifying your bank. Example: 360739620
+
+**Account Services**
+- Online banking access
+- Bill payment
+- Funds transfer
+
+**Fees**
+- Monthly maintenance fee: $5
+- Overdraft fee: $35 per transaction
+
+**Termination**
+- To close your account, contact us at least 30 days in advance.'
+
+  Line 9: '**Title:** Network Connectivity Issue
+**Description:** Unable to connect to the server at IPv4 address 129.163.108.183.
+**Steps to Reproduce:** Attempting to connect to the server using the provided IP address.
+**Expected Results:** Successful connection to the server.
+**Actual Results:** Connection timed out.
+**Severity:** High
+**Reported By:** xwilliams@example.net
+**Affected Customer:** CID-996335
+**Medical Record Number (for reference):** MRN-450486
+**Additional Comments:** This issue was also reported by vberry@example.org.'
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 26: '{
+  "source_ip": "f4e3:117d:3857:870:d854:1ddb:ef90:66f1",
+  "destination_ip": "133.123.223.176, 63.192.251.195",
+  "protocol": "TCP",
+  "port_range": "80-443",
+  "action": "allow",
+  "user_name": "rhys95",
+  "email": "lynnwilliams@example.com"
+}'
+
+  Line 28: '<Device>
+  <DeviceID>A19023156139</DeviceID>
+  <UserName>tw_derek469</UserName>
+  <DateOfBirth>1962-08-16</DateOfBirth>
+  <SensorType>Fingerprint</SensorType>
+  <EnrollmentParams>10, 100</EnrollmentParams>
+  <FeatureExtraction>DCT</FeatureExtraction>
+</Device>'
+
+  Line 32: 'Customer ID: CUST40306940, License Plate: H02-3755-253-59, Medical Record Number: Q915012.'
+
+  Line 44: 'Certificate Key Usage: LIC-I9611592, CERT-48865042'
+
+  Line 52: 'Title Insurance Policy for Ind. Kimberly Nelson, effective 2001-04-10, covering the property at 18 Shane oval, Clarkview.'
+... and 221 more.
+
+
+================================
+

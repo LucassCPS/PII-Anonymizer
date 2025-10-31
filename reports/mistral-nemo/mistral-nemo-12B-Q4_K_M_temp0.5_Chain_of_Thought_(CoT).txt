@@ -1,0 +1,75 @@
+==== Test Execution Report ====
+Model: ai/mistral-nemo:12B-Q4_K_M
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.5
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4512.54 s (75.21 min / 1.25 h)
+Average LLM call time: 4.51 s (0.08 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3778
+Total PII detected by model (adjusted): 3761
+Total missed PII: 1148
+Total LLM empty responses: 10
+
+---- Detection Metrics ----
+True Positives (TP): 3142   = correctly identified PII items
+False Positives (FP): 619  = model detected items not in the dataset
+False Negatives (FN): 1148  = model missed items that exist in the dataset
+
+Precision: 0.835416
+Recall: 0.732401
+F1-score: 0.780524
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [2, 292, 370, 593, 724, 827, 849, 855, 900, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 2: 'Unloading Plan for Shipment MRN-293104, MED25315002, dated 1989.12.22. Driver EMP730359, Vehicle KS40540825.'
+
+  Line 292: '**Proof of Delivery**
+- **Consignee:** Lohit T. Khatri
+- **Delivery Date:** 20.03.2008
+- **Location:** 80 Mathew wall, Flat 9
+- **Recipient's Signature:** Mrs. Laura Gardner'
+
+  Line 370: '**Driver's License**
+- **Name**: Aadhya Saha
+- **Date of Birth**: 1915-05-11
+- **Address**: 16 Chambers branch, Studio 99i
+- **License Number**: 18408 Floyd Bridge, 18019, Arroyoberg'
+
+  Line 593: '36020623757610, 3711-9382-5871-179, C80912284333, F60568075627, 506-41-0203, 610-83-7318, Tuesday, July 17, 2018'
+
+  Line 724: 'Heidi Poole, DOB: 1929-11-19, SSN: 179-32-7169, affiliated with Nelson-Watson'
+
+  Line 827: 'Parcel U7321010: Zone Type - Medical, Overlay Status - None'
+
+  Line 849: '**Death Certificate**
+- **Name**: Matthew Hunt
+- **Date of Birth**: 1970-11-30
+- **Date and Time of Death**: 2023-03-15, 04:32 AM
+- **Cause of Death**: Natural Causes
+- **Attending Physician**: Dr. A. Smith'
+
+  Line 855: '1936-02-27, 2019-04-28, PK48224575, 36917107003330, Y2810213, MRN-497622'
+
+  Line 900: 'Work Permit ID: IDI8V4CRJ3SI, Issued to: [Applicant's Full Name], Date of Birth: 1915-06-18'
+
+  Line 1000: '{
+  "firstName": "Howard",
+  "lastName": "Wells-Munoz",
+  "dateOfBirth": "1957-09-08",
+  "address": "Flat 47g, Stacey plaza, O'Neillton",
+  "type": "idDocument"
+}'
+
+
+================================
+

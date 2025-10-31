@@ -1,0 +1,98 @@
+==== Test Execution Report ====
+Model: ai/granite-4.0-h-tiny:7B
+Prompt technique: Zero-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 11533.52 s (192.23 min / 3.2 h)
+Average LLM call time: 11.53 s (0.19 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 4067
+Total PII detected by model (adjusted): 4032
+Total missed PII: 1093
+Total LLM empty responses: 19
+
+---- Detection Metrics ----
+True Positives (TP): 3197   = correctly identified PII items
+False Positives (FP): 835  = model detected items not in the dataset
+False Negatives (FN): 1093  = model missed items that exist in the dataset
+
+Precision: 0.792907
+Recall: 0.745221
+F1-score: 0.768325
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [37, 259, 264, 284, 310, 543, 546, 554, 572, 752, 800, 827, 855, 900, 939, 960, 982, 998, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 37: '**EMPLOYMENT CONTRACT**
+
+This Employment Contract is entered into on January 1, 2023, between Jennifer Aguilar-Harris, the Employee, with Social Security Number 356 402 586 and Medical Record Number I5514722, and [Employer's Name], the Employer.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 264: '**WARRANTY GRANTOR:** Joshua Miguel Hill, H.No. 58, Kunda Road, Raiganj, Bulgaria, 1-581-202-6315. **WARRANTY GRANTEE:** [Grantee's Name]. **COVERAGE:** [Product/Service Description]. **EXCLUSIONS:** [Excluded Items/Events]. **DURATION:** [Warranty Period]. **GOVERNING LAW:** [Jurisdiction]. **WARRANTY ID:** 308 318 518.'
+
+  Line 284: '`<Policy customerId="Y-965880-Y"> <Classifier apiKey="xoxb-469506804522-323565691892-MF2lT3qrj7ldztTuJjCQm2XQ"> <Traffic ip="200.198.130.188" deviceId="673139112961942"> <QoS bandwidth="100Mbps" delay="10ms" jitter="1ms" packetLoss="0.01"/> </Traffic> </Classifier> </Policy>`'
+
+  Line 310: '{
+  "msisdn": "T6763G719",
+  "activationCode": "ABC123",
+  "serviceType": "Premium"
+}'
+
+  Line 543: '**Quality Inspection Report**
+
+**Part ID:** MED66341325
+**Lot Number:** Kd-44499
+**Inspection Date:** 28.11.2013
+**Inspector:** 188.172.128.58
+
+**Visual Inspection Results:** No visible defects noted.
+**Measurement Results:** Dimensions within tolerance.
+**Non-Conformities:** None identified.
+**Pass/Fail:** Pass'
+
+  Line 546: '**VEHICLE PURCHASE AGREEMENT**
+
+This agreement is made between Robert Gibson, the buyer, and Murty, the seller, for the purchase of a 2022 Toyota Corolla, license plate O83961147, for a total price of $25,000.00. The vehicle is sold "as is" with no warranty. The buyer's Social Security Number is 481-93-0546. Both parties have signed this agreement.'
+
+  Line 554: '**Oct 29, 1988**: tw_louise645 (Ij-21920)'
+
+  Line 572: '{"timestamp": "27 Apr 2019 02:00:38", "user_id": "lee864", "ip_address": "220.245.231.133", "auth_type": "password", "status": "failure", "error_code": "INVALID_PASSWORD"}'
+
+  Line 752: '{
+  "user_id": 12345,
+  "username": "QSanchez",
+  "email": "qsanchez@example.net",
+  "password_hash": "$2a$10$F3Rqc3R0kL2z9Z063x59VOQhF3Rqc3R0kL2z9Z063x59VOQh",
+  "created_at": "2022-01-01T00:00:00Z",
+  "updated_at": "2022-01-01T00:00:00Z"
+}'
+... and 9 more.
+
+
+================================
+

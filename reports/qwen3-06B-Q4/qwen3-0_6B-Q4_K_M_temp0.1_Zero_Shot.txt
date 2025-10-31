@@ -1,0 +1,77 @@
+==== Test Execution Report ====
+Model: ai/qwen3:0.6B-Q4_K_M
+Prompt technique: Zero-Shot
+Temperature: 0.1
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 6224.21 s (103.74 min / 1.73 h)
+Average LLM call time: 6.22 s (0.1 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 2933
+Total PII detected by model (adjusted): 2931
+Total missed PII: 2036
+Total LLM empty responses: 53
+
+---- Detection Metrics ----
+True Positives (TP): 2254   = correctly identified PII items
+False Positives (FP): 677  = model detected items not in the dataset
+False Negatives (FN): 2036  = model missed items that exist in the dataset
+
+Precision: 0.769021
+Recall: 0.525408
+F1-score: 0.62429
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [2, 15, 41, 44, 46, 89, 100, 101, 119, 123, 137, 148, 197, 249, 278, 301, 306, 313, 325, 333, 361, 389, 393, 448, 449, 461, 495, 544, 572, 599, 602, 650, 663, 687, 709, 720, 745, 747, 754, 786, 792, 827, 830, 839, 857, 907, 923, 929, 940, 970, 981, 995, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 2: 'Unloading Plan for Shipment MRN-293104, MED25315002, dated 1989.12.22. Driver EMP730359, Vehicle KS40540825.'
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 41: 'Complaint Form - 1657795349
+Complainant: Pushti Lewis-Marshall
+Date of Birth: 1949-12-21
+Contact Number: 1 (186) 115-8024
+Issue Description: Noise complaint from Natalie's residence.'
+
+  Line 44: 'Certificate Key Usage: LIC-I9611592, CERT-48865042'
+
+  Line 46: 'Upon review of patient record MRN-505536, we identified an adverse reaction following administration of Drug X.'
+
+  Line 89: '**Power Outage Report**
+
+**Incident ID:** Hb27796-A
+**Start Time:** 03:45 AM
+**End Time:** In Progress
+**Affected Area:** Tiruvottiyur, Karnal
+**Street Address:** 822 Sidhu Path, 053774, Karnal
+**Postcode:** LN0Y 4PT
+**Cause:** Storm Damage
+**Customers Impacted:** 2,500
+**Restoration Progress:** Crews are on-site assessing damage and restoring power.'
+
+  Line 100: 'Quality Control measures implemented by Pushti Smith, Employee ID J-917196-G, for the production of MRN-884473.'
+
+  Line 101: 'FGR received: Item Code F-160489-D, Quantity: 500, Lot/Batch: L2345, Manufacturing Date: 2023-03-15.'
+
+  Line 119: 'Policy Number: Q658976, Effective Date: 2023-01-01'
+
+  Line 123: '{
+  "patientId": "W2700655",
+  "providerId": "P12345",
+  "appointmentDate": "2023-05-15",
+  "appointmentType": "Consultation",
+  "reason": "Follow-up on recent lab results"
+}'
+... and 43 more.
+
+
+================================
+

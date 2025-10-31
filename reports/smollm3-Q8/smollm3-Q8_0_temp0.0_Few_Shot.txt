@@ -1,0 +1,187 @@
+==== Test Execution Report ====
+Model: ai/smollm3:Q8_0
+Prompt technique: Few-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4218.19 s (70.3 min / 1.17 h)
+Average LLM call time: 4.22 s (0.07 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 2791
+Total PII detected by model (adjusted): 2769
+Total missed PII: 2164
+Total LLM empty responses: 299
+
+---- Detection Metrics ----
+True Positives (TP): 2126   = correctly identified PII items
+False Positives (FP): 643  = model detected items not in the dataset
+False Negatives (FN): 2164  = model missed items that exist in the dataset
+
+Precision: 0.767786
+Recall: 0.495571
+F1-score: 0.602352
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [2, 4, 6, 9, 11, 12, 15, 23, 30, 35, 37, 38, 39, 41, 45, 46, 47, 48, 56, 58, 66, 68, 75, 81, 86, 96, 97, 106, 107, 112, 114, 116, 121, 124, 132, 135, 137, 138, 139, 143, 146, 151, 155, 159, 160, 161, 162, 164, 168, 173, 174, 180, 185, 189, 191, 193, 196, 205, 206, 214, 216, 220, 222, 223, 227, 229, 235, 236, 244, 252, 259, 263, 264, 271, 275, 281, 284, 286, 291, 295, 297, 298, 299, 305, 308, 309, 311, 313, 317, 324, 325, 331, 332, 333, 334, 336, 337, 338, 344, 346, 348, 362, 363, 365, 366, 367, 369, 373, 379, 380, 381, 384, 388, 392, 394, 395, 398, 405, 406, 410, 416, 417, 418, 420, 428, 433, 438, 442, 447, 448, 449, 450, 451, 453, 454, 459, 462, 464, 470, 477, 478, 481, 484, 487, 489, 490, 498, 499, 501, 506, 508, 509, 510, 512, 513, 515, 518, 519, 527, 532, 533, 535, 539, 540, 543, 544, 546, 554, 556, 560, 561, 562, 565, 566, 569, 572, 573, 575, 577, 578, 580, 583, 586, 587, 599, 601, 605, 616, 624, 632, 636, 642, 647, 649, 654, 657, 664, 672, 675, 679, 682, 685, 686, 690, 694, 697, 701, 708, 712, 713, 736, 739, 745, 747, 756, 759, 762, 766, 767, 773, 774, 775, 776, 777, 778, 781, 783, 786, 790, 791, 792, 795, 805, 816, 818, 825, 826, 830, 831, 833, 839, 840, 841, 842, 847, 851, 853, 856, 860, 861, 862, 864, 866, 868, 869, 870, 872, 876, 877, 880, 883, 892, 893, 894, 897, 898, 900, 904, 907, 908, 915, 919, 920, 923, 925, 933, 939, 940, 946, 947, 951, 954, 955, 964, 965, 966, 967, 969, 970, 972, 981, 982, 986, 990, 994, 996, 997, 998, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 2: 'Unloading Plan for Shipment MRN-293104, MED25315002, dated 1989.12.22. Driver EMP730359, Vehicle KS40540825.'
+  Response: {"entities": []}
+
+The provided text does not contain any personally identifiable information (PII) such as names, addresses, phone numbers, email addresses, or other identifiers that could be used to uniquely identify an individual. Therefore, no entities were found.
+
+  Line 4: 'Please confirm that your vendor has implemented robust data protection measures for sensitive information such as credit card numbers (6011979587748988, 3768-7258-8504-048), Social Security Numbers (ZZ404859T, 783-81-6814), dates of birth (1939-06-07), and medical record numbers (MRN-651747).'
+  Response: I'm an information extraction system designed to identify and label personally identifiable information (PII) in text. My capabilities are limited to extracting and labeling PII as defined in the provided instructions. I do not have the ability to assess or evaluate the security measures implemented by vendors or any other organization.
+
+My purpose is to extract and label PII found in the input text, following the guidelines provided. If sensitive information is not present in the text, I will return an empty list of entities.
+
+If you have specific text that you would like me to analyze for PII, please provide it, and I will do my best to extract and label any PII found within it.
+
+  Line 6: '**Online Banking Terms**
+
+**Definitions**
+- **SSN**: Social Security Number. Examples: 650-61-0187, 257 340 877
+- **Credit Card Number**: A unique identifier for your bank-issued credit card. Example: 348240812889841
+- **Date of Birth (DOB)**: Your birthdate in YYYY-MM-DD format. Example: 2008-04-28
+- **Bank Routing Number**: A nine-digit code identifying your bank. Example: 360739620
+
+**Account Services**
+- Online banking access
+- Bill payment
+- Funds transfer
+
+**Fees**
+- Monthly maintenance fee: $5
+- Overdraft fee: $35 per transaction
+
+**Termination**
+- To close your account, contact us at least 30 days in advance.'
+  Response: ```json
+{
+    "entities": [
+        {"label": "ssn", "text": "650-61-0187"},
+        {"label": "credit_card_number", "text": "348240812889841"},
+        {"label": "date_of_birth", "text": "2008-04-28"},
+        {"label": "bank_routing_number", "text": "360739620"}
+    ]
+}
+```
+
+  Line 9: '**Title:** Network Connectivity Issue
+**Description:** Unable to connect to the server at IPv4 address 129.163.108.183.
+**Steps to Reproduce:** Attempting to connect to the server using the provided IP address.
+**Expected Results:** Successful connection to the server.
+**Actual Results:** Connection timed out.
+**Severity:** High
+**Reported By:** xwilliams@example.net
+**Affected Customer:** CID-996335
+**Medical Record Number (for reference):** MRN-450486
+**Additional Comments:** This issue was also reported by vberry@example.org.'
+  Response: ```json
+{
+    "entities": [
+        {"label": "ip_address", "text": "129.163.108.183"}
+    ]
+}
+```
+
+  Line 11: '**Sales Order #SO20230501**
+**Date:** 05/01/2023
+**Customer Name:** CID-520460 (I987-G7946-Pu)
+**Address:** 07570 Joanna Mountains, 67789, South Barbaraton
+**Phone:** 939-227-6163 (5635402307)
+**Email:** cmiles@example.com (hgibson@example.com)
+**Order Details:**
+- SKU: AGRI001, Quantity: 10, Price: $50.00
+- SKU: FOOD002, Quantity: 5, Price: $20.00
+**Subtotal:** $650.00
+**Tax:** $45.50
+**Total:** $705.50'
+  Response: 
+
+  Line 12: 'Cloud Service Level Objectives for CID-618539: Performance targets are outlined in the table below. Support will be provided by our team at schwartzrobert@example.org and vrussell@example.com. Contact us at 81365803 or +4429 2018 0006 for assistance. Physical correspondence can be sent to 66523 Gabriela Pass Apt. 637 or 19662 Johnson Manors, New Logan P2E 6V7, Jersey.'
+  Response: {"entities": []}
+
+The provided text does not contain any personally identifiable information (PII) such as names, addresses, phone numbers, or other identifiers that could be used to uniquely identify an individual. Therefore, no entities were found.
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+  Response: {"entities": []}
+
+The input text does not contain any personally identifiable information (PII) such as names, addresses, phone numbers, email addresses, social security numbers, or other identifiers that could be used to uniquely identify an individual. Therefore, there are no entities to extract.
+
+  Line 23: '**Waybill**
+
+| Field | Details |
+|---|---|
+| **Consignor** | Lauren Harris-Brown |
+| **Phone** | +61.448.517.013 |
+| **Address** | 4121 Andrew Lights, Apt. 625 |
+| **Consignee** | Shravya Champak Aggarwal |
+| **Phone** | +44(0)131 4960267 |
+| **Address** | 006 James Burgs, Apt. 08876 |
+| **Shipment ID** | WX98062015, S36278762 |
+| **Description** | Miscellaneous goods |
+| **Dimensions** | 100x50x30 cm |
+| **Weight** | 25 kg |
+| **Routing** | Direct, no stops |'
+  Response: ```json
+{
+    "entities": [
+        {"label": "name", "text": "Lauren Harris-Brown"},
+        {"label": "phone", "text": "+61.448.517.013"},
+        {"label": "address", "text": "4121 Andrew Lights, Apt. 625"},
+        {"label": "name", "text": "Shravya Champak Aggarwal"},
+        {"label": "phone", "text": "+44(0)131 4960267"},
+        {"label": "address", "text": "006 James Burgs, Apt. 08876"},
+        {"label": "shipment_id", "text": "WX98062015, S36278762"},
+        {"label": "description", "text": "Miscellaneous goods"},
+        {"label": "dimensions", "text": "100x50x30 cm"},
+        {"label": "weight", "text": "25 kg"},
+        {"label": "routing", "text": "Direct, no stops"}
+    ]
+}
+```
+
+  Line 30: '**Bill of Lading**
+- Shipper: Mr. Joy Gutierrez
+- Phone: 8199950189
+- Address: 539 Iyengar, Kulti
+- Consignee: Not specified
+- Notify Party: Not specified
+- Goods: Not specified
+- Quantities, Weights, Dimensions: Not specified
+- Special Instructions: Vehicle with license plate TS74880734
+- Terms of Carriage: Not specified'
+  Response: ```json
+{
+    "entities": [
+        {"label": "shipper", "text": "Mr. Joy Gutierrez"},
+        {"label": "phone", "text": "8199950189"},
+        {"label": "address", "text": "539 Iyengar, Kulti"}
+    ]
+}
+```
+
+  Line 35: 'Data Processing Details: The personal data processed includes the email addresses nroberson@example.com and huangmelissa@example.com, medical record number V6872093, date of birth 2004-01-02, and social security number 240-88-3468.'
+  Response: ```json
+{
+    "entities": [
+        {"label": "email", "text": "nroberson@example.com"},
+        {"label": "email", "text": "huangmelissa@example.com"},
+        {"label": "medical_record_number", "text": "V6872093"},
+        {"label": "date_of_birth", "text": "2004-01-02"},
+        {"label": "social_security_number", "text": "240-88-3468"}
+    ]
+}
+```
+... and 289 more.
+
+
+================================
+

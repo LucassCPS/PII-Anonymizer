@@ -1,0 +1,88 @@
+==== Test Execution Report ====
+Model: ai/llama3.2:3B-Q4_K_M
+Prompt technique: Zero-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 2960.27 s (49.34 min / 0.82 h)
+Average LLM call time: 2.96 s (0.05 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3527
+Total PII detected by model (adjusted): 3513
+Total missed PII: 1429
+Total LLM empty responses: 18
+
+---- Detection Metrics ----
+True Positives (TP): 2861   = correctly identified PII items
+False Positives (FP): 652  = model detected items not in the dataset
+False Negatives (FN): 1429  = model missed items that exist in the dataset
+
+Precision: 0.814404
+Recall: 0.6669
+F1-score: 0.733308
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [50, 70, 101, 111, 132, 370, 440, 479, 568, 600, 742, 756, 771, 783, 919, 966, 977, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 50: '**Warrant of Arrest**
+
+Case No: 2023-CR-001
+Defendant: Jeremy J. Smith
+DOB: 1984-11-13
+Address: 6322 Mark River, Roybury, Sudan
+SSN: 748-78-5956
+Charges: Unlawful Possession of a Firearm
+Warrant No: GA-2023-001
+Issued by: Mr. Jill Snow, Judge'
+
+  Line 70: 'MED46187229 was manufactured by Chapman PLC in TAS, with clinical trials conducted by Smith-Taylor. Subjects were born on 2024-09-08 and 1991-08-29.'
+
+  Line 101: 'FGR received: Item Code F-160489-D, Quantity: 500, Lot/Batch: L2345, Manufacturing Date: 2023-03-15.'
+
+  Line 111: '**Claim Notice**
+
+Policyholder: Jeremy Freeman
+Date of Birth: 1957-12-08
+Social Security Number: ZZ 90 83 64 T
+Address: 47 Aimee burg, DH8 1UH, Alexandraland
+
+Incident Date: 1919-12-24
+Claimant: Barry J. Young
+
+Contact Insurance Company for Further Assistance.'
+
+  Line 132: '**Dangerous Goods Declaration**
+- **Consignor**: Mr. Julie Scott
+- **Address**: 445 Morris corners, New Kathleenstad
+- **Email**: james49@example.net, anna03@example.com
+- **Phone**: +1 (394) 396-1572
+- **Hazardous Material**: UN1263, Class 3, Packing Group II, 500 kg, Acetone'
+
+  Line 370: '**Driver's License**
+- **Name**: Aadhya Saha
+- **Date of Birth**: 1915-05-11
+- **Address**: 16 Chambers branch, Studio 99i
+- **License Number**: 18408 Floyd Bridge, 18019, Arroyoberg'
+
+  Line 440: '**Driver's License**
+- **Name**: Marcus Martinez
+- **Date of Birth**: 1931-02-08
+- **Address**: 96874 Elizabeth Harbors, Colleentown, Libyan Arab Jamahiriya'
+
+  Line 479: 'Volunteer Agreement between Kevin Luna-Chen and Edwards, Volunteer, SSN 183-45-6264, and ZZ 813660 T, Organization, for duties including patient care, hours as needed, confidentiality of medical records such as A3846528.'
+
+  Line 568: 'Patient was discharged with follow-up appointments scheduled at our clinic located at 631, Sangha Zila. Please contact us at 47755319 for any questions or concerns. Discharge instructions were provided to MRN-457772, DOB: 2014-05-21.'
+
+  Line 600: 'Vessel 'Sea Sprite', built in 1978, insured under policy #123456789, with coverage type 'Hull & Machinery', limit $1,000,000, deductible $10,000. Endorsement page 3 includes additional clause for 'Pollution Liability'. Owner's email: mstephens@example.org, vessel's last known location: 84.176151,-29.322165, owner's date of birth: 1978-03-04.'
+... and 8 more.
+
+
+================================
+

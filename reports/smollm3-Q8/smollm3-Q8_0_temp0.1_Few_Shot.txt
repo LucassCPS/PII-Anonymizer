@@ -1,0 +1,61 @@
+==== Test Execution Report ====
+Model: ai/smollm3:Q8_0
+Prompt technique: Few-Shot
+Temperature: 0.1
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 3600.65 s (60.01 min / 1.0 h)
+Average LLM call time: 3.6 s (0.06 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3913
+Total PII detected by model (adjusted): 3881
+Total missed PII: 1399
+Total LLM empty responses: 73
+
+---- Detection Metrics ----
+True Positives (TP): 2891   = correctly identified PII items
+False Positives (FP): 990  = model detected items not in the dataset
+False Negatives (FN): 1399  = model missed items that exist in the dataset
+
+Precision: 0.744911
+Recall: 0.673893
+F1-score: 0.707625
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [2, 4, 12, 15, 41, 46, 68, 96, 97, 129, 137, 193, 206, 235, 259, 264, 284, 289, 295, 308, 332, 347, 366, 381, 398, 405, 410, 416, 438, 451, 459, 465, 478, 496, 508, 510, 513, 539, 543, 560, 561, 565, 572, 577, 605, 625, 629, 672, 697, 740, 745, 756, 759, 776, 777, 786, 792, 820, 830, 831, 839, 861, 866, 868, 897, 915, 923, 966, 967, 970, 981, 984, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 2: 'Unloading Plan for Shipment MRN-293104, MED25315002, dated 1989.12.22. Driver EMP730359, Vehicle KS40540825.'
+
+  Line 4: 'Please confirm that your vendor has implemented robust data protection measures for sensitive information such as credit card numbers (6011979587748988, 3768-7258-8504-048), Social Security Numbers (ZZ404859T, 783-81-6814), dates of birth (1939-06-07), and medical record numbers (MRN-651747).'
+
+  Line 12: 'Cloud Service Level Objectives for CID-618539: Performance targets are outlined in the table below. Support will be provided by our team at schwartzrobert@example.org and vrussell@example.com. Contact us at 81365803 or +4429 2018 0006 for assistance. Physical correspondence can be sent to 66523 Gabriela Pass Apt. 637 or 19662 Johnson Manors, New Logan P2E 6V7, Jersey.'
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 41: 'Complaint Form - 1657795349
+Complainant: Pushti Lewis-Marshall
+Date of Birth: 1949-12-21
+Contact Number: 1 (186) 115-8024
+Issue Description: Noise complaint from Natalie's residence.'
+
+  Line 46: 'Upon review of patient record MRN-505536, we identified an adverse reaction following administration of Drug X.'
+
+  Line 68: 'Runway 12/30, 2,743 meters long, intersects taxiway Alpha at coordinates 56.553299, -26.524318.'
+
+  Line 96: 'By using this software, you agree to the following terms and conditions. The software is licensed, not sold, to you by Vincent Tailor <vincenttailor@example.net> for use on a single device with the identifier 213226001122238. You may not transfer the software or your rights to use it to another person or entity. This license is effective from 1952-05-14 and is valid until terminated by either party. The software is provided 'as is' without warranties of any kind. The licensor is not liable for any damages resulting from the use of this software. Any disputes will be governed by the laws of the jurisdiction corresponding to the IP address 201.156.175.142.'
+
+  Line 97: 'CID-891563's production report for 1978-06-30 to 1983/12/15, compiled by P2058804.'
+
+  Line 129: 'Loading Plan for Vehicle W95217901, prepared by employee EMP545356 on 1910-09-16. Deliver to 04/25, Hari.'
+... and 63 more.
+
+
+================================
+

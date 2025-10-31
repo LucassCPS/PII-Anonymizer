@@ -1,0 +1,108 @@
+==== Test Execution Report ====
+Model: ai/mistral-nemo:12B-Q4_K_M
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4622.04 s (77.03 min / 1.28 h)
+Average LLM call time: 4.62 s (0.08 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3814
+Total PII detected by model (adjusted): 3797
+Total missed PII: 1090
+Total LLM empty responses: 10
+
+---- Detection Metrics ----
+True Positives (TP): 3200   = correctly identified PII items
+False Positives (FP): 597  = model detected items not in the dataset
+False Negatives (FN): 1090  = model missed items that exist in the dataset
+
+Precision: 0.842771
+Recall: 0.745921
+F1-score: 0.791394
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [2, 50, 146, 271, 292, 334, 524, 900, 907, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 2: 'Unloading Plan for Shipment MRN-293104, MED25315002, dated 1989.12.22. Driver EMP730359, Vehicle KS40540825.'
+
+  Line 50: '**Warrant of Arrest**
+
+Case No: 2023-CR-001
+Defendant: Jeremy J. Smith
+DOB: 1984-11-13
+Address: 6322 Mark River, Roybury, Sudan
+SSN: 748-78-5956
+Charges: Unlawful Possession of a Firearm
+Warrant No: GA-2023-001
+Issued by: Mr. Jill Snow, Judge'
+
+  Line 146: '**Control Objective: Protect Sensitive Personal Information**
+- **Control**: Implement access controls to restrict unauthorized access to employee records.
+- **Pass/Fail**: Pass
+- **Details**: Access to employee records containing PII such as MED54600465, EMP768679, B5953575, 1971-07-15, 147-08-2962, 847-66-0144 is restricted to authorized personnel only. Access is logged and regularly reviewed.'
+
+  Line 271: '**Bank Statement**
+
+**Account Holder:** Isaiah Daksha D’Alia
+**Account Number:** K18007098445, R84980894802
+**Date of Birth:** Sunday, January 15, 1978
+**Transactions:**
+- **Date:** Aug 02, 2009
+- **Amount:** $1,200.00
+- **Location:** Rowehaven, Tumkur'
+
+  Line 292: '**Proof of Delivery**
+- **Consignee:** Lohit T. Khatri
+- **Delivery Date:** 20.03.2008
+- **Location:** 80 Mathew wall, Flat 9
+- **Recipient's Signature:** Mrs. Laura Gardner'
+
+  Line 334: '**User Story: Update Patient Record**
+
+**Acceptance Criteria:**
+
+- As a healthcare professional, I want to update a patient's record with new information, so that the patient's information is accurate and up-to-date.
+
+- Given that the patient's medical record number (MRN) is `MRN-773511`, when I enter the following details:
+  - **Name**: bryanglenn
+  - **Email**: ryan26@example.com
+  - **SSN**: ZZ 33 02 99 T
+
+- Then the patient's record should be updated successfully, and I should see a confirmation message.
+
+- **Pass/Fail Conditions:**
+  - The update should succeed if all fields are filled correctly.
+  - The update should fail if any required field is left blank or if the SSN format is invalid.'
+
+  Line 524: 'LIC-S6978845 revoked on 2022-03-15, parent: 0x1, child: 0x2.'
+
+  Line 900: 'Work Permit ID: IDI8V4CRJ3SI, Issued to: [Applicant's Full Name], Date of Birth: 1915-06-18'
+
+  Line 907: '**Specific Requirements**
+
+| Requirement ID | Description | Requirement Details |
+|---|---|---|
+| SR-001 | API Key Validation | The system must validate API keys to grant access to restricted resources. The API key PDK4665L must be accepted. |
+| SR-002 | Customer ID Recognition | The system must recognize and process customer IDs for account management. The system must accept CID-232620 and U363-X3727-Dn as valid customer IDs. |
+| SR-003 | Medical Record Retrieval | The system must retrieve and display medical records associated with a given medical record number. The system must successfully retrieve records for MED98891796. |
+| SR-004 | Date of Birth Verification | The system must verify and accept dates of birth in the format YYYY-MM-DD for user authentication. The system must accept 1964-05-05 and 1954-06-22 as valid dates of birth. |'
+
+  Line 1000: '{
+  "firstName": "Howard",
+  "lastName": "Wells-Munoz",
+  "dateOfBirth": "1957-09-08",
+  "address": "Flat 47g, Stacey plaza, O'Neillton",
+  "type": "idDocument"
+}'
+
+
+================================
+

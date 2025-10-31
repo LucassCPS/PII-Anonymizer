@@ -1,0 +1,83 @@
+==== Test Execution Report ====
+Model: ai/smollm3:Q8_0
+Prompt technique: Zero-Shot
+Temperature: 0.2
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 3862.13 s (64.37 min / 1.07 h)
+Average LLM call time: 3.86 s (0.06 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3649
+Total PII detected by model (adjusted): 3623
+Total missed PII: 1586
+Total LLM empty responses: 54
+
+---- Detection Metrics ----
+True Positives (TP): 2704   = correctly identified PII items
+False Positives (FP): 919  = model detected items not in the dataset
+False Negatives (FN): 1586  = model missed items that exist in the dataset
+
+Precision: 0.746343
+Recall: 0.630303
+F1-score: 0.683432
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [15, 97, 119, 146, 150, 193, 197, 206, 259, 264, 292, 315, 366, 381, 393, 394, 398, 399, 410, 432, 482, 508, 510, 512, 523, 539, 541, 572, 577, 600, 625, 659, 663, 683, 697, 703, 704, 709, 730, 735, 745, 827, 831, 839, 864, 900, 915, 928, 966, 970, 977, 984, 994, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 97: 'CID-891563's production report for 1978-06-30 to 1983/12/15, compiled by P2058804.'
+
+  Line 119: 'Policy Number: Q658976, Effective Date: 2023-01-01'
+
+  Line 146: '**Control Objective: Protect Sensitive Personal Information**
+- **Control**: Implement access controls to restrict unauthorized access to employee records.
+- **Pass/Fail**: Pass
+- **Details**: Access to employee records containing PII such as MED54600465, EMP768679, B5953575, 1971-07-15, 147-08-2962, 847-66-0144 is restricted to authorized personnel only. Access is logged and regularly reviewed.'
+
+  Line 150: 'Common Name: Belgium, Organization: Saint Vincent and the Grenadines, Validity: 2023-01-01 to 2024-01-01.'
+
+  Line 193: '**Incident Report**
+
+- **Incident Date**: 20.09.1970
+- **Type**: Data Breach
+- **Description**: Unauthorized access to patient records occurred. Two medical records (MRN-770704, MED79594167) were accessed.
+- **Affected Systems**: ECOM-749804 customer portal
+- **Response Actions**: Employee Hv-58240's access was suspended, and a full system audit was initiated.
+- **Lessons Learned**: Additional training on access controls required for J137305-Hm and other customers.'
+
+  Line 197: 'This Client Certificate is valid from 2013.05.09 to 2023.05.08.'
+
+  Line 206: 'We collect your credit card number, 341296259053389, when you make a purchase. Your email, ugreen@example.net, is used for communication and account management. We may receive your medical record number, B7137545, from healthcare providers for service verification. Bimala Aggarwal-Rajagopal's name may be used for identification purposes.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 264: '**WARRANTY GRANTOR:** Joshua Miguel Hill, H.No. 58, Kunda Road, Raiganj, Bulgaria, 1-581-202-6315. **WARRANTY GRANTEE:** [Grantee's Name]. **COVERAGE:** [Product/Service Description]. **EXCLUSIONS:** [Excluded Items/Events]. **DURATION:** [Warranty Period]. **GOVERNING LAW:** [Jurisdiction]. **WARRANTY ID:** 308 318 518.'
+... and 44 more.
+
+
+================================
+

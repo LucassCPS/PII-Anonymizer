@@ -1,0 +1,60 @@
+==== Test Execution Report ====
+Model: ai/qwen3:0.6B-Q4_K_M
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.1
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 6234.52 s (103.91 min / 1.73 h)
+Average LLM call time: 6.23 s (0.1 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 2885
+Total PII detected by model (adjusted): 2879
+Total missed PII: 2054
+Total LLM empty responses: 60
+
+---- Detection Metrics ----
+True Positives (TP): 2236   = correctly identified PII items
+False Positives (FP): 643  = model detected items not in the dataset
+False Negatives (FN): 2054  = model missed items that exist in the dataset
+
+Precision: 0.776659
+Recall: 0.521212
+F1-score: 0.623797
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [15, 44, 68, 101, 119, 120, 136, 137, 150, 172, 178, 227, 235, 245, 288, 313, 319, 337, 347, 349, 361, 364, 397, 415, 417, 426, 457, 513, 548, 557, 564, 572, 583, 599, 606, 633, 647, 650, 655, 663, 709, 720, 745, 747, 763, 810, 818, 826, 827, 839, 861, 867, 888, 900, 923, 968, 970, 981, 994, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 44: 'Certificate Key Usage: LIC-I9611592, CERT-48865042'
+
+  Line 68: 'Runway 12/30, 2,743 meters long, intersects taxiway Alpha at coordinates 56.553299, -26.524318.'
+
+  Line 101: 'FGR received: Item Code F-160489-D, Quantity: 500, Lot/Batch: L2345, Manufacturing Date: 2023-03-15.'
+
+  Line 119: 'Policy Number: Q658976, Effective Date: 2023-01-01'
+
+  Line 120: '120.98.69.195, c3c0:719a:c766:4049:2e49:18:c77f:7776, http://www.jackson.com/, 356929026872567'
+
+  Line 136: 'Route XPMRZ9899HEPCULLS, operated by vehicle 0MW2WEC78GFP7DAT9, license plate A95-6816-359-93, last serviced on 2023-04-07, primarily serves routes in Cuba.'
+
+  Line 137: '**Run ID: S-748668-O, Date: Saturday, October 16, 1976, Product Code: G-389766-L, Quantity Produced: 150, Start Time: 06:00, End Time: 14:00, Equipment Used: Assembly Line 3, Quality Check Results: Pass**'
+
+  Line 150: 'Common Name: Belgium, Organization: Saint Vincent and the Grenadines, Validity: 2023-01-01 to 2024-01-01.'
+
+  Line 172: '**Maintenance Request ID: MRN-613884**
+**Priority: High**
+**Due Date: 2014.03.03**
+**Description: Equipment F8649845 requires immediate maintenance.**'
+... and 50 more.
+
+
+================================
+

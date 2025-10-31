@@ -1,4 +1,5 @@
 import json
+import re
 
 # converts a string list to a json format data
 def string_list_to_json(string_list):
@@ -37,3 +38,46 @@ def llm_json_to_set(data):
             else:
                 continue
     return texts
+
+# auxiliar method for cleaning up gemma3_qat responses
+def clean_gemma3_qat_response(raw_response_str):
+    cleaned_str = re.sub(r'```(?:json|python|text)?\s*|```', '', raw_response_str.strip(), flags=re.IGNORECASE | re.DOTALL)
+    
+    try:
+        data = json.loads(cleaned_str)
+        
+        if 'entities' in data and isinstance(data['entities'], list):
+            return json.dumps(data['entities'])
+        else:
+            return "[]"
+            
+    except json.JSONDecodeError:
+        match = re.search(r'"entities"\s*:\s*(\[.*?\])', cleaned_str, re.DOTALL)
+        if match:
+            try:
+                list_str = match.group(1).strip()
+                json.loads(list_str) 
+                return list_str
+            except json.JSONDecodeError:
+                return "[]"
+        return "[]"
+    
+def clean_llm_response(response):
+    cleaned_str = response.strip()
+
+    match = re.search(r'\{.*\}', cleaned_str, re.DOTALL)
+    if match:
+        json_candidate = match.group(0).strip()
+        json_candidate = re.sub(r'^\s*```(?:json|python|text)?\s*', '', json_candidate, flags=re.IGNORECASE)
+        json_candidate = re.sub(r'```\s*$', '', json_candidate)
+        try:
+            data = json.loads(json_candidate)
+            
+            if 'entities' not in data or not isinstance(data['entities'], list):
+                 if isinstance(data, list):
+                     return json.dumps({"entities": data})
+                 return '{ "entities": [] }'
+            return json.dumps(data, separators=(',', ':'))       
+        except json.JSONDecodeError:
+            return '{ "entities": [] }'
+    return '{ "entities": [] }'

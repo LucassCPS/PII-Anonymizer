@@ -1,0 +1,64 @@
+==== Test Execution Report ====
+Model: ai/qwen3:8B-Q4_K_M
+Prompt technique: Zero-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 13365.17 s (222.75 min / 3.71 h)
+Average LLM call time: 13.36 s (0.22 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3130
+Total PII detected by model (adjusted): 3098
+Total missed PII: 1645
+Total LLM empty responses: 103
+
+---- Detection Metrics ----
+True Positives (TP): 2645   = correctly identified PII items
+False Positives (FP): 453  = model detected items not in the dataset
+False Negatives (FN): 1645  = model missed items that exist in the dataset
+
+Precision: 0.853777
+Recall: 0.61655
+F1-score: 0.716026
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [2, 7, 15, 48, 56, 64, 68, 83, 97, 101, 108, 119, 123, 137, 141, 171, 172, 178, 197, 209, 227, 235, 249, 257, 260, 278, 288, 290, 302, 309, 313, 315, 319, 323, 332, 333, 337, 341, 344, 358, 387, 389, 396, 398, 410, 414, 426, 457, 474, 475, 495, 497, 513, 520, 534, 539, 543, 548, 564, 565, 568, 570, 582, 595, 606, 613, 639, 645, 650, 655, 663, 669, 678, 694, 700, 709, 720, 730, 732, 745, 754, 759, 760, 769, 770, 786, 827, 836, 844, 861, 878, 888, 915, 923, 929, 940, 946, 968, 970, 978, 997, 998, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 2: 'Unloading Plan for Shipment MRN-293104, MED25315002, dated 1989.12.22. Driver EMP730359, Vehicle KS40540825.'
+
+  Line 7: '12/16/2008 09:17 AM - BIO-4010357692 attempted authentication from 216.158.70.128'
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 48: '**Title:** Improved Medical Record Access
+**Description:** Enhance our medical records system to allow employees to access their records via IPv6 addresses.
+**Priority:** High
+**Affected Components:** Medical Records System, Employee Portal
+**Acceptance Criteria:**
+1. Employees can access their medical records using their employee ID (e.g., F1957083, D-163781-H) and medical record number (e.g., L3894141).
+2. The system supports IPv6 addresses for employee login (e.g., b829:c0a0:2e01:44e3:457d:1401:9a57:989, 1e38:d6c2:8c43:2e42:f5a0:2683:ac39:fde3).
+3. The system verifies employee identity using their date of birth (e.g., 1961-11-15, 1910-07-13).'
+
+  Line 56: '**Monday, July 15, 2019, 11:45 AM, Kc-66154, Z92-1224-580-01**'
+
+  Line 64: 'Transaction History Report for Customer ID O22-F1961-Qe (CUST4688477) - Friday, May 11, 1973 - Bank Routing Number 370840444'
+
+  Line 68: 'Runway 12/30, 2,743 meters long, intersects taxiway Alpha at coordinates 56.553299, -26.524318.'
+
+  Line 83: 'POD ID: ID-875-Y, Delivered to Q8339T314 at 86.594007, -47.366755 on 1993-01-10 19:46:03.'
+
+  Line 97: 'CID-891563's production report for 1978-06-30 to 1983/12/15, compiled by P2058804.'
+
+  Line 101: 'FGR received: Item Code F-160489-D, Quantity: 500, Lot/Batch: L2345, Manufacturing Date: 2023-03-15.'
+... and 93 more.
+
+
+================================
+

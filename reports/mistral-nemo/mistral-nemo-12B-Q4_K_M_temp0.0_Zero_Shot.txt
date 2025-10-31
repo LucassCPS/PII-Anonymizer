@@ -1,0 +1,84 @@
+==== Test Execution Report ====
+Model: ai/mistral-nemo:12B-Q4_K_M
+Prompt technique: Zero-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4284.5 s (71.41 min / 1.19 h)
+Average LLM call time: 4.28 s (0.07 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3654
+Total PII detected by model (adjusted): 3647
+Total missed PII: 1152
+Total LLM empty responses: 12
+
+---- Detection Metrics ----
+True Positives (TP): 3138   = correctly identified PII items
+False Positives (FP): 509  = model detected items not in the dataset
+False Negatives (FN): 1152  = model missed items that exist in the dataset
+
+Precision: 0.860433
+Recall: 0.731469
+F1-score: 0.790727
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [18, 41, 60, 99, 292, 480, 524, 577, 601, 724, 900, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 18: '**Permit Application**
+
+**Applicant Details:**
+- First Name: Louise
+- Last Name: Clay
+- Address: H.No. 99 Seth Path, 289030, Bulandshahr
+
+**Proposed Project:**
+- Michelle Erickson-Parks proposes to construct a residential building at the above-mentioned address.
+
+**Medical Record Number (MRN):**
+- MRN-826976'
+
+  Line 41: 'Complaint Form - 1657795349
+Complainant: Pushti Lewis-Marshall
+Date of Birth: 1949-12-21
+Contact Number: 1 (186) 115-8024
+Issue Description: Noise complaint from Natalie's residence.'
+
+  Line 60: 'Applicant: Matthew Karpe, 249 Deborah Ride, 2987, Richardville'
+
+  Line 99: 'RADIUS Access-Request: User-Name = 'katherine53', NAS-Identifier = 'andrewmcintosh''
+
+  Line 292: '**Proof of Delivery**
+- **Consignee:** Lohit T. Khatri
+- **Delivery Date:** 20.03.2008
+- **Location:** 80 Mathew wall, Flat 9
+- **Recipient's Signature:** Mrs. Laura Gardner'
+
+  Line 480: 'Discharge Summary for MED14602114, Mary Tucker, DOB 1941-08-31, admitted under Dr. Gopal.'
+
+  Line 524: 'LIC-S6978845 revoked on 2022-03-15, parent: 0x1, child: 0x2.'
+
+  Line 577: '**Marine Cargo Insurance Certificate**
+
+Insurer: XYZ Insurance Co.
+Policy No: 123456
+Insured: Thomas Ltd.
+Vessel: MV Star
+Cargo: Electronics, described as '89.8062105 -172.336854'
+Coverage Period: 01/01/2023 to 31/12/2023
+Voyage: From Latitude: -38.9570335, Longitude: 19.214750 to Latitude: 89.8062105, Longitude: -172.336854'
+
+  Line 601: 'Our audit found non-compliance with HIPAA regulations regarding employee access to medical records. On 06.06.2024, Dv-10274 and V1615096 accessed the medical record of X582909 without valid authorization. We recommend immediate review and restriction of unauthorized access. Pal, Sekhon and Pradhan must ensure compliance by 06.07.2024 to avoid penalties.'
+
+  Line 724: 'Heidi Poole, DOB: 1929-11-19, SSN: 179-32-7169, affiliated with Nelson-Watson'
+... and 2 more.
+
+
+================================
+

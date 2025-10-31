@@ -1,0 +1,25 @@
+==== Test Execution Report ====
+Model: ai/qwen3:0.6B-Q4_K_M
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 7183.59 s (119.73 min / 2.0 h)
+Average LLM call time: 7.18 s (0.12 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 2967
+Total PII detected by model (adjusted): 2963
+Total missed PII: 1998
+Total LLM empty responses: 47
+
+---- Detection Metrics ----
+True Positives (TP): 2292   = correctly identified PII items
+False Positives (FP): 671  = model detected items not in the dataset
+False Negatives (FN): 1998  = model missed items that exist in the dataset
+
+Precision: 0.77354
+Recall: 0.534266
+F1-score: 0.632014
+================================

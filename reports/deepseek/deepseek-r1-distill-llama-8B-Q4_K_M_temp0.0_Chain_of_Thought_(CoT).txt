@@ -1,0 +1,68 @@
+==== Test Execution Report ====
+Model: ai/deepseek-r1-distill-llama:8B-Q4_K_M
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 7708.5 s (128.47 min / 2.14 h)
+Average LLM call time: 7.71 s (0.13 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3244
+Total PII detected by model (adjusted): 3209
+Total missed PII: 1595
+Total LLM empty responses: 72
+
+---- Detection Metrics ----
+True Positives (TP): 2695   = correctly identified PII items
+False Positives (FP): 514  = model detected items not in the dataset
+False Negatives (FN): 1595  = model missed items that exist in the dataset
+
+Precision: 0.839825
+Recall: 0.628205
+F1-score: 0.718763
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [15, 44, 83, 101, 110, 119, 120, 136, 137, 147, 150, 178, 227, 235, 249, 257, 265, 272, 278, 284, 288, 313, 319, 335, 337, 347, 349, 415, 444, 475, 492, 506, 513, 539, 543, 544, 564, 565, 566, 572, 577, 593, 622, 625, 647, 652, 663, 669, 709, 720, 730, 745, 746, 750, 754, 778, 818, 823, 827, 830, 839, 868, 878, 884, 888, 900, 912, 923, 929, 968, 991, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 44: 'Certificate Key Usage: LIC-I9611592, CERT-48865042'
+
+  Line 83: 'POD ID: ID-875-Y, Delivered to Q8339T314 at 86.594007, -47.366755 on 1993-01-10 19:46:03.'
+
+  Line 101: 'FGR received: Item Code F-160489-D, Quantity: 500, Lot/Batch: L2345, Manufacturing Date: 2023-03-15.'
+
+  Line 110: '**PUBLIC NOTICE**
+
+**DATE:** Sep 23, 2017
+**AGENCY:** Department of Public Works
+**NOTICE TYPE:** Road Closure
+
+**NOTICE:** The section of Cooper lane, Raymondhaven, will be closed for emergency repairs starting Sep 25, 2017. The closure is expected to last until further notice. For more information, please contact (104) 063-1649.'
+
+  Line 119: 'Policy Number: Q658976, Effective Date: 2023-01-01'
+
+  Line 120: '120.98.69.195, c3c0:719a:c766:4049:2e49:18:c77f:7776, http://www.jackson.com/, 356929026872567'
+
+  Line 136: 'Route XPMRZ9899HEPCULLS, operated by vehicle 0MW2WEC78GFP7DAT9, license plate A95-6816-359-93, last serviced on 2023-04-07, primarily serves routes in Cuba.'
+
+  Line 137: '**Run ID: S-748668-O, Date: Saturday, October 16, 1976, Product Code: G-389766-L, Quantity Produced: 150, Start Time: 06:00, End Time: 14:00, Equipment Used: Assembly Line 3, Quality Check Results: Pass**'
+
+  Line 147: '{
+  "username": "ian_116",
+  "password": "Os6l)zfdO_%27fKt^T",
+  "token": "brown2813",
+  "ipv4": ["208.57.106.120", "204.226.3.94"]
+}'
+... and 62 more.
+
+
+================================
+

@@ -7,6 +7,10 @@ class ModelEnum(Enum):
     SMOLL3_Q8 = "MODEL_SMOLL3_Q8"
     QWEN3_06B = "MODEL_QWEN3_06B"
     QWEN3_8B = "MODEL_QWEN3_8B"
+    GRANITE4_TINY = "MODEL_GRANITE4_TINY"
+    MISTRAL_NEMO = "MODEL_MISTRAL_NEMO"
+    DEEPSEEK = "MODEL_DEEPSEEK"
+    LLAMA32= "MODEL_LLAMA32"
 
 def load_models():
     models = {}    

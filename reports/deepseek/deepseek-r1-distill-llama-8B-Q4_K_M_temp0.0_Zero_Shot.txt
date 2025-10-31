@@ -1,0 +1,78 @@
+==== Test Execution Report ====
+Model: ai/deepseek-r1-distill-llama:8B-Q4_K_M
+Prompt technique: Zero-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 8208.7 s (136.81 min / 2.28 h)
+Average LLM call time: 8.21 s (0.14 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3703
+Total PII detected by model (adjusted): 3636
+Total missed PII: 1270
+Total LLM empty responses: 36
+
+---- Detection Metrics ----
+True Positives (TP): 3020   = correctly identified PII items
+False Positives (FP): 616  = model detected items not in the dataset
+False Negatives (FN): 1270  = model missed items that exist in the dataset
+
+Precision: 0.830583
+Recall: 0.703963
+F1-score: 0.762049
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [15, 38, 44, 57, 101, 119, 137, 197, 259, 268, 313, 337, 366, 414, 426, 459, 479, 484, 533, 543, 548, 564, 565, 566, 647, 669, 705, 726, 730, 801, 839, 888, 900, 914, 939, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 38: 'Biometric performance evaluation for system MED65595483, tested on individuals including Beth Mullins-Heath, DOB 1937-06-15, and MED6178165, DOB 1948-10-29, showed enrollment matching rates exceeding 99%.'
+
+  Line 44: 'Certificate Key Usage: LIC-I9611592, CERT-48865042'
+
+  Line 57: 'Case Report ID: E9473003. Patient: Janet Huber-Martinez, DOB: 1975-05-03.'
+
+  Line 101: 'FGR received: Item Code F-160489-D, Quantity: 500, Lot/Batch: L2345, Manufacturing Date: 2023-03-15.'
+
+  Line 119: 'Policy Number: Q658976, Effective Date: 2023-01-01'
+
+  Line 137: '**Run ID: S-748668-O, Date: Saturday, October 16, 1976, Product Code: G-389766-L, Quantity Produced: 150, Start Time: 06:00, End Time: 14:00, Equipment Used: Assembly Line 3, Quality Check Results: Pass**'
+
+  Line 197: 'This Client Certificate is valid from 2013.05.09 to 2023.05.08.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 268: '**Vaccination Record**
+
+| Patient Name | Date of Birth | Vaccine Type | Date Administered | Provider Signature |
+|---|---|---|---|---|
+| Martyn Lamb-Haynes | 1963-04-13 | MMR | 2022-10-15 | Dr. Anthony Taylor |
+| **MRN-284940** | **Karenshire** |'
+... and 26 more.
+
+
+================================
+

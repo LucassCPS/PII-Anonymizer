@@ -1,0 +1,63 @@
+==== Test Execution Report ====
+Model: ai/smollm3:Q8_0
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.1
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 8175.52 s (136.26 min / 2.27 h)
+Average LLM call time: 8.18 s (0.14 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3371
+Total PII detected by model (adjusted): 3348
+Total missed PII: 1540
+Total LLM empty responses: 70
+
+---- Detection Metrics ----
+True Positives (TP): 2750   = correctly identified PII items
+False Positives (FP): 598  = model detected items not in the dataset
+False Negatives (FN): 1540  = model missed items that exist in the dataset
+
+Precision: 0.821386
+Recall: 0.641026
+F1-score: 0.720084
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [4, 7, 15, 21, 34, 44, 65, 82, 150, 162, 178, 183, 198, 233, 259, 288, 327, 337, 341, 394, 396, 399, 404, 411, 416, 417, 482, 495, 509, 513, 528, 536, 540, 544, 555, 565, 577, 585, 600, 609, 614, 624, 644, 652, 655, 669, 671, 709, 716, 730, 753, 769, 772, 773, 787, 820, 826, 827, 839, 852, 861, 878, 929, 945, 947, 952, 966, 968, 970, 998]
+
+Text contents that returned the empty response (first 10):
+
+  Line 4: 'Please confirm that your vendor has implemented robust data protection measures for sensitive information such as credit card numbers (6011979587748988, 3768-7258-8504-048), Social Security Numbers (ZZ404859T, 783-81-6814), dates of birth (1939-06-07), and medical record numbers (MRN-651747).'
+
+  Line 7: '12/16/2008 09:17 AM - BIO-4010357692 attempted authentication from 216.158.70.128'
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 21: 'Bill dated 06/13/1981 for account F62721280238 at 49103 Bernard Inlet, S8P 3K5, Martinezville.'
+
+  Line 34: 'During the audit period from 04.04.2015 to 04.04.2016, IP address 168.108.109.164 was found to have accessed patient record MRN-973445, which is a violation of our data privacy policy. Employee J-927907-G was logged in at the time of access.'
+
+  Line 44: 'Certificate Key Usage: LIC-I9611592, CERT-48865042'
+
+  Line 65: 'Wire Transfer Instruction for 090429799 (KUBODEKA052) on Saturday, November 07, 2009. Account number: ACCT-911155810.'
+
+  Line 82: 'On 1942-09-28, employee Ly-29113 detected unauthorized access from IPv4 address 69.250.223.159 targeting customer ECOM-254523's system.'
+
+  Line 150: 'Common Name: Belgium, Organization: Saint Vincent and the Grenadines, Validity: 2023-01-01 to 2024-01-01.'
+
+  Line 162: 'ID,AnimalType,Breed,Age,Weight,Location,HealthStatus
+71-868445-38,Cow,Holstein,5,650 lbs,North Field,Healthy
+80-757670-87,Pig,Yorkshire,3,350 lbs,South Barn,Excellent
+MRN-43994,Sheep,Merino,2,180 lbs,East Pasture,Good
+Z337082,Chicken,Rhode Island Red,1,3 lbs,Coop,Very Good
+828-35-2027,Horse,Quarter Horse,8,1200 lbs,West Stables,Stable
+jeffreylynch@example.org,Goat,Nubian,4,150 lbs,South Hill,Fine'
+... and 60 more.
+
+
+================================
+

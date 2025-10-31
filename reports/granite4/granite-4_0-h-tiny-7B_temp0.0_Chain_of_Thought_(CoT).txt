@@ -1,0 +1,90 @@
+==== Test Execution Report ====
+Model: ai/granite-4.0-h-tiny:7B
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 11055.74 s (184.26 min / 3.07 h)
+Average LLM call time: 11.06 s (0.18 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 4167
+Total PII detected by model (adjusted): 4116
+Total missed PII: 974
+Total LLM empty responses: 19
+
+---- Detection Metrics ----
+True Positives (TP): 3316   = correctly identified PII items
+False Positives (FP): 800  = model detected items not in the dataset
+False Negatives (FN): 974  = model missed items that exist in the dataset
+
+Precision: 0.805637
+Recall: 0.77296
+F1-score: 0.78896
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [147, 233, 259, 264, 284, 310, 433, 572, 650, 709, 756, 800, 827, 900, 939, 945, 990, 998, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 147: '{
+  "username": "ian_116",
+  "password": "Os6l)zfdO_%27fKt^T",
+  "token": "brown2813",
+  "ipv4": ["208.57.106.120", "204.226.3.94"]
+}'
+
+  Line 233: 'Runway 09/27: 8,747 ft x 150 ft, Taxiway 'E': 25 ft wide, Apron 'Alpha': 100,000 sq ft, Hangar 'H1': 30,000 sq ft, Terminal 'T1': 150,000 sq ft, Employee ID: EMP959205.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 264: '**WARRANTY GRANTOR:** Joshua Miguel Hill, H.No. 58, Kunda Road, Raiganj, Bulgaria, 1-581-202-6315. **WARRANTY GRANTEE:** [Grantee's Name]. **COVERAGE:** [Product/Service Description]. **EXCLUSIONS:** [Excluded Items/Events]. **DURATION:** [Warranty Period]. **GOVERNING LAW:** [Jurisdiction]. **WARRANTY ID:** 308 318 518.'
+
+  Line 284: '`<Policy customerId="Y-965880-Y"> <Classifier apiKey="xoxb-469506804522-323565691892-MF2lT3qrj7ldztTuJjCQm2XQ"> <Traffic ip="200.198.130.188" deviceId="673139112961942"> <QoS bandwidth="100Mbps" delay="10ms" jitter="1ms" packetLoss="0.01"/> </Traffic> </Classifier> </Policy>`'
+
+  Line 310: '{
+  "msisdn": "T6763G719",
+  "activationCode": "ABC123",
+  "serviceType": "Premium"
+}'
+
+  Line 433: '**NON-DISCLOSURE AGREEMENT**
+
+THIS NON-DISCLOSURE AGREEMENT (the "Agreement") is entered into on [current date] by and between Ford, Cobb and Spencer ("Disclosing Party") and 253 744 700 ("Receiving Party").
+
+The Disclosing Party wishes to disclose certain confidential and proprietary information related to its information technology systems and data (the "Confidential Information") to the Receiving Party, Z-372643-L, to evaluate and potentially engage in business discussions.
+
+The Receiving Party agrees to hold the Confidential Information in strict confidence and not to disclose it to any third party without the prior written consent of the Disclosing Party. The Receiving Party further agrees to use the Confidential Information solely for the purpose of evaluating and engaging in business discussions with the Disclosing Party.
+
+The Confidential Information includes, but is not limited to, the Disclosing Party's trade secrets, know-how, inventions, software code, and data, including but not limited to, A8243230.'
+
+  Line 572: '{"timestamp": "27 Apr 2019 02:00:38", "user_id": "lee864", "ip_address": "220.245.231.133", "auth_type": "password", "status": "failure", "error_code": "INVALID_PASSWORD"}'
+
+  Line 650: 'On 2001/02/19 at 18:18:20, the vessel's position was logged at (16.393713, -165.385924).'
+
+  Line 709: 'Bill of Lading issued for shipment C581-1886-479.'
+... and 9 more.
+
+
+================================
+

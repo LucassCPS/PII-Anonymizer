@@ -1,0 +1,107 @@
+==== Test Execution Report ====
+Model: ai/llama3.2:3B-Q4_K_M
+Prompt technique: Few-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 3166.05 s (52.77 min / 0.88 h)
+Average LLM call time: 3.17 s (0.05 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 4402
+Total PII detected by model (adjusted): 4368
+Total missed PII: 1158
+Total LLM empty responses: 34
+
+---- Detection Metrics ----
+True Positives (TP): 3132   = correctly identified PII items
+False Positives (FP): 1236  = model detected items not in the dataset
+False Negatives (FN): 1158  = model missed items that exist in the dataset
+
+Precision: 0.717033
+Recall: 0.73007
+F1-score: 0.723493
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [4, 41, 161, 193, 229, 233, 259, 267, 298, 334, 366, 387, 389, 394, 410, 417, 465, 510, 577, 587, 685, 742, 756, 866, 868, 900, 907, 939, 945, 965, 966, 979, 991, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 4: 'Please confirm that your vendor has implemented robust data protection measures for sensitive information such as credit card numbers (6011979587748988, 3768-7258-8504-048), Social Security Numbers (ZZ404859T, 783-81-6814), dates of birth (1939-06-07), and medical record numbers (MRN-651747).'
+
+  Line 41: 'Complaint Form - 1657795349
+Complainant: Pushti Lewis-Marshall
+Date of Birth: 1949-12-21
+Contact Number: 1 (186) 115-8024
+Issue Description: Noise complaint from Natalie's residence.'
+
+  Line 161: 'Hardware and Software Requirements: The system will utilize biometric scanners with identifiers BIO-4849133385 and BIO-8554008265, compatible with employee IDs EMP278058 and B-910096-J, respectively. The software must support processing and storing biometric data securely, ensuring the privacy of users born on 2015-02-09 and having SSN 527-66-8380.'
+
+  Line 193: '**Incident Report**
+
+- **Incident Date**: 20.09.1970
+- **Type**: Data Breach
+- **Description**: Unauthorized access to patient records occurred. Two medical records (MRN-770704, MED79594167) were accessed.
+- **Affected Systems**: ECOM-749804 customer portal
+- **Response Actions**: Employee Hv-58240's access was suspended, and a full system audit was initiated.
+- **Lessons Learned**: Additional training on access controls required for J137305-Hm and other customers.'
+
+  Line 229: '**Volunteer Application**
+
+**Name:** Megan Cathy Morgan Duncan-Olson
+**Phone Number:** 03783473854, 1-190-454-4076
+**Medical Record Number:** P2701358, MED60942252
+
+**Availability:** Weekdays, 9am - 5pm
+**Skills/Experience:** Fundraising, Event Planning
+**Statement:** "I want to volunteer to make a difference in my community and utilize my skills to support the charity's mission.'
+
+  Line 233: 'Runway 09/27: 8,747 ft x 150 ft, Taxiway 'E': 25 ft wide, Apron 'Alpha': 100,000 sq ft, Hangar 'H1': 30,000 sq ft, Terminal 'T1': 150,000 sq ft, Employee ID: EMP959205.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 267: 'Investment Statement for Leah Patel-Price, DOB: 1983-01-28, Address: Melinda Haven, Jennifershire, SSN: 126 406 586.'
+
+  Line 298: 'Upon incident detection, immediately isolate the device with identifier 328780124154326. Notify the incident response team, specifically employee Ni-38794. If the affected individual's SSN is ZZ 75 31 16 T, follow medical protocol using their medical record number MED73881498.'
+
+  Line 334: '**User Story: Update Patient Record**
+
+**Acceptance Criteria:**
+
+- As a healthcare professional, I want to update a patient's record with new information, so that the patient's information is accurate and up-to-date.
+
+- Given that the patient's medical record number (MRN) is `MRN-773511`, when I enter the following details:
+  - **Name**: bryanglenn
+  - **Email**: ryan26@example.com
+  - **SSN**: ZZ 33 02 99 T
+
+- Then the patient's record should be updated successfully, and I should see a confirmation message.
+
+- **Pass/Fail Conditions:**
+  - The update should succeed if all fields are filled correctly.
+  - The update should fail if any required field is left blank or if the SSN format is invalid.'
+... and 24 more.
+
+
+================================
+
