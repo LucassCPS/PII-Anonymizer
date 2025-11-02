@@ -1,0 +1,73 @@
+==== Test Execution Report ====
+Model: ai/gemma3-qat:4B-UD-Q4_K_XL
+Prompt technique: Few-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4684.69 s (78.08 min / 1.3 h)
+Average LLM call time: 4.68 s (0.08 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 4042
+Total PII detected by model (adjusted): 3960
+Total missed PII: 1158
+Total LLM empty responses: 35
+
+---- Detection Metrics ----
+True Positives (TP): 3132   = correctly identified PII items
+False Positives (FP): 828  = model detected items not in the dataset
+False Negatives (FN): 1158  = model missed items that exist in the dataset
+
+Precision: 0.790909
+Recall: 0.73007
+F1-score: 0.759273
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [45, 96, 178, 189, 249, 259, 296, 306, 313, 319, 337, 349, 364, 366, 426, 459, 465, 495, 533, 543, 562, 570, 685, 697, 720, 745, 827, 861, 878, 900, 923, 963, 966, 981, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 45: 'All users must adhere to the following password policy. Passwords must contain at least 12 characters, including a mix of uppercase and lowercase letters, numbers, and special characters. They must not contain any part of the user's name or username. For example, 'emma_1941' or 'amanda_248' are not acceptable passwords. The password '7X6OygsRVFi$E@vu+(' meets these requirements. Passwords must be changed every 90 days. After three failed login attempts, the account will be locked for 30 minutes. This policy applies to all users, including those with SSN 556-22-3426. Exceptions may be made for users with specific security clearance, such as those with email addresses 'simonbrian@example.net' or 'adamsapril@example.net'.'
+
+  Line 96: 'By using this software, you agree to the following terms and conditions. The software is licensed, not sold, to you by Vincent Tailor <vincenttailor@example.net> for use on a single device with the identifier 213226001122238. You may not transfer the software or your rights to use it to another person or entity. This license is effective from 1952-05-14 and is valid until terminated by either party. The software is provided 'as is' without warranties of any kind. The licensor is not liable for any damages resulting from the use of this software. Any disputes will be governed by the laws of the jurisdiction corresponding to the IP address 201.156.175.142.'
+
+  Line 178: 'Route passes through (23.7698115 N, -75.441626 E) and (6.7180345, 62.699012).'
+
+  Line 189: 'For off-chain storage, we'll use IPFS for large datasets like medical records (e.g., MED2660553). Access is controlled via encrypted keys, syncing with the blockchain at 70.247.134.184. Personal data like SSNs (ZZ 307539 T, 806 832 556) and date of birth (1977-10-18) are securely hashed before storage.'
+
+  Line 249: 'Technician C7982325 performed service CID-892446 on MED3754237.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 296: 'Log entry timestamp: 23 May 2012 05:14:38. Log entry type: X.509. Leaf certificate issued to MRN-677715. Log entry signed using SHA-256 with key ID 54.150.11.180. Log header includes SWIFT BIC XJDRGBKL960.'
+
+  Line 306: '{"userID":123,"username":"radams","email":"radams@example.org","passwordHash":"hashed_password","registrationDate":"2022-10-15","preferences":["newsletters","personalized_ads"]}'
+
+  Line 313: 'Vq-94451 produced 100 units on 22 Apr 1995, with a defect rate of 3% and machine utilization at 95%.'
+
+  Line 319: 'EMP711631, Stock Adjustment: +50 units, Reason: Production Overrun'
+... and 25 more.
+
+
+================================
+

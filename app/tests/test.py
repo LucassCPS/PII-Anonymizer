@@ -1,13 +1,22 @@
 import time
 import pandas as pd
-from utils import data_conversion_handler
+from utils import data_conversion_handler, metrics
 import re
 
 from tqdm import tqdm
 import sys
 
+def format_time(seconds):
+    minutes = seconds / 60
+    hours = minutes / 60
+    return {
+        "seconds": round(seconds, 2),
+        "minutes": round(minutes, 2),
+        "hours": round(hours, 2)
+    }
+
 def resolve_segmentation_errors(dataset_set, llm_set):   
-    in_both, only_in_llm, only_in_dataset = compare_sets(dataset_set, llm_set)
+    in_both, only_in_llm, only_in_dataset = metrics.compare_sets(dataset_set, llm_set)
     
     tp_adjusted = len(in_both)
     fp_adjusted = len(only_in_llm)
@@ -62,17 +71,32 @@ def call_llm(client, model, system_prompt, input_text, temp):
     except Exception:
         return '{ "entities": [] }', 0.0
 
-def compare_sets(dataset_set, llm_set_response):
-    only_in_dataset = dataset_set - llm_set_response   # FN
-    only_in_llm = llm_set_response - dataset_set       # FP
-    in_both = dataset_set & llm_set_response           # TP
-    return in_both, only_in_llm, only_in_dataset
+def build_audit_from_artifacts(idx_1based, input_text, dataset_set, llm_str, llm_set):
+    in_both, only_in_llm, only_in_dataset = metrics.compare_sets(dataset_set, llm_set)
+    tp_adj, fp_adj, fn_adj = resolve_segmentation_errors(dataset_set, llm_set)
 
-def compute_f1(tp, fp, fn):
-    denom = (2 * tp + fp + fn)
-    return (2 * tp / denom) if denom else 0.0
+    return {
+        "idx": int(idx_1based),
+        "input_text": input_text,
 
-def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model):
+        "dataset_set": sorted(dataset_set),
+        "llm_str": llm_str,
+        "llm_set": sorted(llm_set),
+
+        "compare_strict": {
+            "in_both": sorted(in_both),
+            "only_in_llm": sorted(only_in_llm),
+            "only_in_dataset": sorted(only_in_dataset),
+        },
+
+        "adjusted_counts": {
+            "tp_adjusted": int(tp_adj),
+            "fp_adjusted": int(fp_adj),
+            "fn_adjusted": int(fn_adj),
+        }
+    }
+
+def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model, max_audits=50):
     df = pd.read_parquet(dataset_path)
     total_rows = min(num_rows_dataset, len(df))
 
@@ -88,6 +112,8 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
     invalid_responses = []
     invalid_response_line_texts = []
+
+    audits = []
 
     pbar = tqdm(
         total=total_rows,
@@ -129,6 +155,16 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
             tp, fp, fn = resolve_segmentation_errors(dataset_set, llm_set)
             tp_sum += tp; fp_sum += fp; fn_sum += fn
 
+            if (fp > 0 or fn > 0) and len(audits) < max_audits:
+                audit = build_audit_from_artifacts(
+                    idx_1based=i,
+                    input_text=row.text,
+                    dataset_set=dataset_set,
+                    llm_str=llm_str,
+                    llm_set=llm_set
+                )
+                audits.append(audit)
+
             pbar.update(1)
     finally:
         pbar.close()
@@ -137,16 +173,7 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
     total_wall_time = time.perf_counter() - total_wall_time_start
     avg_llm_time = total_llm_time / total_rows if total_rows else 0.0
-    f1 = compute_f1(tp_sum, fp_sum, fn_sum)
-
-    def format_time(seconds):
-        minutes = seconds / 60
-        hours = minutes / 60
-        return {
-            "seconds": round(seconds, 2),
-            "minutes": round(minutes, 2),
-            "hours": round(hours, 2)
-        }
+    f1 = metrics.compute_f1(tp_sum, fp_sum, fn_sum)
 
     report = {
         "model": model,
@@ -173,53 +200,8 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
         "precision": round(tp_sum / (tp_sum + fp_sum), 6) if (tp_sum + fp_sum) else 0.0,
         "recall": round(tp_sum / (tp_sum + fn_sum), 6) if (tp_sum + fn_sum) else 0.0,
         "f1_score": round(f1, 6),
+
+        "audits": audits
     }
 
     return report
-
-def print_report(report, prompt_type):
-    print("==== Test Execution Report ====")
-    print(f"Model: {report['model']}")
-    print(f"Prompt technique: {prompt_type}")
-    print(f"Temperature: {report['temperature']}")
-    print(f"Dataset rows used: {report['dataset_rows_used']}\n")
-
-    print("---- Execution Time ----")
-    print(f"Total time: {report['total_time']['seconds']} s "
-          f"({report['total_time']['minutes']} min / {report['total_time']['hours']} h)")
-    print(f"Average LLM call time: {report['avg_llm_call_time']['seconds']} s "
-          f"({report['avg_llm_call_time']['minutes']} min / {report['avg_llm_call_time']['hours']} h)")
-
-    print("---- Sensitive Information ----")
-    print(f"Total PII in dataset (expected): {report['total_dataset_pii']}")
-    print(f"Total PII detected by model: {report['total_model_pii']}")
-    print(f"Total PII detected by model (adjusted): {report['total_model_pii_adjusted']}")
-    print(f"Total missed PII: {report['total_missed_pii']}")
-    print(f"Total LLM empty responses: {report['total_no_response']}\n")
-
-    print("---- Detection Metrics ----")
-    print(f"True Positives (TP): {report['tp']}   = correctly identified PII items")
-    print(f"False Positives (FP): {report['fp']}  = model detected items not in the dataset")
-    print(f"False Negatives (FN): {report['fn']}  = model missed items that exist in the dataset\n")
-
-    print(f"Precision: {report['precision']}")
-    print(f"Recall: {report['recall']}")
-    print(f"F1-score: {report['f1_score']}")
-    print("================================\n")
-
-    print("\n==== Dataset Lines That Returned an Empty JSON Response ====")
-    if report.get("invalid_response_lines"):
-        print("---- Empty Response Tracking ----")
-        total_empty_responses = len(report['invalid_response_lines'])
-        print(f"Line that returned the empty response: {report['invalid_response_lines']}")
-        
-        print("\nText contents that returned the empty response (first 10):")
-        for i, text in enumerate(report['invalid_response_texts']):
-            if i >= 10: 
-                print(f"... and {total_empty_responses - 10} more.")
-                break
-            print(f"\n  Line {report['invalid_response_lines'][i]}: '{text}'") 
-        print("\n")
-    else:
-        print("No lines returned the exact empty JSON response string.")
-    print("================================\n")

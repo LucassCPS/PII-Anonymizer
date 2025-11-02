@@ -1,0 +1,89 @@
+==== Test Execution Report ====
+Model: ai/gemma3-qat:4B-UD-Q4_K_XL
+Prompt technique: Zero-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 4698.65 s (78.31 min / 1.31 h)
+Average LLM call time: 4.7 s (0.08 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3958
+Total PII detected by model (adjusted): 3901
+Total missed PII: 1055
+Total LLM empty responses: 32
+
+---- Detection Metrics ----
+True Positives (TP): 3235   = correctly identified PII items
+False Positives (FP): 666  = model detected items not in the dataset
+False Negatives (FN): 1055  = model missed items that exist in the dataset
+
+Precision: 0.829275
+Recall: 0.754079
+F1-score: 0.789891
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [11, 15, 68, 137, 178, 197, 259, 319, 383, 389, 443, 459, 482, 539, 544, 557, 572, 663, 685, 697, 703, 745, 827, 839, 868, 888, 900, 923, 963, 966, 970, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 11: '**Sales Order #SO20230501**
+**Date:** 05/01/2023
+**Customer Name:** CID-520460 (I987-G7946-Pu)
+**Address:** 07570 Joanna Mountains, 67789, South Barbaraton
+**Phone:** 939-227-6163 (5635402307)
+**Email:** cmiles@example.com (hgibson@example.com)
+**Order Details:**
+- SKU: AGRI001, Quantity: 10, Price: $50.00
+- SKU: FOOD002, Quantity: 5, Price: $20.00
+**Subtotal:** $650.00
+**Tax:** $45.50
+**Total:** $705.50'
+
+  Line 15: 'Purchase Order dated 26.03.2023'
+
+  Line 68: 'Runway 12/30, 2,743 meters long, intersects taxiway Alpha at coordinates 56.553299, -26.524318.'
+
+  Line 137: '**Run ID: S-748668-O, Date: Saturday, October 16, 1976, Product Code: G-389766-L, Quantity Produced: 150, Start Time: 06:00, End Time: 14:00, Equipment Used: Assembly Line 3, Quality Check Results: Pass**'
+
+  Line 178: 'Route passes through (23.7698115 N, -75.441626 E) and (6.7180345, 62.699012).'
+
+  Line 197: 'This Client Certificate is valid from 2013.05.09 to 2023.05.08.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 319: 'EMP711631, Stock Adjustment: +50 units, Reason: Production Overrun'
+
+  Line 383: '**Public Record Request**
+
+Requestor's Name: Jesus Hamilton
+Contact Information: H.No. 518 Radhakrishnan Road, 409356, Bhusawal, India. Email: triveni54@example.org
+Records Requested: All public records related to the property at 6075 Crystal Fords, Apt. 53269, Hardinghaven, Kerala 41480, India.
+Signature: _______________________________________'
+
+  Line 389: 'Start Date: 1996-08-05, Machine: EMP81897'
+... and 22 more.
+
+
+================================
+

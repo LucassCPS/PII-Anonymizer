@@ -1,0 +1,73 @@
+==== Test Execution Report ====
+Model: ai/gemma3-qat:4B-UD-Q4_K_XL
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 3851.05 s (64.18 min / 1.07 h)
+Average LLM call time: 3.85 s (0.06 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 3812
+Total PII detected by model (adjusted): 3746
+Total missed PII: 1193
+Total LLM empty responses: 36
+
+---- Detection Metrics ----
+True Positives (TP): 3097   = correctly identified PII items
+False Positives (FP): 649  = model detected items not in the dataset
+False Negatives (FN): 1193  = model missed items that exist in the dataset
+
+Precision: 0.826749
+Recall: 0.721911
+F1-score: 0.770781
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [2, 44, 68, 96, 137, 178, 189, 259, 284, 319, 335, 337, 361, 389, 415, 441, 459, 465, 557, 570, 572, 685, 697, 745, 827, 839, 847, 861, 868, 900, 923, 963, 966, 970, 981, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 2: 'Unloading Plan for Shipment MRN-293104, MED25315002, dated 1989.12.22. Driver EMP730359, Vehicle KS40540825.'
+
+  Line 44: 'Certificate Key Usage: LIC-I9611592, CERT-48865042'
+
+  Line 68: 'Runway 12/30, 2,743 meters long, intersects taxiway Alpha at coordinates 56.553299, -26.524318.'
+
+  Line 96: 'By using this software, you agree to the following terms and conditions. The software is licensed, not sold, to you by Vincent Tailor <vincenttailor@example.net> for use on a single device with the identifier 213226001122238. You may not transfer the software or your rights to use it to another person or entity. This license is effective from 1952-05-14 and is valid until terminated by either party. The software is provided 'as is' without warranties of any kind. The licensor is not liable for any damages resulting from the use of this software. Any disputes will be governed by the laws of the jurisdiction corresponding to the IP address 201.156.175.142.'
+
+  Line 137: '**Run ID: S-748668-O, Date: Saturday, October 16, 1976, Product Code: G-389766-L, Quantity Produced: 150, Start Time: 06:00, End Time: 14:00, Equipment Used: Assembly Line 3, Quality Check Results: Pass**'
+
+  Line 178: 'Route passes through (23.7698115 N, -75.441626 E) and (6.7180345, 62.699012).'
+
+  Line 189: 'For off-chain storage, we'll use IPFS for large datasets like medical records (e.g., MED2660553). Access is controlled via encrypted keys, syncing with the blockchain at 70.247.134.184. Personal data like SSNs (ZZ 307539 T, 806 832 556) and date of birth (1977-10-18) are securely hashed before storage.'
+
+  Line 259: '**BILL OF SALE**
+
+**PARTIES INVOLVED:**
+- Seller: Kelly Troy Green
+- Buyer: [Buyer's Name]
+
+**PROPERTY DESCRIPTION:**
+- Address: 154 Laura Quadrant, East Stephaniemouth
+
+**PURCHASE PRICE:**
+- $ [Purchase Price]
+
+**DATE OF BIRTH:**
+- Seller: 1994-03-19
+
+**SSN:**
+- Seller: 219-08-5982'
+
+  Line 284: '`<Policy customerId="Y-965880-Y"> <Classifier apiKey="xoxb-469506804522-323565691892-MF2lT3qrj7ldztTuJjCQm2XQ"> <Traffic ip="200.198.130.188" deviceId="673139112961942"> <QoS bandwidth="100Mbps" delay="10ms" jitter="1ms" packetLoss="0.01"/> </Traffic> </Classifier> </Policy>`'
+
+  Line 319: 'EMP711631, Stock Adjustment: +50 units, Reason: Production Overrun'
+... and 26 more.
+
+
+================================
+

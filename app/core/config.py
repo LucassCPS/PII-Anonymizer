@@ -2,7 +2,8 @@ import os
 from enum import Enum
 
 class ModelEnum(Enum):
-    GEMMA3_QAT = "MODEL_GEMMA3_QAT"
+    GEMMA3_QAT_270M = "MODEL_GEMMA3_QAT_270M"
+    GEMMA3_QAT_4B = "MODEL_GEMMA3_QAT_4B"
     SMOLL3_Q4 = "MODEL_SMOLL3_Q4"
     SMOLL3_Q8 = "MODEL_SMOLL3_Q8"
     QWEN3_06B = "MODEL_QWEN3_06B"
@@ -10,7 +11,8 @@ class ModelEnum(Enum):
     GRANITE4_TINY = "MODEL_GRANITE4_TINY"
     MISTRAL_NEMO = "MODEL_MISTRAL_NEMO"
     DEEPSEEK = "MODEL_DEEPSEEK"
-    LLAMA32= "MODEL_LLAMA32"
+    LLAMA32_3B= "MODEL_LLAMA32_3B_Q4"
+    LLAMA32_1B= "MODEL_LLAMA32_1B_Q8"
 
 def load_models():
     models = {}    
