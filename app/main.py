@@ -6,7 +6,7 @@ from openai import OpenAI
 from pathlib import Path
 import sys
 
-MODEL = load_model(ModelEnum.LLAMA32_1B)
+MODEL = load_model(ModelEnum.MISTRAL_NEMO)
 API_KEY = load_api_key()
 BASE_URL = load_base_url()
 TEMPERATURE = 0.0
