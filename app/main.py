@@ -1,20 +1,10 @@
 import streamlit as st
-import os
 from core import llm_client
+from core import prompts
 from components import sidebar
 import json
 
-SYSTEM_PROMPT_FILE = "system_prompt_default.txt"
-DEFAULT_SYSTEM_PROMPT = ""
-
-try:
-    if os.path.exists(SYSTEM_PROMPT_FILE):
-        with open(SYSTEM_PROMPT_FILE, "r", encoding="utf-8") as f:
-            DEFAULT_SYSTEM_PROMPT = f.read().strip()
-    else:
-        DEFAULT_SYSTEM_PROMPT = "Instruções Padrão não encontradas. Crie o arquivo system_prompt_default.txt."
-except Exception as e:
-    DEFAULT_SYSTEM_PROMPT = f"Erro ao ler prompt: {e}"
+DEFAULT_SYSTEM_PROMPT, PROMPT_TYPE = prompts.get_zero_shot_prompt()
 
 st.set_page_config(page_title="LLM Chat")
 st.title("Analisador de Dados Sensíveis")

@@ -4,6 +4,7 @@ from core import config
 DEFAULT_ENV_PATH = "backend.env"
 DEFAULT_DO_STREAM = True
 DEFAULT_MAX_TOKENS = 0
+DEFAULT_TEMPERATURE = 0.0
 
 def render_sidebar(default_system_prompt: str):
     with st.sidebar:
@@ -35,7 +36,7 @@ def render_sidebar(default_system_prompt: str):
             selected_model_id = cache["models"][selected_label]
             selected_model_name = selected_label
 
-        temperature = st.slider("Temperature", 0.0, 1.0, 0.2, 0.1)
+        #temperature = st.slider("Temperature", 0.0, 1.0, 0.2, 0.1)
 
         st.markdown("---")
         current_prompt = st.session_state.get("system_prompt", default_system_prompt)
@@ -64,7 +65,7 @@ def render_sidebar(default_system_prompt: str):
         "api_key": cache["api_key"],
         "model": selected_model_id,
         "model_name": selected_model_name,
-        "temperature": temperature,
+        "temperature": DEFAULT_TEMPERATURE,
         "max_tokens": DEFAULT_MAX_TOKENS,
         "do_stream": DEFAULT_DO_STREAM,
         "system_prompt": st.session_state.get("system_prompt", default_system_prompt),

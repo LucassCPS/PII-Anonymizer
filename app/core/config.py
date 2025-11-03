@@ -1,23 +1,5 @@
-
 import os
 from dotenv import dotenv_values, load_dotenv
-
-def parse_models_manual(path: str):
-    models = {}
-    if not os.path.exists(path):
-        return models
-    with open(path, "r", encoding="utf-8") as f:
-        for raw in f:
-            line = raw.strip()
-            if not line or line.startswith("#"):
-                continue
-            if "=" in line:
-                k, v = line.split("=", 1)
-                k = k.strip()
-                v = v.strip().strip('"').strip("'")
-                if k.startswith("MODEL_") and v:
-                    models[k] = v
-    return models
 
 def load_env_and_models(env_path: str):
     env_vars = {}
@@ -47,3 +29,10 @@ def load_env_and_models(env_path: str):
                 models[k] = v
 
     return base_url, api_key, models, env_vars
+
+def load_models():
+    models = {}    
+    for k, v in os.environ.items():
+        if k.startswith("MODEL_") and v:
+            models[k] = v
+    return models
