@@ -72,16 +72,19 @@ def call_llm(client, model, system_prompt, input_text, temp):
         return '{ "entities": [] }', 0.0
 
 def build_audit_from_artifacts(idx_1based, input_text, dataset_set, llm_str, llm_set):
-    in_both, only_in_llm, only_in_dataset = metrics.compare_sets(dataset_set, llm_set)
-    tp_adj, fp_adj, fn_adj = resolve_segmentation_errors(dataset_set, llm_set)
+    dataset_set_str = {str(x) for x in dataset_set}
+    llm_set_str = {str(x) for x in llm_set}
+
+    in_both, only_in_llm, only_in_dataset = metrics.compare_sets(dataset_set_str, llm_set_str)
+    tp_adj, fp_adj, fn_adj = resolve_segmentation_errors(dataset_set_str, llm_set_str)
 
     return {
         "idx": int(idx_1based),
         "input_text": input_text,
 
-        "dataset_set": sorted(dataset_set),
+        "dataset_set": sorted(dataset_set_str),
         "llm_str": llm_str,
-        "llm_set": sorted(llm_set),
+        "llm_set": sorted(llm_set_str),
 
         "compare_strict": {
             "in_both": sorted(in_both),
@@ -96,7 +99,7 @@ def build_audit_from_artifacts(idx_1based, input_text, dataset_set, llm_str, llm
         }
     }
 
-def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model, max_audits=50):
+def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model, max_audits=200):
     df = pd.read_parquet(dataset_path)
     total_rows = min(num_rows_dataset, len(df))
 

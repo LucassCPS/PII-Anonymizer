@@ -38,29 +38,6 @@ def llm_json_to_set(data):
             else:
                 continue
     return texts
-
-# auxiliar method for cleaning up gemma3_qat responses
-def clean_gemma3_qat_response(raw_response_str):
-    cleaned_str = re.sub(r'```(?:json|python|text)?\s*|```', '', raw_response_str.strip(), flags=re.IGNORECASE | re.DOTALL)
-    
-    try:
-        data = json.loads(cleaned_str)
-        
-        if 'entities' in data and isinstance(data['entities'], list):
-            return json.dumps(data['entities'])
-        else:
-            return "[]"
-            
-    except json.JSONDecodeError:
-        match = re.search(r'"entities"\s*:\s*(\[.*?\])', cleaned_str, re.DOTALL)
-        if match:
-            try:
-                list_str = match.group(1).strip()
-                json.loads(list_str) 
-                return list_str
-            except json.JSONDecodeError:
-                return "[]"
-        return "[]"
     
 def clean_llm_response(response):
     cleaned_str = response.strip()
