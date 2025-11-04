@@ -22,27 +22,41 @@ def render_sidebar(default_system_prompt: str):
 
         cache = st.session_state.env_cache
 
-        selected_model_id = None
-        selected_model_name = None
+        model_anon_id = None
+        model_anon_name = None
+        
+        model_resp_id = None
+        model_resp_name = None
+
         if not cache["models"]:
             st.error("Nenhum modelo encontrado (MODEL_*). Ajuste seu backend.env no container.")
         else:
-            selected_label = st.selectbox(
-                "Selecione o modelo",
+            selected_label_anon = st.selectbox(
+                "Modelo 1: **Anonimização (PII)**",
                 options=list(cache["models"].keys()),
-                format_func=lambda k: cache['models'][k].replace('ai/', ''),
-                index=0
+                format_func=lambda k: cache['models'][k].replace('MODEL_', ''),
+                index=0,
+                key="model_selector_anon"
             )
-            selected_model_id = cache["models"][selected_label]
-            selected_model_name = selected_label
+            model_anon_id = cache["models"][selected_label_anon]
+            model_anon_name = selected_label_anon
 
-        #temperature = st.slider("Temperature", 0.0, 1.0, 0.2, 0.1)
+            #st.markdown("---")
+            selected_label_resp = st.selectbox(
+                "Modelo 2: **Elaboração da Resposta**",
+                options=list(cache["models"].keys()),
+                format_func=lambda k: cache['models'][k].replace('MODEL_', ''),
+                index=0,
+                key="model_selector_resp"
+            )
+            model_resp_id = cache["models"][selected_label_resp]
+            model_resp_name = selected_label_resp
 
+       
         st.markdown("---")
         current_prompt = st.session_state.get("system_prompt", default_system_prompt)
         
         with st.expander("Instruções do Modelo", expanded=True):
-            
             edited_prompt = st.text_area(
                 "Instruções",
                 value=current_prompt,
@@ -63,8 +77,10 @@ def render_sidebar(default_system_prompt: str):
     return {
         "base_url": cache["base_url"],
         "api_key": cache["api_key"],
-        "model": selected_model_id,
-        "model_name": selected_model_name,
+        "model_anon": model_anon_id,
+        "model_anon_name": model_anon_name,
+        "model_resp": model_resp_id,
+        "model_resp_name": model_resp_name,
         "temperature": DEFAULT_TEMPERATURE,
         "max_tokens": DEFAULT_MAX_TOKENS,
         "do_stream": DEFAULT_DO_STREAM,
