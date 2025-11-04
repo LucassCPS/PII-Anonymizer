@@ -1,16 +1,12 @@
 import streamlit as st
 from core import llm_client
-from utils import prompts
 from components import sidebar
+from utils import prompts
 from utils import reidentifier
+from utils import json_cleaner
 import json
 import re
 
-def clean_json_output(text: str) -> str:
-    cleaned_text = re.sub(r'^\s*```(?:json)?\s*', '', text, flags=re.MULTILINE | re.IGNORECASE)
-    cleaned_text = re.sub(r'\s*```\s*$', '', cleaned_text, flags=re.MULTILINE)
-    cleaned_text = re.sub(r'^\s*(?:Aqui está o JSON:\s*|Resposta:\s*|JSON\s*:\s*)', '', cleaned_text, flags=re.IGNORECASE)
-    return cleaned_text.strip()
 
 
 DEFAULT_SYSTEM_PROMPT, PROMPT_TYPE = prompts.get_zero_shot_prompt()
@@ -203,7 +199,7 @@ if analyze_clicked:
                 full_text_pii = resp.choices[0].message.content.strip()
 
         pii_json = {}
-        cleaned_pii_output = clean_json_output(full_text_pii)
+        cleaned_pii_output = json_cleaner.clean_json_output(full_text_pii)
         
         try:
             pii_json = json.loads(cleaned_pii_output)
