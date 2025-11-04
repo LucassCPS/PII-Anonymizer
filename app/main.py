@@ -103,8 +103,8 @@ if not model_anon or not model_resp:
 client = llm_client.get_client(base_url, api_key)
 
 
-col1, col2 = st.columns([2, 1])
-with col1:
+col_input, col_anon_output = st.columns(2)
+with col_input:
     st.markdown("### Entrada do Usuário")
     user_input = st.text_area(
         "Cole aqui o texto do usuário para análise...", 
@@ -115,12 +115,12 @@ with col1:
     )
     
     analyze_clicked = st.button(
-        "Analisar e Enviar", 
+        "Anonimizar e Enviar", 
         type="primary", 
         width="stretch", 
         key="analyze_button"
     )
-with col2:
+with col_anon_output:
     st.markdown("### Saída Anonimizada")
     
     placeholder_anon = st.empty()
@@ -132,7 +132,7 @@ with col2:
         disabled=True 
     )
 
-    popover = st.popover("Mostrar PII's Detectados", width="stretch")
+    popover = st.popover("Mostrar PII's Detectados (JSON)", use_container_width=True)
     with popover:
         if "error" in st.session_state.pii_json_data:
             st.code(st.session_state.pii_json_data.get("raw_text", ""), language="json")
@@ -141,30 +141,34 @@ with col2:
             st.empty()
 
 st.markdown("---")
-st.markdown("### Resposta Recebida de um Terceiro")
-placeholder_forwarded = st.empty()
-placeholder_forwarded.text_area(
-    "Resposta do Terceiro (Output p/ Usuário)",
-    value=st.session_state.forwarded_output_content,
-    height=200,
-    label_visibility="collapsed",
-    disabled=True 
-)
 
-st.markdown("---")
-st.markdown("### Resposta Reidentificada")
-placeholder_reidentified = st.empty()
-placeholder_reidentified.text_area(
-    "Resposta do Terceiro com PIIs Restaurados",
-    value=st.session_state.reidentified_output_content,
-    height=100,
-    label_visibility="collapsed",
-    disabled=True 
-)
+col_forwarded, col_reidentified = st.columns(2)
+with col_forwarded:
+    st.markdown("### Resposta Recebida de um Terceiro")
+    placeholder_forwarded = st.empty()
+    placeholder_forwarded.text_area(
+        "Resposta do Terceiro (Output p/ Usuário)",
+        value=st.session_state.forwarded_output_content,
+        height=200,
+        label_visibility="collapsed",
+        disabled=True 
+    )
+
+with col_reidentified:
+    st.markdown("### Resposta Reidentificada")
+    placeholder_reidentified = st.empty()
+    placeholder_reidentified.text_area(
+        "Resposta do Terceiro com PIIs Restaurados",
+        value=st.session_state.reidentified_output_content,
+        height=200, 
+        label_visibility="collapsed",
+        disabled=True 
+    )
+
 
 if analyze_clicked:
     st.session_state.anonimized_output_content = "Processando..."
-    st.session_state.forwarded_output_content = ""
+    st.session_state.forwarded_output_content = "Processando..."
     st.session_state.reidentified_output_content = ""
     
     placeholder_anon.text_area(
@@ -194,9 +198,9 @@ if analyze_clicked:
 
     try:
         with st.spinner("Analisando e extraindo PIIs..."):
-            full_text_pii = ""
-            resp = client.chat.completions.create(model=model_anon, messages=messages_anon, temperature=temp)
-            full_text_pii = resp.choices[0].message.content.strip()
+                full_text_pii = ""
+                resp = client.chat.completions.create(model=model_anon, messages=messages_anon, temperature=temp)
+                full_text_pii = resp.choices[0].message.content.strip()
 
         pii_json = {}
         cleaned_pii_output = clean_json_output(full_text_pii)
@@ -210,13 +214,12 @@ if analyze_clicked:
                 "raw_text": full_text_pii
             }
 
-        simulated_anon_text = user_input.strip()
-        anon_display_value = simulated_anon_text
+        anon_text = user_input.strip()
+        anon_display_value = anon_text
 
         if "entities" in st.session_state.pii_json_data:
             try:
                 entities = st.session_state.pii_json_data["entities"]
-
                 entities_sorted = sorted(entities, key=lambda e: len(e.get("text", "")), reverse=True)
 
                 for entity in entities_sorted:
@@ -227,22 +230,20 @@ if analyze_clicked:
                         continue
 
                     replacement_token = f"[{label_text.upper()}]"
-
                     try:
-                        simulated_anon_text = re.sub(re.escape(original_text), replacement_token, simulated_anon_text)
+                        anon_text = re.sub(re.escape(original_text), replacement_token, anon_text)
                     except re.error:
-                        simulated_anon_text = simulated_anon_text.replace(original_text, replacement_token)
+                        anon_text = anon_text.replace(original_text, replacement_token)
                 
-                anon_display_value = simulated_anon_text
-
+                anon_display_value = anon_text
             except Exception as e:
                 anon_display_value = (f"Erro ao processar anonimização com base no JSON: {e}")
         else:
-            anon_display_value = simulated_anon_text
+            anon_display_value = anon_text
 
         st.session_state.anonimized_output_content = anon_display_value
         placeholder_anon.text_area(
-            "Texto Anonimizado (Substituições)",
+            "Texto Anonimizado",
             value=anon_display_value,
             height=200,
             label_visibility="collapsed",
@@ -257,12 +258,23 @@ if analyze_clicked:
             else:
                 st.empty()
                 st.json(pii_json)
+
                     
         messages_resp = [
-                {"role": "system", "content": DEFAULT_THIRD_PARTY_PROMPT},
-                {"role": "user", "content": simulated_anon_text},
+            {"role": "system", "content": DEFAULT_THIRD_PARTY_PROMPT},
+            {"role": "user", "content": anon_text},
         ]
         
+
+        ## Resposta do Terceiro
+        placeholder_forwarded.text_area(
+            "Resposta do Terceiro",
+            value=st.session_state.forwarded_output_content,
+            height=200,
+            label_visibility="collapsed",
+            disabled=True 
+        )
+
         response_from_third = ""
         with st.spinner("Elaborando resposta..."):
             resp_llm = client.chat.completions.create(model=model_resp, messages=messages_resp, temperature=temp)
@@ -270,13 +282,15 @@ if analyze_clicked:
 
         st.session_state.forwarded_output_content = response_from_third
         placeholder_forwarded.text_area(
-                "Resposta do Terceiro (Output p/ Usuário)",
-                value=response_from_third,
-                height=200,
-                label_visibility="collapsed",
-                disabled=True 
+            "Resposta do Terceiro",
+            value=response_from_third,
+            height=200,
+            label_visibility="collapsed",
+            disabled=True 
         )
         
+
+        ## Resposta Reidentificada
         try:
             reidentified_text = reidentifier.reidentify_text(
                 anonymized_text=response_from_third,
@@ -287,11 +301,11 @@ if analyze_clicked:
 
         st.session_state.reidentified_output_content = reidentified_text
         placeholder_reidentified.text_area(
-                "Resposta do Terceiro com PIIs Restaurados",
-                value=reidentified_text,
-                height=100,
-                label_visibility="collapsed",
-                disabled=True 
+            "Resposta do Terceiro com PIIs Restaurados",
+            value=reidentified_text,
+            height=200, 
+            label_visibility="collapsed",
+            disabled=True 
         )
     
     except Exception as e:
@@ -300,10 +314,10 @@ if analyze_clicked:
         st.session_state.reidentified_output_content = ""
         
         placeholder_anon.text_area(
-                "Texto Anonimizado",
-                value=st.session_state.anonimized_output_content,
-                height=200,
-                label_visibility="collapsed",
-                disabled=True 
+            "Texto Anonimizado",
+            value=st.session_state.anonimized_output_content,
+            height=200,
+            label_visibility="collapsed",
+            disabled=True 
         )
         st.error(f"Erro fatal: {e}")
