@@ -1,0 +1,123 @@
+==== Test Execution Report ====
+Model: ai/granite-4.0-h-tiny:7B
+Prompt technique: Few-Shot
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 12846.55 s (214.11 min / 3.57 h)
+Average LLM call time: 12.85 s (0.21 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 4645
+Total PII detected by model (adjusted): 4564
+Total missed PII: 861
+Total LLM empty responses: 11
+
+---- Detection Metrics ----
+True Positives (TP): 3429   = correctly identified PII items
+False Positives (FP): 1135  = model detected items not in the dataset
+False Negatives (FN): 861  = model missed items that exist in the dataset
+
+Precision: 0.751315
+Recall: 0.799301
+F1-score: 0.774565
+================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [45, 205, 264, 508, 572, 577, 736, 777, 839, 966, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 45: 'All users must adhere to the following password policy. Passwords must contain at least 12 characters, including a mix of uppercase and lowercase letters, numbers, and special characters. They must not contain any part of the user's name or username. For example, 'emma_1941' or 'amanda_248' are not acceptable passwords. The password '7X6OygsRVFi$E@vu+(' meets these requirements. Passwords must be changed every 90 days. After three failed login attempts, the account will be locked for 30 minutes. This policy applies to all users, including those with SSN 556-22-3426. Exceptions may be made for users with specific security clearance, such as those with email addresses 'simonbrian@example.net' or 'adamsapril@example.net'.'
+
+  Line 205: '**Credit Card Statement**
+**Account Holder:** Chavvi A. Andra
+**Credit Card Number:** 3494-5116-3452-746
+**Statement Period:** May 16, 2005 - June 15, 2005
+**Address:** H.No. 127, Mital Street
+
+| Date       | Description         | Amount | Type   |
+|------------|---------------------|--------|--------|
+| 1987/02/01 | Groceries           | -50.00 | Debit  |
+| 2005/05/20 | Dining              | -30.00 | Debit  |
+| 2005/06/05 | Gasoline            | -45.00 | Debit  |
+| 2005/06/10 | Credit Card Payment | +150.00 | Credit |
+
+**Current Balance:** $55.00
+**Minimum Payment Due:** $15.00'
+
+  Line 264: '**WARRANTY GRANTOR:** Joshua Miguel Hill, H.No. 58, Kunda Road, Raiganj, Bulgaria, 1-581-202-6315. **WARRANTY GRANTEE:** [Grantee's Name]. **COVERAGE:** [Product/Service Description]. **EXCLUSIONS:** [Excluded Items/Events]. **DURATION:** [Warranty Period]. **GOVERNING LAW:** [Jurisdiction]. **WARRANTY ID:** 308 318 518.'
+
+  Line 508: '**New in v2.5.1:**
+- Improved patient data handling for records V1541991 and I2597706.
+- Updated IP whitelisting to include 98.37.129.215.
+- Customer ID C844-2597-855 now supports enhanced analytics.
+- Bug fix for date parsing issue on 1996/09/03.'
+
+  Line 572: '{"timestamp": "27 Apr 2019 02:00:38", "user_id": "lee864", "ip_address": "220.245.231.133", "auth_type": "password", "status": "failure", "error_code": "INVALID_PASSWORD"}'
+
+  Line 577: '**Marine Cargo Insurance Certificate**
+
+Insurer: XYZ Insurance Co.
+Policy No: 123456
+Insured: Thomas Ltd.
+Vessel: MV Star
+Cargo: Electronics, described as '89.8062105 -172.336854'
+Coverage Period: 01/01/2023 to 31/12/2023
+Voyage: From Latitude: -38.9570335, Longitude: 19.214750 to Latitude: 89.8062105, Longitude: -172.336854'
+
+  Line 736: '**AIRWORTHINESS DIRECTIVE**
+
+This directive addresses an unsafe condition in certain aircraft. Affected is any aircraft with customer ID J4485S927 and employee ID U-85062-Q, operating under certificate license number LIC-J1996202. The unsafe condition is a structural fatigue crack in the wing spar. To comply, perform a detailed inspection of the wing spar on or before 2002/05/04. If any cracks are found, follow the repair procedures outlined in the approved maintenance document.'
+
+  Line 777: 'Hughes, Simpson and Schwartz, a Limited Liability Company, was incorporated in the state of Delaware with Evans LLC serving as its registered agent.'
+
+  Line 839: 'Block Header Data: Version 1, Previous Hash 125-90-8060, Timestamp 4.224.130.104, Difficulty Target MRN-756032, Nonce 12345678, Transaction Root Hash 98765432.'
+
+  Line 966: 'Credit card numbers such as 3716 5456 6191 560 will be replaced with generic values. Medical record numbers like MED79100707 will be suppressed. IPv4 addresses like 15.11.188.148 will be permuted. Dates of birth such as 1998-04-28 will be generalized to the nearest decade.'
+... and 1 more.
+
+
+================================
+
+==== False Negatives Breakdown by PII Class (FN) ====
+- first_name: 184
+- last_name: 131
+- medical_record_number: 73
+- customer_id: 52
+- company_name: 41
+- street_address: 39
+- license_plate: 36
+- ipv4: 28
+- name: 27
+- ssn: 25
+- date: 21
+- date_time: 20
+- employee_id: 18
+- city: 17
+- address: 16
+- unique_identifier: 15
+- user_name: 13
+- time: 12
+- credit_card_number: 10
+- biometric_identifier: 10
+- date_of_birth: 9
+- phone_number: 9
+- email: 8
+- device_identifier: 7
+- coordinate: 6
+- password: 6
+- ipv6: 5
+- account_number: 5
+- bank_routing_number: 4
+- postcode: 4
+- api_key: 3
+- state: 2
+- country: 2
+- url: 1
+- cvv: 1
+- health_plan_beneficiary_number: 1
+=====================================================

@@ -28,6 +28,17 @@ def print_report(report, prompt_type):
     print(f"F1-score: {report['f1_score']}")
     print("================================\n")
 
+    print("\n==== False Negatives Breakdown by PII Class (FN) ====")
+    missed_classes = report.get("missed_pii_class_breakdown", {})
+    if missed_classes:
+        sorted_missed = sorted(missed_classes.items(), key=lambda item: item[1], reverse=True)
+        
+        for class_name, count in sorted_missed:
+            print(f"- {class_name}: {count}")
+    else:
+        print("No False Negatives recorded or breakdown data unavailable.")
+    print("=====================================================\n")
+
     print("\n==== Dataset Lines That Returned an Empty JSON Response ====")
     if report.get("invalid_response_lines"):
         print("---- Empty Response Tracking ----")
@@ -95,63 +106,3 @@ def print_audits(report: dict, max_items: int = 10, show_raw: bool = True, max_c
     if total > to_show:
         print(f"... and {total - to_show} more not shown.")
     print("===================================\n")
-
-def print_audit_report(audit: dict, show_raw: bool = True, max_chars: int = 4000):
-    print("\n========== AUDIT REPORT ==========")
-    print(f"Dataset line (1-based): {audit['idx']}\n")
-
-    print("---- Input Text ----")
-    print(audit["input_text"])
-    print()
-
-    print("---- Dataset (gold) set ----")
-    if audit["dataset_set"]:
-        for item in audit["dataset_set"]:
-            print(f"  - {item}")
-    else:
-        print("  (empty)")
-    print()
-
-    if show_raw:
-        raw = audit.get("llm_str", "")
-        raw_display = raw if len(raw) <= max_chars else (raw[:max_chars] + "... [truncated]")
-        print("---- Raw LLM response (string) ----")
-        print(raw_display)
-        print()
-
-    print("---- LLM set (parsed) ----")
-    if audit["llm_set"]:
-        for item in audit["llm_set"]:
-            print(f"  - {item}")
-    else:
-        print("  (empty)")
-    print()
-
-    print("---- compare_sets (strict) ----")
-    print("In both (TP):")
-    if audit["compare_strict"]["in_both"]:
-        for item in audit["compare_strict"]["in_both"]:
-            print(f"  - {item}")
-    else:
-        print("  (none)")
-
-    print("\nOnly in LLM (FP):")
-    if audit["compare_strict"]["only_in_llm"]:
-        for item in audit["compare_strict"]["only_in_llm"]:
-            print(f"  - {item}")
-    else:
-        print("  (none)")
-
-    print("\nOnly in dataset (FN):")
-    if audit["compare_strict"]["only_in_dataset"]:
-        for item in audit["compare_strict"]["only_in_dataset"]:
-            print(f"  - {item}")
-    else:
-        print("  (none)")
-
-    print("\n---- Adjusted counts (after segmentation fix) ----")
-    ac = audit["adjusted_counts"]
-    print(f"TP (adjusted): {ac['tp_adjusted']}")
-    print(f"FP (adjusted): {ac['fp_adjusted']}")
-    print(f"FN (adjusted): {ac['fn_adjusted']}")
-    print("====================================\n")

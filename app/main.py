@@ -6,7 +6,7 @@ from openai import OpenAI
 from pathlib import Path
 import sys
 
-MODEL = load_model(ModelEnum.MISTRAL_NEMO)
+MODEL = load_model(ModelEnum.GRANITE4_TINY)
 API_KEY = load_api_key()
 BASE_URL = load_base_url()
 TEMPERATURE = 0.0
@@ -19,7 +19,7 @@ RUN_FULL_TEST = False
 TEST_NUM_ROWS = 1000
 
 RUN_MODEL_AUDITION = True
-AUDITION_NUM_ROWS = 200
+AUDITION_NUM_ROWS = 1000
 
 def get_file_name(prompt_type, audit=False):
     model_name = MODEL.split('/')[-1] if '/' in MODEL else MODEL
@@ -36,9 +36,9 @@ def get_file_name(prompt_type, audit=False):
 
 def run_audit_for_model(client, dataset_path):
     audit_prompts = [
-        ("zero_shot", prompts.get_zero_shot_prompt),
+        #("zero_shot", prompts.get_zero_shot_prompt),
         ("few_shot", prompts.get_few_shot_prompt),
-        ("chain_of_thought", prompts.get_chain_of_thought_prompt)
+        #("chain_of_thought", prompts.get_chain_of_thought_prompt)
     ]
 
     output_dir_path = Path(OUTPUT_DIR)

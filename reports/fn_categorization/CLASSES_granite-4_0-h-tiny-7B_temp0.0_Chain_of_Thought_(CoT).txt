@@ -1,0 +1,4769 @@
+==== Test Execution Report ====
+Model: ai/granite-4.0-h-tiny:7B
+Prompt technique: Chain-of-Thought (CoT)
+Temperature: 0.0
+Dataset rows used: 1000
+
+---- Execution Time ----
+Total time: 2420.6 s (40.34 min / 0.67 h)
+Average LLM call time: 2.42 s (0.04 min / 0.0 h)
+---- Sensitive Information ----
+Total PII in dataset (expected): 4290
+Total PII detected by model: 4215
+Total PII detected by model (adjusted): 4161
+Total missed PII: 972
+Total LLM empty responses: 18
+
+---- Detection Metrics ----
+True Positives (TP): 3318   = correctly identified PII items
+False Positives (FP): 843  = model detected items not in the dataset
+False Negatives (FN): 972  = model missed items that exist in the dataset
+
+Precision: 0.797404
+Recall: 0.773427
+F1-score: 0.785233
+================================
+
+
+==== False Negatives Breakdown by PII Class (FN) ====
+- first_name: 239
+- last_name: 214
+- medical_record_number: 90
+- customer_id: 69
+- street_address: 36
+- name: 33
+- license_plate: 27
+- company_name: 27
+- ipv4: 22
+- ssn: 22
+- address: 17
+- city: 16
+- date_time: 15
+- date: 15
+- employee_id: 15
+- user_name: 13
+- unique_identifier: 13
+- time: 12
+- biometric_identifier: 11
+- credit_card_number: 9
+- date_of_birth: 9
+- phone_number: 8
+- vehicle_identifier: 8
+- email: 8
+- device_identifier: 7
+- password: 6
+- coordinate: 6
+- ipv6: 5
+- account_number: 5
+- bank_routing_number: 4
+- postcode: 4
+- api_key: 3
+- country: 1
+- state: 1
+- cvv: 1
+- url: 1
+- health_plan_beneficiary_number: 1
+=====================================================
+
+
+==== Dataset Lines That Returned an Empty JSON Response ====
+---- Empty Response Tracking ----
+Line that returned the empty response: [147, 233, 264, 284, 310, 433, 572, 650, 709, 756, 800, 827, 900, 939, 945, 990, 998, 1000]
+
+Text contents that returned the empty response (first 10):
+
+  Line 147: '{
+  "username": "ian_116",
+  "password": "Os6l)zfdO_%27fKt^T",
+  "token": "brown2813",
+  "ipv4": ["208.57.106.120", "204.226.3.94"]
+}'
+
+  Line 233: 'Runway 09/27: 8,747 ft x 150 ft, Taxiway 'E': 25 ft wide, Apron 'Alpha': 100,000 sq ft, Hangar 'H1': 30,000 sq ft, Terminal 'T1': 150,000 sq ft, Employee ID: EMP959205.'
+
+  Line 264: '**WARRANTY GRANTOR:** Joshua Miguel Hill, H.No. 58, Kunda Road, Raiganj, Bulgaria, 1-581-202-6315. **WARRANTY GRANTEE:** [Grantee's Name]. **COVERAGE:** [Product/Service Description]. **EXCLUSIONS:** [Excluded Items/Events]. **DURATION:** [Warranty Period]. **GOVERNING LAW:** [Jurisdiction]. **WARRANTY ID:** 308 318 518.'
+
+  Line 284: '`<Policy customerId="Y-965880-Y"> <Classifier apiKey="xoxb-469506804522-323565691892-MF2lT3qrj7ldztTuJjCQm2XQ"> <Traffic ip="200.198.130.188" deviceId="673139112961942"> <QoS bandwidth="100Mbps" delay="10ms" jitter="1ms" packetLoss="0.01"/> </Traffic> </Classifier> </Policy>`'
+
+  Line 310: '{
+  "msisdn": "T6763G719",
+  "activationCode": "ABC123",
+  "serviceType": "Premium"
+}'
+
+  Line 433: '**NON-DISCLOSURE AGREEMENT**
+
+THIS NON-DISCLOSURE AGREEMENT (the "Agreement") is entered into on [current date] by and between Ford, Cobb and Spencer ("Disclosing Party") and 253 744 700 ("Receiving Party").
+
+The Disclosing Party wishes to disclose certain confidential and proprietary information related to its information technology systems and data (the "Confidential Information") to the Receiving Party, Z-372643-L, to evaluate and potentially engage in business discussions.
+
+The Receiving Party agrees to hold the Confidential Information in strict confidence and not to disclose it to any third party without the prior written consent of the Disclosing Party. The Receiving Party further agrees to use the Confidential Information solely for the purpose of evaluating and engaging in business discussions with the Disclosing Party.
+
+The Confidential Information includes, but is not limited to, the Disclosing Party's trade secrets, know-how, inventions, software code, and data, including but not limited to, A8243230.'
+
+  Line 572: '{"timestamp": "27 Apr 2019 02:00:38", "user_id": "lee864", "ip_address": "220.245.231.133", "auth_type": "password", "status": "failure", "error_code": "INVALID_PASSWORD"}'
+
+  Line 650: 'On 2001/02/19 at 18:18:20, the vessel's position was logged at (16.393713, -165.385924).'
+
+  Line 709: 'Bill of Lading issued for shipment C581-1886-479.'
+
+  Line 756: '**ACCOUNT CLOSURE FORM**
+
+**Account Holder:** ZZ850958T
+**Account Numbers:** ACCT-1707022514, E3854330900
+**Address:** H.No. 04 Aurora, Apt. H.No. 37
+**City, State, ZIP:** 617 Cross Loop, North Todd, Kentucky
+**Date of Birth:** 1920-12-07
+**Closure Reason:** Account holder's request
+**Final Balance:** $0.00'
+... and 8 more.
+
+
+================================
+
+
+========== AUDIT SUMMARY ==========
+Total audits collected (fp>0 or fn>0): 200
+Showing first 100 audits:
+
+--- Audit #1 | Dataset line: 2 ---
+Input:
+  Unloading Plan for Shipment MRN-293104, MED25315002, dated 1989.12.22. Driver EMP730359, Vehicle KS40540825.
+Dataset set:
+  - 1989.12.22
+  - EMP730359
+  - KS40540825
+  - MED25315002
+  - MRN-293104
+LLM set:
+  - 1989.12.22
+  - EMP730359
+  - KS40540825
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 0
+  Only in dataset (FN): 2
+Adjusted counts → TP: 3 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "1989.12.22"
+        },
+        {
+            "label": "Employee ID",
+            "text": "EMP730359"
+        },
+        {
+            "label": "Vehicle ID",
+            "text": "KS40540825"
+        }
+    ]
+}
+
+--- Audit #2 | Dataset line: 7 ---
+Input:
+  12/16/2008 09:17 AM - BIO-4010357692 attempted authentication from 216.158.70.128
+Dataset set:
+  - 12/16/2008 09:17 AM
+  - 216.158.70.128
+  - BIO-4010357692
+LLM set:
+  - 09:17 AM
+  - 12/16/2008
+  - 216.158.70.128
+  - 4010357692
+Diff (strict):
+  In both (TP): 1
+  Only in LLM (FP): 3
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "12/16/2008"
+        },
+        {
+            "label": "Time",
+            "text": "09:17 AM"
+        },
+        {
+            "label": "Personal Identification Number",
+            "text": "4010357692"
+        },
+        {
+            "label": "IP Address",
+            "text": "216.158.70.128"
+        }
+    ]
+}
+
+--- Audit #3 | Dataset line: 11 ---
+Input:
+  **Sales Order #SO20230501**
+**Date:** 05/01/2023
+**Customer Name:** CID-520460 (I987-G7946-Pu)
+**Address:** 07570 Joanna Mountains, 67789, South Barbaraton
+**Phone:** 939-227-6163 (5635402307)
+**Email:** cmiles@example.com (hgibson@example.com)
+**Order Details:**
+- SKU: AGRI001, Quantity: 10, Price: $50.00
+- SKU: FOOD002, Quantity: 5, Price: $20.00
+**Subtotal:** $650.00
+**Tax:** $45.50
+**Total:** $705.50
+Dataset set:
+  - 07570 Joanna Mountains, 67789, South Barbaraton
+  - 5635402307
+  - 939-227-6163
+  - CID-520460
+  - I987-G7946-Pu
+  - cmiles@example.com
+  - hgibson@example.com
+LLM set:
+  - $20.00
+  - $45.50
+  - $50.00
+  - $650.00
+  - $705.50
+  - 05/01/2023
+  - 07570 Joanna Mountains, 67789, South Barbaraton
+  - 10
+  - 5
+  - 939-227-6163
+  - AGRI001
+  - CID-520460 (I987-G7946-Pu)
+  - FOOD002
+  - SO20230501
+  - cmiles@example.com
+  - hgibson@example.com
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 12
+  Only in dataset (FN): 3
+Adjusted counts → TP: 4 | FP: 12 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Order Number", "text": "SO20230501"
+        },
+        {
+            "label": "Date", "text": "05/01/2023"
+        },
+        {
+            "label": "Customer Name", "text": "CID-520460 (I987-G7946-Pu)"
+        },
+        {
+            "label": "Address", "text": "07570 Joanna Mountains, 67789, South Barbaraton"
+        },
+        {
+            "label": "Phone", "text": "939-227-6163"
+        },
+        {
+            "label": "Email", "text": "cmiles@example.com"
+        },
+        {
+            "label": "Email", "text": "hgibson@example.com"
+        },
+        {
+            "label": "SKU", "text": "AGRI001"
+        },
+        {
+            "label": "SKU", "text": "FOOD002"
+        },
+        {
+            "label": "Quantity", "text": "10"
+        },
+        {
+            "label": "Quantity", "text": "5"
+        },
+        {
+            "label": "Price", "text": "$50.00"
+        },
+        {
+            "label": "Price", "text": "$20.00"
+        },
+        {
+            "label": "Subtotal", "text": "$650.00"
+        },
+        {
+            "label": "Tax", "text": "$45.50"
+        },
+        {
+            "label": "Total", "text": "$705.50"
+        }
+    ]
+}
+
+--- Audit #4 | Dataset line: 12 ---
+Input:
+  Cloud Service Level Objectives for CID-618539: Performance targets are outlined in the table below. Support will be provided by our team at schwartzrobert@example.org and vrussell@example.com. Contact us at 81365803 or +4429 2018 0006 for assistance. Physical correspondence can be sent to 66523 Gabriela Pass Apt. 637 or 19662 Johnson Manors, New Logan P2E 6V7, Jersey.
+Dataset set:
+  - +4429 2018 0006
+  - 19662 Johnson Manors, New Logan P2E 6V7, Jersey
+  - 66523 Gabriela Pass Apt. 637
+  - 81365803
+  - CID-618539
+  - schwartzrobert@example.org
+  - vrussell@example.com
+LLM set:
+  - +442920180006
+  - 19662 Johnson Manors, New Logan P2E 6V7, Jersey
+  - 66523 Gabriela Pass Apt. 637
+  - 81365803
+  - schwartzrobert@example.org
+  - vrussell@example.com
+Diff (strict):
+  In both (TP): 5
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 5 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Email",
+            "text": "schwartzrobert@example.org"
+        },
+        {
+            "label": "Email",
+            "text": "vrussell@example.com"
+        },
+        {
+            "label": "Phone Number",
+            "text": "81365803"
+        },
+        {
+            "label": "Phone Number",
+            "text": "+442920180006"
+        },
+        {
+            "label": "Address",
+            "text": "66523 Gabriela Pass Apt. 637"
+        },
+        {
+            "label": "Address",
+            "text": "19662 Johnson Manors, New Logan P2E 6V7, Jersey"
+        }
+    ]
+}
+
+--- Audit #5 | Dataset line: 14 ---
+Input:
+  IND submitted by Dr. John Doe, SSN 248-26-0106, DOB 1987-08-04, for drug MED49406521, using IP 134.252.232.61 for clinical trial protocol.
+Dataset set:
+  - 134.252.232.61
+  - 1987-08-04
+  - 248-26-0106
+  - MED49406521
+LLM set:
+  - 134.252.232.61
+  - 1987-08-04
+  - 248-26-0106
+  - Dr. John Doe
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 1 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Dr. John Doe"
+        },
+        {
+            "label": "SSN",
+            "text": "248-26-0106"
+        },
+        {
+            "label": "DOB",
+            "text": "1987-08-04"
+        },
+        {
+            "label": "IP",
+            "text": "134.252.232.61"
+        }
+    ]
+}
+
+--- Audit #6 | Dataset line: 16 ---
+Input:
+  Ciphertext for customer ID ID-407-B (L8149B349). Encrypted data: sl.SloV2VW-92QT0rRJY8yhbQG21cbs. Initialization vectors: 106.131.233.44, 79.180.115.87. Medical record number: MRN-258470.
+Dataset set:
+  - 106.131.233.44
+  - 79.180.115.87
+  - ID-407-B
+  - L8149B349
+  - MRN-258470
+  - sl.SloV2VW-92QT0rRJY8yhbQG21cbs
+LLM set:
+  - 106.131.233.44, 79.180.115.87
+  - ID-407-B (L8149B349)
+  - MRN-258470
+  - sl.SloV2VW-92QT0rRJY8yhbQG21cbs
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 2
+  Only in dataset (FN): 4
+Adjusted counts → TP: 2 | FP: 2 | FN: 4
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Customer ID",
+            "text": "ID-407-B (L8149B349)"
+        },
+        {
+            "label": "Encrypted data",
+            "text": "sl.SloV2VW-92QT0rRJY8yhbQG21cbs"
+        },
+        {
+            "label": "Initialization vectors",
+            "text": "106.131.233.44, 79.180.115.87"
+        },
+        {
+            "label": "Medical record number",
+            "text": "MRN-258470"
+        }
+    ]
+}
+
+--- Audit #7 | Dataset line: 17 ---
+Input:
+  **Bill of Sale**
+
+**Vehicle Identification Number:** 8HEC1TN717CH8S6J9
+**Make:** Toyota
+**Model:** Corolla
+**Year:** 2018
+**Odometer Reading:** 56,890 miles
+**Purchase Price:** $12,500.00
+
+**Seller:**
+Ekanta Purohit
+5 Laura Block, 2938, West Lisa
+
+**Buyer:**
+Tripathi
+Dataset set:
+  - 5 Laura Block, 2938, West Lisa
+  - 8HEC1TN717CH8S6J9
+  - Ekanta
+  - Purohit
+  - Tripathi
+LLM set:
+  - 5 Laura Block, 2938, West Lisa
+  - Ekanta Purohit
+  - Tripathi
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 3
+Adjusted counts → TP: 2 | FP: 1 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full Name",
+            "text": "Ekanta Purohit"
+        },
+        {
+            "label": "Address",
+            "text": "5 Laura Block, 2938, West Lisa"
+        },
+        {
+            "label": "Full Name",
+            "text": "Tripathi"
+        }
+    ]
+}
+
+--- Audit #8 | Dataset line: 18 ---
+Input:
+  **Permit Application**
+
+**Applicant Details:**
+- First Name: Louise
+- Last Name: Clay
+- Address: H.No. 99 Seth Path, 289030, Bulandshahr
+
+**Proposed Project:**
+- Michelle Erickson-Parks proposes to construct a residential building at the above-mentioned address.
+
+**Medical Record Number (MRN):**
+- MRN-826976
+Dataset set:
+  - Clay
+  - Erickson-Parks
+  - H.No. 99 Seth Path, 289030, Bulandshahr
+  - Louise
+  - MRN-826976
+  - Michelle
+LLM set:
+  - H.No. 99 Seth Path, 289030, Bulandshahr
+  - Louise Clay
+  - MRN-826976
+  - Michelle Erickson-Parks
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 2
+  Only in dataset (FN): 4
+Adjusted counts → TP: 2 | FP: 2 | FN: 4
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full Name",
+            "text": "Louise Clay"
+        },
+        {
+            "label": "Address",
+            "text": "H.No. 99 Seth Path, 289030, Bulandshahr"
+        },
+        {
+            "label": "Full Name",
+            "text": "Michelle Erickson-Parks"
+        },
+        {
+            "label": "Medical Record Number (MRN)",
+            "text": "MRN-826976"
+        }
+    ]
+}
+
+--- Audit #9 | Dataset line: 20 ---
+Input:
+  **Parent Consent Form**
+
+**Student Information:**
+- First Name: Wazir
+- Last Name: Berry-King
+- Date of Birth: 1959-03-13
+
+**Parent/Guardian Information:**
+- Social Security Number: 188-78-9684
+Dataset set:
+  - 188-78-9684
+  - 1959-03-13
+  - Berry-King
+  - Wazir
+LLM set:
+  - 188-78-9684
+  - 1959-03-13
+  - Wazir Berry-King
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full Name",
+            "text": "Wazir Berry-King"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "1959-03-13"
+        },
+        {
+            "label": "Social Security Number",
+            "text": "188-78-9684"
+        }
+    ]
+}
+
+--- Audit #10 | Dataset line: 23 ---
+Input:
+  **Waybill**
+
+| Field | Details |
+|---|---|
+| **Consignor** | Lauren Harris-Brown |
+| **Phone** | +61.448.517.013 |
+| **Address** | 4121 Andrew Lights, Apt. 625 |
+| **Consignee** | Shravya Champak Aggarwal |
+| **Phone** | +44(0)131 4960267 |
+| **Address** | 006 James Burgs, Apt. 08876 |
+| **Shipment ID** | WX98062015, S36278762 |
+| **Description** | Miscellaneous goods |
+| **Dimensions** | 100x50x30 cm |
+| **Weight** | 25 kg |
+| **Routing** | Direct, no stops |
+Dataset set:
+  - +44(0)131 4960267
+  - +61.448.517.013
+  - 006 James Burgs, Apt. 08876
+  - 4121 Andrew Lights, Apt. 625
+  - Lauren Harris-Brown
+  - S36278762
+  - Shravya Champak Aggarwal
+  - WX98062015
+LLM set:
+  - +44(0)131 4960267
+  - +61.448.517.013
+  - 006 James Burgs, Apt. 08876
+  - 4121 Andrew Lights, Apt. 625
+  - Lauren Harris-Brown
+  - Shravya Champak Aggarwal
+Diff (strict):
+  In both (TP): 6
+  Only in LLM (FP): 0
+  Only in dataset (FN): 2
+Adjusted counts → TP: 6 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full name",
+            "text": "Lauren Harris-Brown"
+        },
+        {
+            "label": "Phone number",
+            "text": "+61.448.517.013"
+        },
+        {
+            "label": "Address",
+            "text": "4121 Andrew Lights, Apt. 625"
+        },
+        {
+            "label": "Full name",
+            "text": "Shravya Champak Aggarwal"
+        },
+        {
+            "label": "Phone number",
+            "text": "+44(0)131 4960267"
+        },
+        {
+            "label": "Address",
+            "text": "006 James Burgs, Apt. 08876"
+        }
+    ]
+}
+
+--- Audit #11 | Dataset line: 24 ---
+Input:
+  **Prescription for Brenda Michael Lewis**
+DOB: 1997-09-19
+MRN: MED44101457
+Lisinopril 20mg x 30 tablets
+Take one tablet daily.
+Dataset set:
+  - 1997-09-19
+  - Brenda
+  - Lewis
+  - MED44101457
+  - Michael
+LLM set:
+  - 1997-09-19
+  - Brenda Michael Lewis
+  - MED44101457
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 3
+Adjusted counts → TP: 2 | FP: 1 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Brenda Michael Lewis"
+        },
+        {
+            "label": "dob",
+            "text": "1997-09-19"
+        },
+        {
+            "label": "mrn",
+            "text": "MED44101457"
+        }
+    ]
+}
+
+--- Audit #12 | Dataset line: 26 ---
+Input:
+  {
+  "source_ip": "f4e3:117d:3857:870:d854:1ddb:ef90:66f1",
+  "destination_ip": "133.123.223.176, 63.192.251.195",
+  "protocol": "TCP",
+  "port_range": "80-443",
+  "action": "allow",
+  "user_name": "rhys95",
+  "email": "lynnwilliams@example.com"
+}
+Dataset set:
+  - 133.123.223.176
+  - 63.192.251.195
+  - f4e3:117d:3857:870:d854:1ddb:ef90:66f1
+  - lynnwilliams@example.com
+  - rhys95
+LLM set:
+  - lynnwilliams@example.com
+  - rhys95
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 0
+  Only in dataset (FN): 3
+Adjusted counts → TP: 2 | FP: 0 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "email",
+            "text": "lynnwilliams@example.com"
+        },
+        {
+            "label": "user_name",
+            "text": "rhys95"
+        }
+    ]
+}
+
+--- Audit #13 | Dataset line: 27 ---
+Input:
+  Effective 03/03/1982, customer CUST8572299 at 59565 Silva Prairie, Munger, was charged at 12:45:33.226001 on the date 1982/03/11.
+Dataset set:
+  - 03/03/1982
+  - 12:45:33.226001
+  - 1982/03/11
+  - 59565 Silva Prairie
+  - CUST8572299
+  - Munger
+LLM set:
+  - 03/03/1982
+  - 1982/03/11
+  - 59565 Silva Prairie
+  - Munger
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 0
+  Only in dataset (FN): 2
+Adjusted counts → TP: 4 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "date",
+            "text": "03/03/1982"
+        },
+        {
+            "label": "date",
+            "text": "1982/03/11"
+        },
+        {
+            "label": "address",
+            "text": "59565 Silva Prairie"
+        },
+        {
+            "label": "address",
+            "text": "Munger"
+        }
+    ]
+}
+
+--- Audit #14 | Dataset line: 28 ---
+Input:
+  <Device>
+  <DeviceID>A19023156139</DeviceID>
+  <UserName>tw_derek469</UserName>
+  <DateOfBirth>1962-08-16</DateOfBirth>
+  <SensorType>Fingerprint</SensorType>
+  <EnrollmentParams>10, 100</EnrollmentParams>
+  <FeatureExtraction>DCT</FeatureExtraction>
+</Device>
+Dataset set:
+  - 1962-08-16
+  - A19023156139
+  - tw_derek469
+LLM set:
+  - 1962-08-16
+  - A19023156139
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 2 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "SSN", 
+            "text": "A19023156139"
+        },
+        {
+            "label": "DateOfBirth", 
+            "text": "1962-08-16"
+        }
+    ]
+}
+
+--- Audit #15 | Dataset line: 30 ---
+Input:
+  **Bill of Lading**
+- Shipper: Mr. Joy Gutierrez
+- Phone: 8199950189
+- Address: 539 Iyengar, Kulti
+- Consignee: Not specified
+- Notify Party: Not specified
+- Goods: Not specified
+- Quantities, Weights, Dimensions: Not specified
+- Special Instructions: Vehicle with license plate TS74880734
+- Terms of Carriage: Not specified
+Dataset set:
+  - 539 Iyengar, Kulti
+  - 8199950189
+  - Mr. Joy Gutierrez
+  - TS74880734
+LLM set:
+  - 539 Iyengar, Kulti
+  - 8199950189
+  - Mr. Joy Gutierrez
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Mr. Joy Gutierrez"
+        },
+        {
+            "label": "phone",
+            "text": "8199950189"
+        },
+        {
+            "label": "address",
+            "text": "539 Iyengar, Kulti"
+        }
+    ]
+}
+
+--- Audit #16 | Dataset line: 33 ---
+Input:
+  Service Review for Customer ID D5990015 (R140645) from 2010/08/12. Contact: ycarrillo@example.org, MRN: MED84969521.
+Dataset set:
+  - 2010/08/12
+  - D5990015
+  - MED84969521
+  - R140645
+  - ycarrillo@example.org
+LLM set:
+  - 2010/08/12
+  - MED84969521
+  - ycarrillo@example.org
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 0
+  Only in dataset (FN): 2
+Adjusted counts → TP: 3 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Email",
+            "text": "ycarrillo@example.org"
+        },
+        {
+            "label": "MRN",
+            "text": "MED84969521"
+        },
+        {
+            "label": "Date",
+            "text": "2010/08/12"
+        }
+    ]
+}
+
+--- Audit #17 | Dataset line: 34 ---
+Input:
+  During the audit period from 04.04.2015 to 04.04.2016, IP address 168.108.109.164 was found to have accessed patient record MRN-973445, which is a violation of our data privacy policy. Employee J-927907-G was logged in at the time of access.
+Dataset set:
+  - 04.04.2015
+  - 168.108.109.164
+  - J-927907-G
+  - MRN-973445
+LLM set:
+  - 04.04.2015
+  - 04.04.2016
+  - 168.108.109.164
+  - J-927907-G
+  - MRN-973445
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 1
+  Only in dataset (FN): 0
+Adjusted counts → TP: 4 | FP: 1 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "04.04.2015"
+        },
+        {
+            "label": "Date",
+            "text": "04.04.2016"
+        },
+        {
+            "label": "IP address",
+            "text": "168.108.109.164"
+        },
+        {
+            "label": "Patient identifier",
+            "text": "MRN-973445"
+        },
+        {
+            "label": "Employee identifier",
+            "text": "J-927907-G"
+        }
+    ]
+}
+
+--- Audit #18 | Dataset line: 37 ---
+Input:
+  **EMPLOYMENT CONTRACT**
+
+This Employment Contract is entered into on January 1, 2023, between Jennifer Aguilar-Harris, the Employee, with Social Security Number 356 402 586 and Medical Record Number I5514722, and [Employer's Name], the Employer.
+Dataset set:
+  - 356 402 586
+  - Aguilar-Harris
+  - I5514722
+  - Jennifer
+LLM set:
+  - 356 402 586
+  - I5514722
+  - January 1, 2023
+  - Jennifer Aguilar-Harris
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 2
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 2 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Name",
+            "text": "Jennifer Aguilar-Harris"
+        },
+        {
+            "label": "Social Security Number",
+            "text": "356 402 586"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "I5514722"
+        },
+        {
+            "label": "Date",
+            "text": "January 1, 2023"
+        }
+    ]
+}
+
+--- Audit #19 | Dataset line: 38 ---
+Input:
+  Biometric performance evaluation for system MED65595483, tested on individuals including Beth Mullins-Heath, DOB 1937-06-15, and MED6178165, DOB 1948-10-29, showed enrollment matching rates exceeding 99%.
+Dataset set:
+  - 1937-06-15
+  - 1948-10-29
+  - Beth
+  - MED6178165
+  - MED65595483
+  - Mullins-Heath
+LLM set:
+  - 1937-06-15
+  - 1948-10-29
+  - Beth Mullins-Heath
+  - MED6178165
+  - MED65595483
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 4 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Personal identification number",
+            "text": "MED65595483"
+        },
+        {
+            "label": "Date of birth",
+            "text": "1937-06-15"
+        },
+        {
+            "label": "Name",
+            "text": "Beth Mullins-Heath"
+        },
+        {
+            "label": "Date of birth",
+            "text": "1948-10-29"
+        },
+        {
+            "label": "Personal identification number",
+            "text": "MED6178165"
+        }
+    ]
+}
+
+--- Audit #20 | Dataset line: 39 ---
+Input:
+  Threat Assessment: Vehicle with license plate Z81130159, registered to SSN 052 253 861, DOB 1940-06-16, poses elevated risk. Medical records MRN-548084 link subject to suspicious activities. Vehicle with license plate RK42912583, registered to SSN 247 207 665, requires further investigation.
+Dataset set:
+  - 052 253 861
+  - 1940-06-16
+  - 247 207 665
+  - MRN-548084
+  - RK42912583
+  - Z81130159
+LLM set:
+  - 052 253 861
+  - 1940-06-16
+  - 247 207 665
+  - RK42912583
+  - Z81130159
+Diff (strict):
+  In both (TP): 5
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 5 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "SSN", "text": "052 253 861"
+        },
+        {
+            "label": "DOB", "text": "1940-06-16"
+        },
+        {
+            "label": "License Plate", "text": "Z81130159"
+        },
+        {
+            "label": "SSN", "text": "247 207 665"
+        },
+        {
+            "label": "DOB", "text": "1940-06-16"
+        },
+        {
+            "label": "License Plate", "text": "RK42912583"
+        }
+    ]
+}
+
+--- Audit #21 | Dataset line: 41 ---
+Input:
+  Complaint Form - 1657795349
+Complainant: Pushti Lewis-Marshall
+Date of Birth: 1949-12-21
+Contact Number: 1 (186) 115-8024
+Issue Description: Noise complaint from Natalie's residence.
+Dataset set:
+  - 1 (186) 115-8024
+  - 1657795349
+  - 1949-12-21
+  - Lewis-Marshall
+  - Natalie
+  - Pushti
+LLM set:
+  - 1 (186) 115-8024
+  - 1949-12-21
+  - Pushti Lewis-Marshall
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 4
+Adjusted counts → TP: 2 | FP: 1 | FN: 4
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Name",
+            "text": "Pushti Lewis-Marshall"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "1949-12-21"
+        },
+        {
+            "label": "Contact Number",
+            "text": "1 (186) 115-8024"
+        }
+    ]
+}
+
+--- Audit #22 | Dataset line: 42 ---
+Input:
+  The property at 135 Frank Flat, 49/ is in good condition, with comparable sales in the area including 89887 Dalton Island, J3X 1C4, Lake Robertchester. Michelle Lopez, the appraiser, can be reached at 174.225.5752. License plate UH10246598 was observed in the vicinity.
+Dataset set:
+  - 135 Frank Flat, 49/
+  - 174.225.5752
+  - 89887 Dalton Island, J3X 1C4, Lake Robertchester
+  - Michelle Lopez
+  - UH10246598
+LLM set:
+  - 135 Frank Flat, 49/
+  - 174.225.5752
+  - 89887
+  - J3X 1C4
+  - Lake Robertchester
+  - UH10246598
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 3
+  Only in dataset (FN): 2
+Adjusted counts → TP: 3 | FP: 3 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Address", "text": "135 Frank Flat, 49/"
+        },
+        {
+            "label": "Postal Code", "text": "89887"
+        },
+        {
+            "label": "Postal Code", "text": "J3X 1C4"
+        },
+        {
+            "label": "Postal Code", "text": "Lake Robertchester"
+        },
+        {
+            "label": "Phone Number", "text": "174.225.5752"
+        },
+        {
+            "label": "License Plate", "text": "UH10246598"
+        }
+    ]
+}
+
+--- Audit #23 | Dataset line: 45 ---
+Input:
+  All users must adhere to the following password policy. Passwords must contain at least 12 characters, including a mix of uppercase and lowercase letters, numbers, and special characters. They must not contain any part of the user's name or username. For example, 'emma_1941' or 'amanda_248' are not acceptable passwords. The password '7X6OygsRVFi$E@vu+(' meets these requirements. Passwords must be changed every 90 days. After three failed login attempts, the account will be locked for 30 minutes. This policy applies to all users, including those with SSN 556-22-3426. Exceptions may be made for users with specific security clearance, such as those with email addresses 'simonbrian@example.net' or 'adamsapril@example.net'.
+Dataset set:
+  - 556-22-3426
+  - 7X6OygsRVFi$E@vu+(
+  - adamsapril@example.net
+  - amanda_248
+  - emma_1941
+  - simonbrian@example.net
+LLM set:
+  - 556-22-3426
+  - adamsapril@example.net
+  - simonbrian@example.net
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 0
+  Only in dataset (FN): 3
+Adjusted counts → TP: 3 | FP: 0 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "email",
+            "text": "simonbrian@example.net"
+        },
+        {
+            "label": "email",
+            "text": "adamsapril@example.net"
+        },
+        {
+            "label": "SSN",
+            "text": "556-22-3426"
+        }
+    ]
+}
+
+--- Audit #24 | Dataset line: 47 ---
+Input:
+  **Customer Onboarding Form**
+
+- **First Name:** Jackie
+- **Last Name:** Arellano-Wheeler
+- **Date of Birth:** 2019-06-09
+- **Social Security Number:** 132-63-6009
+Dataset set:
+  - 132-63-6009
+  - 2019-06-09
+  - Arellano-Wheeler
+  - Jackie
+LLM set:
+  - 132-63-6009
+  - 2019-06-09
+  - Jackie Arellano-Wheeler
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full Name",
+            "text": "Jackie Arellano-Wheeler"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "2019-06-09"
+        },
+        {
+            "label": "Social Security Number",
+            "text": "132-63-6009"
+        }
+    ]
+}
+
+--- Audit #25 | Dataset line: 48 ---
+Input:
+  **Title:** Improved Medical Record Access
+**Description:** Enhance our medical records system to allow employees to access their records via IPv6 addresses.
+**Priority:** High
+**Affected Components:** Medical Records System, Employee Portal
+**Acceptance Criteria:**
+1. Employees can access their medical records using their employee ID (e.g., F1957083, D-163781-H) and medical record number (e.g., L3894141).
+2. The system supports IPv6 addresses for employee login (e.g., b829:c0a0:2e01:44e3:457d:1401:9a57:989, 1e38:d6c2:8c43:2e42:f5a0:2683:ac39:fde3).
+3. The system verifies employee identity using their date of birth (e.g., 1961-11-15, 1910-07-13).
+Dataset set:
+  - 1910-07-13
+  - 1961-11-15
+  - 1e38:d6c2:8c43:2e42:f5a0:2683:ac39:fde3
+  - D-163781-H
+  - F1957083
+  - L3894141
+  - b829:c0a0:2e01:44e3:457d:1401:9a57:989
+LLM set:
+  - 1910-07-13
+  - 1961-11-15
+  - D-163781-H
+  - F1957083
+  - L3894141
+Diff (strict):
+  In both (TP): 5
+  Only in LLM (FP): 0
+  Only in dataset (FN): 2
+Adjusted counts → TP: 5 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Employee ID", "text": "F1957083"
+        },
+        {
+            "label": "Employee ID", "text": "D-163781-H"
+        },
+        {
+            "label": "Medical Record Number", "text": "L3894141"
+        },
+        {
+            "label": "Date of Birth", "text": "1961-11-15"
+        },
+        {
+            "label": "Date of Birth", "text": "1910-07-13"
+        }
+    ]
+}
+
+--- Audit #26 | Dataset line: 49 ---
+Input:
+  Policyholder: Jill Bailey-King, SSN: ZZ 783444 T, Medical Record Number: MRN-958826.
+Dataset set:
+  - Bailey-King
+  - Jill
+  - MRN-958826
+  - ZZ 783444 T
+LLM set:
+  - Jill Bailey-King
+  - MRN-958826
+  - ZZ 783444 T
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Jill Bailey-King"
+        },
+        {
+            "label": "SSN",
+            "text": "ZZ 783444 T"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "MRN-958826"
+        }
+    ]
+}
+
+--- Audit #27 | Dataset line: 50 ---
+Input:
+  **Warrant of Arrest**
+
+Case No: 2023-CR-001
+Defendant: Jeremy J. Smith
+DOB: 1984-11-13
+Address: 6322 Mark River, Roybury, Sudan
+SSN: 748-78-5956
+Charges: Unlawful Possession of a Firearm
+Warrant No: GA-2023-001
+Issued by: Mr. Jill Snow, Judge
+Dataset set:
+  - 1984-11-13
+  - 6322 Mark River, Roybury, Sudan
+  - 748-78-5956
+  - Jeremy J. Smith
+  - Mr. Jill Snow
+LLM set:
+  - 1984-11-13
+  - 2023-CR-001
+  - 6322 Mark River, Roybury, Sudan
+  - 748-78-5956
+  - GA-2023-001
+  - Jeremy J. Smith
+  - Mr. Jill Snow, Judge
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 3
+  Only in dataset (FN): 1
+Adjusted counts → TP: 4 | FP: 3 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Case No",
+            "text": "2023-CR-001"
+        },
+        {
+            "label": "Defendant",
+            "text": "Jeremy J. Smith"
+        },
+        {
+            "label": "DOB",
+            "text": "1984-11-13"
+        },
+        {
+            "label": "Address",
+            "text": "6322 Mark River, Roybury, Sudan"
+        },
+        {
+            "label": "SSN",
+            "text": "748-78-5956"
+        },
+        {
+            "label": "Warrant No",
+            "text": "GA-2023-001"
+        },
+        {
+            "label": "Issued by",
+            "text": "Mr. Jill Snow, Judge"
+        }
+    ]
+}
+
+--- Audit #28 | Dataset line: 52 ---
+Input:
+  Title Insurance Policy for Ind. Kimberly Nelson, effective 2001-04-10, covering the property at 18 Shane oval, Clarkview.
+Dataset set:
+  - 18 Shane oval, Clarkview
+  - 2001-04-10
+  - Ind. Kimberly Nelson
+LLM set:
+  - 18 Shane oval, Clarkview
+  - 2001-04-10
+  - Kimberly Nelson
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 1
+Adjusted counts → TP: 2 | FP: 1 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Kimberly Nelson"
+        },
+        {
+            "label": "date",
+            "text": "2001-04-10"
+        },
+        {
+            "label": "address",
+            "text": "18 Shane oval, Clarkview"
+        }
+    ]
+}
+
+--- Audit #29 | Dataset line: 54 ---
+Input:
+  Subject's Social Security Numbers: 522-25-8195, ZZ 45 05 74 T. Date of Birth: 2011-06-02. Medical Record Numbers: F2438543, MRN-606766. License Plate: X65240693.
+Dataset set:
+  - 2011-06-02
+  - 522-25-8195
+  - F2438543
+  - MRN-606766
+  - X65240693
+  - ZZ 45 05 74 T
+LLM set:
+  - 2011-06-02
+  - 522-25-8195
+  - F2438543
+  - MRN-606766
+  - X65240693
+Diff (strict):
+  In both (TP): 5
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 5 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Social Security Number",
+            "text": "522-25-8195"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "2011-06-02"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "F2438543"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "MRN-606766"
+        },
+        {
+            "label": "License Plate",
+            "text": "X65240693"
+        }
+    ]
+}
+
+--- Audit #30 | Dataset line: 55 ---
+Input:
+  Customer profile for Maria Meghan Sundaram. Email: bford@example.org. Customer IDs: P845746-Vb, C129-5599-861.
+Dataset set:
+  - C129-5599-861
+  - Maria
+  - Meghan
+  - P845746-Vb
+  - Sundaram
+  - bford@example.org
+LLM set:
+  - C129-5599-861
+  - Maria Meghan Sundaram
+  - P845746-Vb
+  - bford@example.org
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 3
+Adjusted counts → TP: 3 | FP: 1 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Maria Meghan Sundaram"
+        },
+        {
+            "label": "email",
+            "text": "bford@example.org"
+        },
+        {
+            "label": "customer_id",
+            "text": "P845746-Vb"
+        },
+        {
+            "label": "customer_id",
+            "text": "C129-5599-861"
+        }
+    ]
+}
+
+--- Audit #31 | Dataset line: 57 ---
+Input:
+  Case Report ID: E9473003. Patient: Janet Huber-Martinez, DOB: 1975-05-03.
+Dataset set:
+  - 1975-05-03
+  - E9473003
+  - Huber-Martinez
+  - Janet
+LLM set:
+  - 1975-05-03
+  - Janet Huber-Martinez
+Diff (strict):
+  In both (TP): 1
+  Only in LLM (FP): 1
+  Only in dataset (FN): 3
+Adjusted counts → TP: 1 | FP: 1 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Name",
+            "text": "Janet Huber-Martinez"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "1975-05-03"
+        }
+    ]
+}
+
+--- Audit #32 | Dataset line: 58 ---
+Input:
+  **Diploma Certificate**
+
+This is to certify that Shelby Randhawa-Raman has successfully completed the course and is hereby awarded a Diploma. Course Title: Not Specified. Date of Award: 03/26/2022. Medical Record Numbers: MED80308095, A2090862.
+Dataset set:
+  - 03/26/2022
+  - A2090862
+  - MED80308095
+  - Randhawa-Raman
+  - Shelby
+LLM set:
+  - 03/26/2022
+  - A2090862
+  - MED80308095
+  - Shelby Randhawa-Raman
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 3 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Name",
+            "text": "Shelby Randhawa-Raman"
+        },
+        {
+            "label": "Date",
+            "text": "03/26/2022"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "MED80308095"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "A2090862"
+        }
+    ]
+}
+
+--- Audit #33 | Dataset line: 59 ---
+Input:
+  Dear Bradley Lopez,
+
+We are pleased to inform you that you have been promoted to a new position within our company. Your employee ID is E654828 and your date of birth is 1990-11-21. Your new role will commence on [effective date]. We look forward to your continued success with us.
+
+Sincerely,
+[Manager's Name]
+Dataset set:
+  - 1990-11-21
+  - Bradley
+  - E654828
+  - Lopez
+LLM set:
+  - 1990-11-21
+  - Bradley Lopez
+  - E654828
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Name",
+            "text": "Bradley Lopez"
+        },
+        {
+            "label": "Employee ID",
+            "text": "E654828"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "1990-11-21"
+        }
+    ]
+}
+
+--- Audit #34 | Dataset line: 60 ---
+Input:
+  Applicant: Matthew Karpe, 249 Deborah Ride, 2987, Richardville
+Dataset set:
+  - 249 Deborah Ride, 2987, Richardville
+  - Karpe
+  - Matthew
+LLM set:
+  - 249 Deborah Ride
+  - 2987
+  - Matthew Karpe
+  - Richardville
+Diff (strict):
+  In both (TP): 0
+  Only in LLM (FP): 4
+  Only in dataset (FN): 3
+Adjusted counts → TP: 1 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Matthew Karpe"
+        },
+        {
+            "label": "address",
+            "text": "249 Deborah Ride"
+        },
+        {
+            "label": "address",
+            "text": "2987"
+        },
+        {
+            "label": "address",
+            "text": "Richardville"
+        }
+    ]
+}
+
+--- Audit #35 | Dataset line: 61 ---
+Input:
+  Distributor agrees to pay Producer, a company with principal place of business at 12345 Finley St, Joan Finley-Gross, SSN ZZ 32 90 72 T, a bank routing number of 988979633, within 30 days of delivery of the media content.
+Dataset set:
+  - 988979633
+  - Finley-Gross
+  - Joan
+  - ZZ 32 90 72 T
+LLM set:
+  - 12345 Finley St
+  - 988979633
+  - Joan Finley-Gross
+  - ZZ 32 90 72 T
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 2
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 2 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Address",
+            "text": "12345 Finley St"
+        },
+        {
+            "label": "Name",
+            "text": "Joan Finley-Gross"
+        },
+        {
+            "label": "SSN",
+            "text": "ZZ 32 90 72 T"
+        },
+        {
+            "label": "Bank Routing Number",
+            "text": "988979633"
+        }
+    ]
+}
+
+--- Audit #36 | Dataset line: 62 ---
+Input:
+  Lab Test Result for Upadhriti Khalsa-Dave, DOB: 1919-08-20, MRN: MRN-948256.
+Dataset set:
+  - 1919-08-20
+  - Khalsa-Dave
+  - MRN-948256
+  - Upadhriti
+LLM set:
+  - 1919-08-20
+  - MRN-948256
+  - Upadhriti Khalsa-Dave
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Upadhriti Khalsa-Dave"
+        },
+        {
+            "label": "dob",
+            "text": "1919-08-20"
+        },
+        {
+            "label": "mrn",
+            "text": "MRN-948256"
+        }
+    ]
+}
+
+--- Audit #37 | Dataset line: 64 ---
+Input:
+  Transaction History Report for Customer ID O22-F1961-Qe (CUST4688477) - Friday, May 11, 1973 - Bank Routing Number 370840444
+Dataset set:
+  - 370840444
+  - CUST4688477
+  - Friday, May 11, 1973
+  - O22-F1961-Qe
+LLM set:
+  - 370840444
+  - Friday, May 11, 1973
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 0
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "Friday, May 11, 1973"
+        },
+        {
+            "label": "Bank Routing Number",
+            "text": "370840444"
+        }
+    ]
+}
+
+--- Audit #38 | Dataset line: 66 ---
+Input:
+  **Requestor's Details:**
+- **First Name:** Lynne
+- **Last Name:** Baker
+- **Employee ID:** Z8388744
+- **Email:** amber09@example.org
+Dataset set:
+  - Baker
+  - Lynne
+  - Z8388744
+  - amber09@example.org
+LLM set:
+  - Lynne Baker
+  - Z8388744
+  - amber09@example.org
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full Name",
+            "text": "Lynne Baker"
+        },
+        {
+            "label": "Employee ID",
+            "text": "Z8388744"
+        },
+        {
+            "label": "Email",
+            "text": "amber09@example.org"
+        }
+    ]
+}
+
+--- Audit #39 | Dataset line: 68 ---
+Input:
+  Runway 12/30, 2,743 meters long, intersects taxiway Alpha at coordinates 56.553299, -26.524318.
+Dataset set:
+  - 56.553299, -26.524318
+LLM set:
+  - 2,743 meters
+  - 56.553299, -26.524318
+  - Runway 12/30
+Diff (strict):
+  In both (TP): 1
+  Only in LLM (FP): 2
+  Only in dataset (FN): 0
+Adjusted counts → TP: 1 | FP: 2 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Airport runway",
+            "text": "Runway 12/30"
+        },
+        {
+            "label": "Length",
+            "text": "2,743 meters"
+        },
+        {
+            "label": "Coordinates",
+            "text": "56.553299, -26.524318"
+        }
+    ]
+}
+
+--- Audit #40 | Dataset line: 69 ---
+Input:
+  **No Claim Certificate**
+**Policyholder:** Kristen Hale
+**Date of Birth:** 2002-02-26
+**License Plate:** WG19772720
+Dataset set:
+  - 2002-02-26
+  - Hale
+  - Kristen
+  - WG19772720
+LLM set:
+  - 2002-02-26
+  - Kristen Hale
+  - WG19772720
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Kristen Hale"
+        },
+        {
+            "label": "date_of_birth",
+            "text": "2002-02-26"
+        },
+        {
+            "label": "license_plate",
+            "text": "WG19772720"
+        }
+    ]
+}
+
+--- Audit #41 | Dataset line: 70 ---
+Input:
+  MED46187229 was manufactured by Chapman PLC in TAS, with clinical trials conducted by Smith-Taylor. Subjects were born on 2024-09-08 and 1991-08-29.
+Dataset set:
+  - 1991-08-29
+  - 2024-09-08
+  - Chapman PLC
+  - MED46187229
+  - Smith-Taylor
+  - TAS
+LLM set:
+  - 1991-08-29
+  - 2024-09-08
+  - MED46187229
+  - TAS
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 0
+  Only in dataset (FN): 2
+Adjusted counts → TP: 4 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "SSN",
+            "text": "MED46187229"
+        },
+        {
+            "label": "Date",
+            "text": "2024-09-08"
+        },
+        {
+            "label": "Date",
+            "text": "1991-08-29"
+        },
+        {
+            "label": "Address",
+            "text": "TAS"
+        }
+    ]
+}
+
+--- Audit #42 | Dataset line: 71 ---
+Input:
+  Data categories to be transferred include date of birth (1932-10-14), health plan beneficiary numbers (G934357132, I788256308), and IP address (79.252.9.102). Social Security Number (ZZ 88 68 06 T) will not be transferred. Purpose of transfer is data processing and analytics. Retention period is five years. Data subjects retain rights to access, correct, and delete their data.
+Dataset set:
+  - 1932-10-14
+  - 79.252.9.102
+  - G934357132
+  - I788256308
+  - ZZ 88 68 06 T
+LLM set:
+  - 1932-10-14
+  - 79.252.9.102
+  - G934357132
+  - I788256308
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 4 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date of Birth",
+            "text": "1932-10-14"
+        },
+        {
+            "label": "Health Plan Beneficiary Number",
+            "text": "G934357132"
+        },
+        {
+            "label": "Health Plan Beneficiary Number",
+            "text": "I788256308"
+        },
+        {
+            "label": "IP Address",
+            "text": "79.252.9.102"
+        }
+    ]
+}
+
+--- Audit #43 | Dataset line: 72 ---
+Input:
+  **Leave Application**
+**Employee Name:** Jasmin Taylor-Brooks
+**Employee ID:** K3509261
+**Date of Birth:** 1956-11-19
+**Dates of Absence:** 2023-03-01 to 2023-03-05
+**Reason for Leave:** Personal
+Dataset set:
+  - 1956-11-19
+  - Jasmin
+  - K3509261
+  - Taylor-Brooks
+LLM set:
+  - 1956-11-19
+  - 2023-03-01 to 2023-03-05
+  - Jasmin Taylor-Brooks
+  - K3509261
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 2
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 2 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full or partial name",
+            "text": "Jasmin Taylor-Brooks"
+        },
+        {
+            "label": "Personal identification number",
+            "text": "K3509261"
+        },
+        {
+            "label": "Date of birth",
+            "text": "1956-11-19"
+        },
+        {
+            "label": "Dates of absence",
+            "text": "2023-03-01 to 2023-03-05"
+        }
+    ]
+}
+
+--- Audit #44 | Dataset line: 73 ---
+Input:
+  Complaint Form submitted by Adam Moss. Contact: candice71@example.org. SSN: 450 458 237. Issue: Non-compliance with regulatory standards.
+Dataset set:
+  - 450 458 237
+  - Adam
+  - Moss
+  - candice71@example.org
+LLM set:
+  - 450 458 237
+  - Adam Moss
+  - candice71@example.org
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Adam Moss"
+        },
+        {
+            "label": "email",
+            "text": "candice71@example.org"
+        },
+        {
+            "label": "ssn",
+            "text": "450 458 237"
+        }
+    ]
+}
+
+--- Audit #45 | Dataset line: 74 ---
+Input:
+  **Date: 1998/04/11, Time: 23:37:35.841958, Position: Latitude: 20.808327, Longitude: 146.461523, Weather: Clear, Course: 270°, Speed: 15 knots, Log: Routine maintenance on engine MED56565774.**
+Dataset set:
+  - 1998/04/11
+  - 23:37:35.841958
+  - Latitude: 20.808327, Longitude: 146.461523
+  - MED56565774
+LLM set:
+  - 15 knots
+  - 1998/04/11
+  - 23:37:35.841958
+  - 270°
+  - Clear
+  - Latitude: 20.808327, Longitude: 146.461523
+  - Routine maintenance on engine MED56565774
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 4
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 4 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "1998/04/11"
+        },
+        {
+            "label": "Time",
+            "text": "23:37:35.841958"
+        },
+        {
+            "label": "Position",
+            "text": "Latitude: 20.808327, Longitude: 146.461523"
+        },
+        {
+            "label": "Weather",
+            "text": "Clear"
+        },
+        {
+            "label": "Course",
+            "text": "270°"
+        },
+        {
+            "label": "Speed",
+            "text": "15 knots"
+        },
+        {
+            "label": "Log",
+            "text": "Routine maintenance on engine MED56565774"
+        }
+    ]
+}
+
+--- Audit #46 | Dataset line: 75 ---
+Input:
+  **Cloud Storage Service** - Provided by Azure, priced at $0.025 per GB per month. SLA: 99.9% uptime. Support: +44(0)1144960027, collinsmelissa@example.com. Customer ID: C244-8230-810. Service located at 039 Holloway Round, 2950, Lake Douglas.
+Dataset set:
+  - +44(0)1144960027
+  - 039 Holloway Round, 2950, Lake Douglas
+  - C244-8230-810
+  - collinsmelissa@example.com
+LLM set:
+  - $0.025 per GB per month
+  - +44(0)1144960027
+  - 039 Holloway Round, 2950, Lake Douglas
+  - Azure
+  - C244-8230-810
+  - collinsmelissa@example.com
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 2
+  Only in dataset (FN): 0
+Adjusted counts → TP: 4 | FP: 2 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Organization",
+            "text": "Azure"
+        },
+        {
+            "label": "Price",
+            "text": "$0.025 per GB per month"
+        },
+        {
+            "label": "Contact",
+            "text": "+44(0)1144960027"
+        },
+        {
+            "label": "Email",
+            "text": "collinsmelissa@example.com"
+        },
+        {
+            "label": "Customer ID",
+            "text": "C244-8230-810"
+        },
+        {
+            "label": "Address",
+            "text": "039 Holloway Round, 2950, Lake Douglas"
+        }
+    ]
+}
+
+--- Audit #47 | Dataset line: 77 ---
+Input:
+  **DEATH CERTIFICATE**
+
+- **Date of Death:** 1967-04-20
+- **Decedent's Information:**
+  - **Name:** U4666571
+  - **Date of Birth:** 1969-02-28
+  - **Social Security Number:** 520-45-5722
+  - **License Plate:** 02-408192-57
+- **Cause of Death:** [To be specified by attending physician]
+- **Attending Physician:** [Signature block]
+- **Registrar:** [Signature block]
+Dataset set:
+  - 02-408192-57
+  - 1967-04-20
+  - 1969-02-28
+  - 520-45-5722
+  - U4666571
+LLM set:
+  - 02-408192-57
+  - 1967-04-20
+  - 1969-02-28
+  - 520-45-5722
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 4 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date of Death",
+            "text": "1967-04-20"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "1969-02-28"
+        },
+        {
+            "label": "Social Security Number",
+            "text": "520-45-5722"
+        },
+        {
+            "label": "License Plate",
+            "text": "02-408192-57"
+        }
+    ]
+}
+
+--- Audit #48 | Dataset line: 79 ---
+Input:
+  On May 15, 2023, our organization experienced an unauthorized access incident, affecting two individuals: Benjamin Mitchell (SSN: 876-71-2791) and Christine Smith-Hernandez (SSN: 413 588 039). The breach involved the exposure of their medical records (MRN: V3363705). Immediate corrective actions included securing the affected data, notifying the individuals, and reviewing and reinforcing security protocols.
+Dataset set:
+  - 413 588 039
+  - 876-71-2791
+  - Benjamin
+  - Christine
+  - Mitchell
+  - Smith-Hernandez
+  - V3363705
+LLM set:
+  - 413 588 039
+  - 876-71-2791
+  - Benjamin Mitchell
+  - Christine Smith-Hernandez
+  - MRN: V3363705
+  - May 15, 2023
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 4
+  Only in dataset (FN): 5
+Adjusted counts → TP: 2 | FP: 4 | FN: 5
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "May 15, 2023"
+        },
+        {
+            "label": "Name",
+            "text": "Benjamin Mitchell"
+        },
+        {
+            "label": "SSN",
+            "text": "876-71-2791"
+        },
+        {
+            "label": "Name",
+            "text": "Christine Smith-Hernandez"
+        },
+        {
+            "label": "SSN",
+            "text": "413 588 039"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "MRN: V3363705"
+        }
+    ]
+}
+
+--- Audit #49 | Dataset line: 83 ---
+Input:
+  POD ID: ID-875-Y, Delivered to Q8339T314 at 86.594007, -47.366755 on 1993-01-10 19:46:03.
+Dataset set:
+  - 1993-01-10 19:46:03
+  - 86.594007, -47.366755
+  - ID-875-Y
+  - Q8339T314
+LLM set:
+  - 1993-01-10
+  - 19:46:03
+  - 86.594007, -47.366755
+Diff (strict):
+  In both (TP): 1
+  Only in LLM (FP): 2
+  Only in dataset (FN): 3
+Adjusted counts → TP: 2 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Address",
+            "text": "86.594007, -47.366755"
+        },
+        {
+            "label": "Date",
+            "text": "1993-01-10"
+        },
+        {
+            "label": "Time",
+            "text": "19:46:03"
+        }
+    ]
+}
+
+--- Audit #50 | Dataset line: 85 ---
+Input:
+  **Packing Slip**
+**Order #:** 12345
+**Customer ID:** Ri-61100
+**Ship To:**
+4 Marcus Highroad, Lisaview
+**Phone:** (680) 542-2823
+**Date:** 2024-01-14
+**Items:**
+- SKU123, Quantity: 2
+- SKU456, Quantity: 1
+**Barcode:** 1234567890
+Dataset set:
+  - (680) 542-2823
+  - 2024-01-14
+  - 4 Marcus Highroad, Lisaview
+  - Ri-61100
+LLM set:
+  - (680) 542-2823
+  - 12345
+  - 2024-01-14
+  - 4 Marcus Highroad, Lisaview
+  - Ri-61100
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 1
+  Only in dataset (FN): 0
+Adjusted counts → TP: 4 | FP: 1 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Order Number", 
+            "text": "12345"
+        },
+        {
+            "label": "Customer ID", 
+            "text": "Ri-61100"
+        },
+        {
+            "label": "Address", 
+            "text": "4 Marcus Highroad, Lisaview"
+        },
+        {
+            "label": "Phone", 
+            "text": "(680) 542-2823"
+        },
+        {
+            "label": "Date", 
+            "text": "2024-01-14"
+        }
+    ]
+}
+
+--- Audit #51 | Dataset line: 86 ---
+Input:
+  **Packing List**
+| Item Description | Quantity | Dimensions (LxWxH) | Weight (kg) | Special Instructions |
+| --- | --- | --- | --- | --- |
+| Crate of electronics | 1 | 120x60x60 cm | 25 | Fragile, Handle with care |
+| Pallet of machinery | 1 | 180x120x120 cm | 1000 | Heavy, Requires forklift |
+| **Destination:** Level 8 67 Schultz Pocket | **Customer ID:** H815-H9045-Ol | **License Plate:** HF06553821 | **Contact Email:** barbarabarbara90@example.com
+Dataset set:
+  - H815-H9045-Ol
+  - HF06553821
+  - Level 8 67 Schultz Pocket
+  - barbara90@example.com
+LLM set:
+  - H815-H9045-Ol
+  - HF06553821
+  - Level 8 67 Schultz Pocket
+  - barbarabarbara90@example.com
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 1 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Address",
+            "text": "Level 8 67 Schultz Pocket"
+        },
+        {
+            "label": "Customer ID",
+            "text": "H815-H9045-Ol"
+        },
+        {
+            "label": "License Plate",
+            "text": "HF06553821"
+        },
+        {
+            "label": "Contact Email",
+            "text": "barbarabarbara90@example.com"
+        }
+    ]
+}
+
+--- Audit #52 | Dataset line: 89 ---
+Input:
+  **Power Outage Report**
+
+**Incident ID:** Hb27796-A
+**Start Time:** 03:45 AM
+**End Time:** In Progress
+**Affected Area:** Tiruvottiyur, Karnal
+**Street Address:** 822 Sidhu Path, 053774, Karnal
+**Postcode:** LN0Y 4PT
+**Cause:** Storm Damage
+**Customers Impacted:** 2,500
+**Restoration Progress:** Crews are on-site assessing damage and restoring power.
+Dataset set:
+  - 822 Sidhu Path, 053774, Karnal
+  - Hb27796-A
+  - LN0Y 4PT
+  - Tiruvottiyur
+LLM set:
+  - 03:45 AM
+  - 2,500
+  - 822 Sidhu Path, 053774, Karnal
+  - Hb27796-A
+  - In Progress
+  - LN0Y 4PT
+  - Storm Damage
+  - Tiruvottiyur, Karnal
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 5
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 5 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Incident ID", "text": "Hb27796-A"
+        },
+        {
+            "label": "Start Time", "text": "03:45 AM"
+        },
+        {
+            "label": "End Time", "text": "In Progress"
+        },
+        {
+            "label": "Affected Area", "text": "Tiruvottiyur, Karnal"
+        },
+        {
+            "label": "Street Address", "text": "822 Sidhu Path, 053774, Karnal"
+        },
+        {
+            "label": "Postcode", "text": "LN0Y 4PT"
+        },
+        {
+            "label": "Cause", "text": "Storm Damage"
+        },
+        {
+            "label": "Customers Impacted", "text": "2,500"
+        }
+    ]
+}
+
+--- Audit #53 | Dataset line: 90 ---
+Input:
+  Our Service Level Agreement is effective from 2023-01-01, serving Customer ID CID-656935 with IP address 184.149.183.105. Medical Record Numbers Q8302691 and J9259680 are associated with this service. Employee ID Qu-37209 is responsible for service delivery.
+Dataset set:
+  - 184.149.183.105
+  - CID-656935
+  - J9259680
+  - Q8302691
+  - Qu-37209
+LLM set:
+  - 184.149.183.105
+  - 2023-01-01
+  - CID-656935
+  - J9259680
+  - Q8302691
+  - Qu-37209
+Diff (strict):
+  In both (TP): 5
+  Only in LLM (FP): 1
+  Only in dataset (FN): 0
+Adjusted counts → TP: 5 | FP: 1 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "2023-01-01"
+        },
+        {
+            "label": "Customer ID",
+            "text": "CID-656935"
+        },
+        {
+            "label": "IP address",
+            "text": "184.149.183.105"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "Q8302691"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "J9259680"
+        },
+        {
+            "label": "Employee ID",
+            "text": "Qu-37209"
+        }
+    ]
+}
+
+--- Audit #54 | Dataset line: 93 ---
+Input:
+  Sales Order CID-410603 dated 1990-10-10 for Customer at 4874 Leslie Falls, South Jaredstad, Phone: 08081570043.
+Dataset set:
+  - 08081570043
+  - 1990-10-10
+  - 4874 Leslie Falls, South Jaredstad
+  - CID-410603
+LLM set:
+  - 08081570043
+  - 1990-10-10
+  - 4874 Leslie Falls, South Jaredstad
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "1990-10-10"
+        },
+        {
+            "label": "Address",
+            "text": "4874 Leslie Falls, South Jaredstad"
+        },
+        {
+            "label": "Phone number",
+            "text": "08081570043"
+        }
+    ]
+}
+
+--- Audit #55 | Dataset line: 95 ---
+Input:
+  {
+  "payer": "zharrison@example.net",
+  "payee": "008 Martinez Glen Apt. 814",
+  "amount": "3576004872063987",
+  "currency": "USD",
+  "reference": "1941-05-02",
+  "payment_method": "Credit Card"
+}
+Dataset set:
+  - 008 Martinez Glen Apt. 814
+  - 1941-05-02
+  - 3576004872063987
+  - zharrison@example.net
+LLM set:
+  - 008 Martinez Glen Apt. 814
+  - 1941-05-02
+  - zharrison@example.net
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Email",
+            "text": "zharrison@example.net"
+        },
+        {
+            "label": "Address",
+            "text": "008 Martinez Glen Apt. 814"
+        },
+        {
+            "label": "Date",
+            "text": "1941-05-02"
+        }
+    ]
+}
+
+--- Audit #56 | Dataset line: 98 ---
+Input:
+  Upon review of Powell-Baker's financial statements for the period ending 310516715, we found an unexplained transaction on 1985-09-18 involving SSN 660-97-4530.
+Dataset set:
+  - 1985-09-18
+  - 310516715
+  - 660-97-4530
+  - Powell-Baker
+LLM set:
+  - 1985-09-18
+  - 660-97-4530
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 0
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "1985-09-18"
+        },
+        {
+            "label": "SSN",
+            "text": "660-97-4530"
+        }
+    ]
+}
+
+--- Audit #57 | Dataset line: 100 ---
+Input:
+  Quality Control measures implemented by Pushti Smith, Employee ID J-917196-G, for the production of MRN-884473.
+Dataset set:
+  - J-917196-G
+  - MRN-884473
+  - Pushti
+  - Smith
+LLM set:
+  - J-917196-G
+  - MRN-884473
+  - Pushti Smith
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Pushti Smith"
+        },
+        {
+            "label": "employee_id",
+            "text": "J-917196-G"
+        },
+        {
+            "label": "product_id",
+            "text": "MRN-884473"
+        }
+    ]
+}
+
+--- Audit #58 | Dataset line: 101 ---
+Input:
+  FGR received: Item Code F-160489-D, Quantity: 500, Lot/Batch: L2345, Manufacturing Date: 2023-03-15.
+Dataset set:
+  - F-160489-D
+LLM set:
+  - 2023-03-15
+  - 500
+  - F-160489-D
+  - L2345
+Diff (strict):
+  In both (TP): 1
+  Only in LLM (FP): 3
+  Only in dataset (FN): 0
+Adjusted counts → TP: 1 | FP: 3 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Item Code", 
+            "text": "F-160489-D"
+        },
+        {
+            "label": "Quantity", 
+            "text": "500"
+        },
+        {
+            "label": "Lot/Batch", 
+            "text": "L2345"
+        },
+        {
+            "label": "Manufacturing Date", 
+            "text": "2023-03-15"
+        }
+    ]
+}
+
+--- Audit #59 | Dataset line: 103 ---
+Input:
+  **Payment Receipt**
+
+**Invoice Number:** CID-659191
+**Date:** 07.07.1987
+**Consumer Details:** MRN-28765
+**Payment Method:** Credit Card (343797348725273)
+**Total Amount Due:** $123.45
+Dataset set:
+  - 07.07.1987
+  - 343797348725273
+  - CID-659191
+  - MRN-28765
+LLM set:
+  - 07.07.1987
+  - CID-659191
+  - Credit Card (343797348725273)
+  - MRN-28765
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 1 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Invoice Number",
+            "text": "CID-659191"
+        },
+        {
+            "label": "Date",
+            "text": "07.07.1987"
+        },
+        {
+            "label": "Consumer Details",
+            "text": "MRN-28765"
+        },
+        {
+            "label": "Payment Method",
+            "text": "Credit Card (343797348725273)"
+        }
+    ]
+}
+
+--- Audit #60 | Dataset line: 104 ---
+Input:
+  **Consignment Note**
+
+**Consignor:** Taylor Sanchez-Kelly
+**Address:** 522 Megan Crossing, New Elizabeth, 319955
+**Country:** South Georgia and the South Sandwich Islands
+**License Plate:** W05322609
+**Consignee:** [To be filled]
+**Goods Description:** [To be filled]
+**Quantity:** [To be filled]
+**Weight:** [To be filled]
+**Transport Mode:** [To be filled]
+Dataset set:
+  - 319955
+  - 522 Megan Crossing
+  - New Elizabeth
+  - Sanchez-Kelly
+  - South Georgia and the South Sandwich Islands
+  - Taylor
+  - W05322609
+LLM set:
+  - 319955
+  - 522 Megan Crossing, New Elizabeth, 319955
+  - South Georgia and the South Sandwich Islands
+  - Taylor Sanchez-Kelly
+  - W05322609
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 2
+  Only in dataset (FN): 4
+Adjusted counts → TP: 3 | FP: 2 | FN: 4
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full name",
+            "text": "Taylor Sanchez-Kelly"
+        },
+        {
+            "label": "Address",
+            "text": "522 Megan Crossing, New Elizabeth, 319955"
+        },
+        {
+            "label": "ZIP code",
+            "text": "319955"
+        },
+        {
+            "label": "Country",
+            "text": "South Georgia and the South Sandwich Islands"
+        },
+        {
+            "label": "License plate",
+            "text": "W05322609"
+        }
+    ]
+}
+
+--- Audit #61 | Dataset line: 105 ---
+Input:
+  Payment Date: 2012-10-02, Amount Paid: $3470.00, Payer: Cynthia Fleming-Newman, Payee: Medical Services Inc., Payment Method: Credit Card, Transaction ID: O4326046, Card Number: 347000048583290, Payment Date: Jul 05, 2008.
+Dataset set:
+  - 2012-10-02
+  - 347000048583290
+  - Cynthia Fleming-Newman
+  - Jul 05, 2008
+  - O4326046
+LLM set:
+  - $3470.00
+  - 2012-10-02
+  - 347000048583290
+  - Credit Card
+  - Cynthia Fleming-Newman
+  - Jul 05, 2008
+  - Medical Services Inc.
+  - O4326046
+Diff (strict):
+  In both (TP): 5
+  Only in LLM (FP): 3
+  Only in dataset (FN): 0
+Adjusted counts → TP: 5 | FP: 3 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "2012-10-02"
+        },
+        {
+            "label": "Amount",
+            "text": "$3470.00"
+        },
+        {
+            "label": "Name",
+            "text": "Cynthia Fleming-Newman"
+        },
+        {
+            "label": "Name",
+            "text": "Medical Services Inc."
+        },
+        {
+            "label": "Payment Method",
+            "text": "Credit Card"
+        },
+        {
+            "label": "Transaction ID",
+            "text": "O4326046"
+        },
+        {
+            "label": "Card Number",
+            "text": "347000048583290"
+        },
+        {
+            "label": "Date",
+            "text": "Jul 05, 2008"
+        }
+    ]
+}
+
+--- Audit #62 | Dataset line: 108 ---
+Input:
+  Production Schedule for M5016812: Setup at 21:55 on 2017/08/04, Operation from 01:50:29 PM, Employee M-172034-G allocated.
+Dataset set:
+  - 01:50:29 PM
+  - 2017/08/04
+  - 21:55
+  - M-172034-G
+  - M5016812
+LLM set:
+  - 01:50:29 PM
+  - 2017/08/04
+  - 21:55
+  - M-172034-G
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 4 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "2017/08/04"
+        },
+        {
+            "label": "Time",
+            "text": "21:55"
+        },
+        {
+            "label": "Time",
+            "text": "01:50:29 PM"
+        },
+        {
+            "label": "Employee ID",
+            "text": "M-172034-G"
+        }
+    ]
+}
+
+--- Audit #63 | Dataset line: 110 ---
+Input:
+  **PUBLIC NOTICE**
+
+**DATE:** Sep 23, 2017
+**AGENCY:** Department of Public Works
+**NOTICE TYPE:** Road Closure
+
+**NOTICE:** The section of Cooper lane, Raymondhaven, will be closed for emergency repairs starting Sep 25, 2017. The closure is expected to last until further notice. For more information, please contact (104) 063-1649.
+Dataset set:
+  - (104) 063-1649
+  - Cooper lane, Raymondhaven
+  - Sep 23, 2017
+LLM set:
+  - (104) 063-1649
+  - Cooper lane, Raymondhaven
+  - Department of Public Works
+  - Road Closure
+  - Sep 23, 2017
+  - Sep 25, 2017
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 3
+  Only in dataset (FN): 0
+Adjusted counts → TP: 3 | FP: 3 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "DATE", 
+            "text": "Sep 23, 2017"
+        },
+        {
+            "label": "DATE", 
+            "text": "Sep 25, 2017"
+        },
+        {
+            "label": "AGENCY", 
+            "text": "Department of Public Works"
+        },
+        {
+            "label": "NOTICE TYPE", 
+            "text": "Road Closure"
+        },
+        {
+            "label": "ADDRESS", 
+            "text": "Cooper lane, Raymondhaven"
+        },
+        {
+            "label": "PHONE", 
+            "text": "(104) 063-1649"
+        }
+    ]
+}
+
+--- Audit #64 | Dataset line: 113 ---
+Input:
+  **Guest Name:** Michael Fernandez
+**Date of Birth:** 1959-11-25
+**Medical Record Number:** MED96259436
+Dataset set:
+  - 1959-11-25
+  - Fernandez
+  - MED96259436
+  - Michael
+LLM set:
+  - 1959-11-25
+  - MED96259436
+  - Michael Fernandez
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full or partial name",
+            "text": "Michael Fernandez"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "1959-11-25"
+        },
+        {
+            "label": "Personal identification number",
+            "text": "MED96259436"
+        }
+    ]
+}
+
+--- Audit #65 | Dataset line: 115 ---
+Input:
+  Bill of Sale, dated 01/01/2023, between Michael and Sophie Quinn-Molina, sellers, SSN 225-47-2720 and 613-74-7742 respectively, and the buyer, for the property located at 1749 James Divide Suite 409.
+Dataset set:
+  - 1749 James Divide Suite 409
+  - 225-47-2720
+  - 613-74-7742
+  - Michael
+  - Quinn-Molina
+  - Sophie
+LLM set:
+  - 1749 James Divide Suite 409
+  - 225-47-2720
+  - 613-74-7742
+  - Michael
+  - Sophie Quinn-Molina
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 4 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Name",
+            "text": "Michael"
+        },
+        {
+            "label": "Name",
+            "text": "Sophie Quinn-Molina"
+        },
+        {
+            "label": "Personal Identification Number",
+            "text": "225-47-2720"
+        },
+        {
+            "label": "Personal Identification Number",
+            "text": "613-74-7742"
+        },
+        {
+            "label": "Address",
+            "text": "1749 James Divide Suite 409"
+        }
+    ]
+}
+
+--- Audit #66 | Dataset line: 116 ---
+Input:
+  Thank you for your feedback, Helen M. Conway. Your responses will help us improve our services. If you have any further comments or need assistance, please contact us at ramaswamylipika@example.com or 802.729.3270. We look forward to serving you again. Your next bill will be sent to the address on file, and your account details can be found at our website using your account number and date of birth, 1922-09-04.
+Dataset set:
+  - 1922-09-04
+  - 802.729.3270
+  - Helen M. Conway
+  - ramaswamylipika@example.com
+LLM set:
+  - 1922-09-04
+  - 802.729.3270
+  - ramaswamylipika@example.com
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Email",
+            "text": "ramaswamylipika@example.com"
+        },
+        {
+            "label": "Phone Number",
+            "text": "802.729.3270"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "1922-09-04"
+        }
+    ]
+}
+
+--- Audit #67 | Dataset line: 118 ---
+Input:
+  Ticket ID: ID-363-J, Created: 2008-09-09 01:31:54, Customer: H.No. 16 Hegde Marg, 390951, Haridwar, Phone: (723) 262-3347 x766, Issue Reported: 1999-04-14T19:31:58.283085.
+Dataset set:
+  - (723) 262-3347 x766
+  - 1999-04-14T19:31:58.283085
+  - 2008-09-09 01:31:54
+  - H.No. 16 Hegde Marg, 390951, Haridwar
+  - ID-363-J
+LLM set:
+  - (723) 262-3347 x766
+  - 01:31:54
+  - 1999-04-14
+  - 19:31:58.283085
+  - 2008-09-09
+  - 390951
+  - H.No. 16 Hegde Marg
+  - Haridwar
+  - ID-363-J
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 7
+  Only in dataset (FN): 3
+Adjusted counts → TP: 4 | FP: 2 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Ticket ID", "text": "ID-363-J"
+        },
+        {
+            "label": "Date", "text": "2008-09-09"
+        },
+        {
+            "label": "Time", "text": "01:31:54"
+        },
+        {
+            "label": "Address", "text": "H.No. 16 Hegde Marg"
+        },
+        {
+            "label": "ZIP code", "text": "390951"
+        },
+        {
+            "label": "City", "text": "Haridwar"
+        },
+        {
+            "label": "Phone", "text": "(723) 262-3347 x766"
+        },
+        {
+            "label": "Date", "text": "1999-04-14"
+        },
+        {
+            "label": "Time", "text": "19:31:58.283085"
+        }
+    ]
+}
+
+--- Audit #68 | Dataset line: 119 ---
+Input:
+  Policy Number: Q658976, Effective Date: 2023-01-01
+Dataset set:
+  - Q658976
+LLM set:
+  - 2023-01-01
+  - Q658976
+Diff (strict):
+  In both (TP): 1
+  Only in LLM (FP): 1
+  Only in dataset (FN): 0
+Adjusted counts → TP: 1 | FP: 1 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Policy Number",
+            "text": "Q658976"
+        },
+        {
+            "label": "Effective Date",
+            "text": "2023-01-01"
+        }
+    ]
+}
+
+--- Audit #69 | Dataset line: 121 ---
+Input:
+  **Quality Control Report**
+
+**Customer ID:** Bw-59259
+**Batch Number:** MED60180388
+**Test Date:** Monday, February 09, 2015
+**Employee ID:** M8788413
+
+**Product:** Organic Apples
+**Batch Size:** 1000 lbs
+**Test Results:** All samples passed microbial and chemical residue tests. Moisture content and firmness within specified limits.
+**Pass/Fail Status:** Pass
+**Corrective Actions:** None required.
+Dataset set:
+  - Bw-59259
+  - M8788413
+  - MED60180388
+  - Monday, February 09, 2015
+LLM set:
+  - 1000 lbs
+  - Bw-59259
+  - M8788413
+  - MED60180388
+  - Monday, February 09, 2015
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 1
+  Only in dataset (FN): 0
+Adjusted counts → TP: 4 | FP: 1 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Customer ID",
+            "text": "Bw-59259"
+        },
+        {
+            "label": "Batch Number",
+            "text": "MED60180388"
+        },
+        {
+            "label": "Test Date",
+            "text": "Monday, February 09, 2015"
+        },
+        {
+            "label": "Employee ID",
+            "text": "M8788413"
+        },
+        {
+            "label": "Batch Size",
+            "text": "1000 lbs"
+        }
+    ]
+}
+
+--- Audit #70 | Dataset line: 123 ---
+Input:
+  {
+  "patientId": "W2700655",
+  "providerId": "P12345",
+  "appointmentDate": "2023-05-15",
+  "appointmentType": "Consultation",
+  "reason": "Follow-up on recent lab results"
+}
+Dataset set:
+  - W2700655
+LLM set:
+  - 2023-05-15
+  - P12345
+  - W2700655
+Diff (strict):
+  In both (TP): 1
+  Only in LLM (FP): 2
+  Only in dataset (FN): 0
+Adjusted counts → TP: 1 | FP: 2 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Patient ID",
+            "text": "W2700655"
+        },
+        {
+            "label": "Provider ID",
+            "text": "P12345"
+        },
+        {
+            "label": "Appointment Date",
+            "text": "2023-05-15"
+        }
+    ]
+}
+
+--- Audit #71 | Dataset line: 128 ---
+Input:
+  **Consent Form**
+
+**Patient Information:**
+- Full Name: Abha Dixon
+- Date of Birth: 2017-07-09
+- Medical Record Number: D4661406
+
+**Procedure:** [Procedure details to be filled in]
+
+**Risks:** [Risks to be detailed]
+
+**Benefits:** [Benefits to be detailed]
+
+**Patient Signature:** ________________________________
+
+**Date:** ___________________
+Dataset set:
+  - 2017-07-09
+  - Abha
+  - D4661406
+  - Dixon
+LLM set:
+  - 2017-07-09
+  - Abha Dixon
+  - D4661406
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full Name",
+            "text": "Abha Dixon"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "2017-07-09"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "D4661406"
+        }
+    ]
+}
+
+--- Audit #72 | Dataset line: 131 ---
+Input:
+  To renew your license, please provide your full name, license number, and date of birth: 1938-05-04 or 1948-09-26.
+Dataset set:
+  - 1938-05-04
+  - 1948-09-26
+LLM set:
+  - 1938-05-04 or 1948-09-26
+  - license number
+  - your full name
+Diff (strict):
+  In both (TP): 0
+  Only in LLM (FP): 3
+  Only in dataset (FN): 2
+Adjusted counts → TP: 0 | FP: 3 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "full name",
+            "text": "your full name"
+        },
+        {
+            "label": "license number",
+            "text": "license number"
+        },
+        {
+            "label": "date of birth",
+            "text": "1938-05-04 or 1948-09-26"
+        }
+    ]
+}
+
+--- Audit #73 | Dataset line: 133 ---
+Input:
+  **Chargeback Notice**
+
+**Chargeback ID:** Cb94511-U
+**Customer ID:** CID-276484
+**Credit Card Number:** 3402 6242 8150 422
+**Transaction Date:** 19.11.2006
+**Disputed Amount:** $500
+**Reason for Chargeback:** Unauthorized Transaction
+**Evidence:** Medical Record Number - M7335752
+Dataset set:
+  - 19.11.2006
+  - 3402 6242 8150 422
+  - CID-276484
+  - Cb94511-U
+  - M7335752
+LLM set:
+  - $500
+  - 19.11.2006
+  - 3402 6242 8150 422
+  - CID-276484
+  - Cb94511-U
+  - Medical Record Number - M7335752
+  - Unauthorized Transaction
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 3
+  Only in dataset (FN): 1
+Adjusted counts → TP: 4 | FP: 3 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Chargeback ID",
+            "text": "Cb94511-U"
+        },
+        {
+            "label": "Customer ID",
+            "text": "CID-276484"
+        },
+        {
+            "label": "Credit Card Number",
+            "text": "3402 6242 8150 422"
+        },
+        {
+            "label": "Transaction Date",
+            "text": "19.11.2006"
+        },
+        {
+            "label": "Disputed Amount",
+            "text": "$500"
+        },
+        {
+            "label": "Reason for Chargeback",
+            "text": "Unauthorized Transaction"
+        },
+        {
+            "label": "Evidence",
+            "text": "Medical Record Number - M7335752"
+        }
+    ]
+}
+
+--- Audit #74 | Dataset line: 134 ---
+Input:
+  Contact us at Nichols-Benitez, 6 Hugh flat, SN9 2PF, Meganmouth. Email: katherine88@example.com, jwalla@example.net. Phone: (02).6295.0291.
+Dataset set:
+  - (02).6295.0291
+  - 6 Hugh flat, SN9 2PF, Meganmouth
+  - Nichols-Benitez
+  - jwalla@example.net
+  - katherine88@example.com
+LLM set:
+  - (02).6295.0291
+  - 6 Hugh flat, SN9 2PF
+  - Nichols-Benitez
+  - jwalla@example.net
+  - katherine88@example.com
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 1
+  Only in dataset (FN): 1
+Adjusted counts → TP: 4 | FP: 1 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Name",
+            "text": "Nichols-Benitez"
+        },
+        {
+            "label": "Address",
+            "text": "6 Hugh flat, SN9 2PF"
+        },
+        {
+            "label": "Email",
+            "text": "katherine88@example.com"
+        },
+        {
+            "label": "Email",
+            "text": "jwalla@example.net"
+        },
+        {
+            "label": "Phone",
+            "text": "(02).6295.0291"
+        }
+    ]
+}
+
+--- Audit #75 | Dataset line: 135 ---
+Input:
+  Annuitant: Vihaan Butler-Huerta, SSN: 543 102 735, Bank Routing Number: 111993368
+Dataset set:
+  - 111993368
+  - 543 102 735
+  - Butler-Huerta
+  - Vihaan
+LLM set:
+  - 111993368
+  - 543 102 735
+  - Vihaan Butler-Huerta
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full or partial name",
+            "text": "Vihaan Butler-Huerta"
+        },
+        {
+            "label": "SSN",
+            "text": "543 102 735"
+        },
+        {
+            "label": "Bank Routing Number",
+            "text": "111993368"
+        }
+    ]
+}
+
+--- Audit #76 | Dataset line: 137 ---
+Input:
+  **Run ID: S-748668-O, Date: Saturday, October 16, 1976, Product Code: G-389766-L, Quantity Produced: 150, Start Time: 06:00, End Time: 14:00, Equipment Used: Assembly Line 3, Quality Check Results: Pass**
+Dataset set:
+  - G-389766-L
+  - S-748668-O
+  - Saturday, October 16, 1976
+LLM set:
+  - 06:00
+  - 14:00
+  - 150
+  - Assembly Line 3
+  - G-389766-L
+  - Pass
+  - S-748668-O
+  - Saturday, October 16, 1976
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 5
+  Only in dataset (FN): 0
+Adjusted counts → TP: 3 | FP: 5 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Run ID",
+            "text": "S-748668-O"
+        },
+        {
+            "label": "Date",
+            "text": "Saturday, October 16, 1976"
+        },
+        {
+            "label": "Product Code",
+            "text": "G-389766-L"
+        },
+        {
+            "label": "Quantity Produced",
+            "text": "150"
+        },
+        {
+            "label": "Start Time",
+            "text": "06:00"
+        },
+        {
+            "label": "End Time",
+            "text": "14:00"
+        },
+        {
+            "label": "Equipment Used",
+            "text": "Assembly Line 3"
+        },
+        {
+            "label": "Quality Check Results",
+            "text": "Pass"
+        }
+    ]
+}
+
+--- Audit #77 | Dataset line: 139 ---
+Input:
+  **Complaint for Medical Records Privacy Violation**
+
+COMES NOW, Plaintiff, and for cause of action against Defendant, states as follows:
+
+1. **Parties Involved**: Plaintiff is John Doe, born on 2006-11-15, with Social Security Number 119-19-7089 and email address smithyvonne@example.com. Defendant is HealthCare Inc.
+
+2. **Factual Allegations**: On or about 1915-04-21, Plaintiff's medical records were inappropriately accessed by Defendant's employees, as evidenced by Medical Record Number MRN-200183.
+
+3. **Legal Claims**: Defendant's actions violate the Health Insurance Portability and Accountability Act (HIPAA), 42 U.S.C. § 1320d.
+
+4. **Prayer for Relief**: Plaintiff seeks damages for invasion of privacy and punitive damages for Defendant's willful disregard of HIPAA regulations.
+Dataset set:
+  - 119-19-7089
+  - 1915-04-21
+  - 2006-11-15
+  - MRN-200183
+  - smithyvonne@example.com
+LLM set:
+  - 119-19-7089
+  - 1915-04-21
+  - 2006-11-15
+  - HealthCare Inc.
+  - John Doe
+  - MRN-200183
+  - smithyvonne@example.com
+Diff (strict):
+  In both (TP): 5
+  Only in LLM (FP): 2
+  Only in dataset (FN): 0
+Adjusted counts → TP: 5 | FP: 2 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Name",
+            "text": "John Doe"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "2006-11-15"
+        },
+        {
+            "label": "Social Security Number",
+            "text": "119-19-7089"
+        },
+        {
+            "label": "Email",
+            "text": "smithyvonne@example.com"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "MRN-200183"
+        },
+        {
+            "label": "Date",
+            "text": "1915-04-21"
+        },
+        {
+            "label": "Company",
+            "text": "HealthCare Inc."
+        }
+    ]
+}
+
+--- Audit #78 | Dataset line: 141 ---
+Input:
+  **Packing List ID: IDRPRS1ZCPP3**
+- **Customer ID:** R-242825-H
+- **License Plate:** GJ84551323
+- **Medical Record Number:** MED5274118
+Dataset set:
+  - GJ84551323
+  - IDRPRS1ZCPP3
+  - MED5274118
+  - R-242825-H
+LLM set:
+  - GJ84551323
+  - MED5274118
+  - R-242825-H
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Customer ID",
+            "text": "R-242825-H"
+        },
+        {
+            "label": "License Plate",
+            "text": "GJ84551323"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "MED5274118"
+        }
+    ]
+}
+
+--- Audit #79 | Dataset line: 142 ---
+Input:
+  **Terri Barker-May**
+**ACCT-1526735548**
+**21 Apr 1997**
+Dataset set:
+  - 21 Apr 1997
+  - ACCT-1526735548
+  - Barker-May
+  - Terri
+LLM set:
+  - 21 Apr 1997
+  - ACCT-1526735548
+  - Terri Barker-May
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full or partial name",
+            "text": "Terri Barker-May"
+        },
+        {
+            "label": "Personal identification number",
+            "text": "ACCT-1526735548"
+        },
+        {
+            "label": "Birth date",
+            "text": "21 Apr 1997"
+        }
+    ]
+}
+
+--- Audit #80 | Dataset line: 143 ---
+Input:
+  **Release Notes - Version 2.5.1 (11/06/2018)**
+
+- **New Features**:
+  - Added support for customer IDs: E746699-Lm, Df68042-H.
+  - Implemented medical record number integration: F668368.
+
+- **Improvements**:
+  - Enhanced email notification system for amurray@example.net.
+Dataset set:
+  - 11/06/2018
+  - Df68042-H
+  - E746699-Lm
+  - F668368
+  - amurray@example.net
+LLM set:
+  - Df68042-H
+  - E746699-Lm
+  - F668368
+  - amurray@example.net
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 4 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Customer ID",
+            "text": "E746699-Lm"
+        },
+        {
+            "label": "Customer ID",
+            "text": "Df68042-H"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "F668368"
+        },
+        {
+            "label": "Email",
+            "text": "amurray@example.net"
+        }
+    ]
+}
+
+--- Audit #81 | Dataset line: 144 ---
+Input:
+  **Invoice #: K267216-Dc**
+**Date: Jun 30, 1980**
+**Store: SuperMart**
+**Customer: Kelly**
+**Address: NN06 6XP**
+Dataset set:
+  - Jun 30, 1980
+  - K267216-Dc
+  - Kelly
+  - NN06 6XP
+LLM set:
+  - Jun 30, 1980
+  - K267216-Dc
+  - Kelly
+  - NN06 6XP
+  - SuperMart
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 1
+  Only in dataset (FN): 0
+Adjusted counts → TP: 4 | FP: 1 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Invoice Number",
+            "text": "K267216-Dc"
+        },
+        {
+            "label": "Date",
+            "text": "Jun 30, 1980"
+        },
+        {
+            "label": "Store",
+            "text": "SuperMart"
+        },
+        {
+            "label": "Customer",
+            "text": "Kelly"
+        },
+        {
+            "label": "Address",
+            "text": "NN06 6XP"
+        }
+    ]
+}
+
+--- Audit #82 | Dataset line: 147 ---
+Input:
+  {
+  "username": "ian_116",
+  "password": "Os6l)zfdO_%27fKt^T",
+  "token": "brown2813",
+  "ipv4": ["208.57.106.120", "204.226.3.94"]
+}
+Dataset set:
+  - 204.226.3.94
+  - 208.57.106.120
+  - Os6l)zfdO_%27fKt^T
+  - brown2813
+  - ian_116
+LLM set:
+  (empty)
+Diff (strict):
+  In both (TP): 0
+  Only in LLM (FP): 0
+  Only in dataset (FN): 5
+Adjusted counts → TP: 0 | FP: 0 | FN: 5
+
+Raw LLM output:
+{
+    "entities": []
+}
+
+--- Audit #83 | Dataset line: 148 ---
+Input:
+  **Order Number:** 471-12-4900
+**Date:** 2023-03-15
+**Customer ID:** ID-735-K
+**License Plate:** W49412346
+**Vehicle ID:** RUMUK8W9K8SG7NP7G
+**Part Number:** 123456789
+**Description:** Spark Plug
+**Quantity:** 10
+**Price:** $5.00
+**Subtotal:** $50.00
+**Total:** $50.00
+Dataset set:
+  - 471-12-4900
+  - ID-735-K
+  - RUMUK8W9K8SG7NP7G
+  - W49412346
+LLM set:
+  - 123456789
+  - 2023-03-15
+  - 471-12-4900
+  - ID-735-K
+  - RUMUK8W9K8SG7NP7G
+  - W49412346
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 2
+  Only in dataset (FN): 0
+Adjusted counts → TP: 4 | FP: 2 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Order Number", "text": "471-12-4900"
+        },
+        {
+            "label": "Date", "text": "2023-03-15"
+        },
+        {
+            "label": "Customer ID", "text": "ID-735-K"
+        },
+        {
+            "label": "License Plate", "text": "W49412346"
+        },
+        {
+            "label": "Vehicle ID", "text": "RUMUK8W9K8SG7NP7G"
+        },
+        {
+            "label": "Part Number", "text": "123456789"
+        }
+    ]
+}
+
+--- Audit #84 | Dataset line: 150 ---
+Input:
+  Common Name: Belgium, Organization: Saint Vincent and the Grenadines, Validity: 2023-01-01 to 2024-01-01.
+Dataset set:
+  - Belgium
+  - Saint Vincent and the Grenadines
+LLM set:
+  - 2023-01-01
+  - 2024-01-01
+  - Belgium
+  - Saint Vincent and the Grenadines
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 2
+  Only in dataset (FN): 0
+Adjusted counts → TP: 2 | FP: 2 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Country",
+            "text": "Belgium"
+        },
+        {
+            "label": "Country",
+            "text": "Saint Vincent and the Grenadines"
+        },
+        {
+            "label": "Date",
+            "text": "2023-01-01"
+        },
+        {
+            "label": "Date",
+            "text": "2024-01-01"
+        }
+    ]
+}
+
+--- Audit #85 | Dataset line: 152 ---
+Input:
+  Gift card balance for card number 4693587288779606 is $50.00. Issued by ABC Retail, expires on 12/31/2024.
+Dataset set:
+  - 4693587288779606
+LLM set:
+  - 12/31/2024
+  - 4693587288779606
+Diff (strict):
+  In both (TP): 1
+  Only in LLM (FP): 1
+  Only in dataset (FN): 0
+Adjusted counts → TP: 1 | FP: 1 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "credit_card_number",
+            "text": "4693587288779606"
+        },
+        {
+            "label": "expiration_date",
+            "text": "12/31/2024"
+        }
+    ]
+}
+
+--- Audit #86 | Dataset line: 154 ---
+Input:
+  In accordance with the engagement letter dated 03.04.1982, we conducted an audit of the blockchain-based financial statements of Michael Holt-Iqbal, employee ID N-537162-G, for the period ended 31.12.2021. The transactions were recorded on the blockchain at IP addresses 140.161.100.92 and 190.63.25.115.
+Dataset set:
+  - 03.04.1982
+  - 140.161.100.92
+  - 190.63.25.115
+  - Michael Holt-Iqbal
+  - N-537162-G
+LLM set:
+  - 03.04.1982
+  - 140.161.100.92
+  - 190.63.25.115
+  - 31.12.2021
+  - Michael Holt-Iqbal
+  - N-537162-G
+Diff (strict):
+  In both (TP): 5
+  Only in LLM (FP): 1
+  Only in dataset (FN): 0
+Adjusted counts → TP: 5 | FP: 1 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "date",
+            "text": "03.04.1982"
+        },
+        {
+            "label": "name",
+            "text": "Michael Holt-Iqbal"
+        },
+        {
+            "label": "employee ID",
+            "text": "N-537162-G"
+        },
+        {
+            "label": "date",
+            "text": "31.12.2021"
+        },
+        {
+            "label": "IP address",
+            "text": "140.161.100.92"
+        },
+        {
+            "label": "IP address",
+            "text": "190.63.25.115"
+        }
+    ]
+}
+
+--- Audit #87 | Dataset line: 155 ---
+Input:
+  **Shipment Order**
+- **Shipment ID:** J34252658
+- **Sender:** Carly Powell-Simpson
+- **Sender Address:** 9818 Lee Track, 73503, Kleinbury, KS
+- **Receiver Address:** 413 Melissa Fort, Loveview
+- **Phone Number:** 07765167423
+- **Estimated Delivery Date:** 2023-07-15
+Dataset set:
+  - 07765167423
+  - 413 Melissa Fort, Loveview
+  - 9818 Lee Track, 73503, Kleinbury, KS
+  - Carly Powell-Simpson
+  - J34252658
+LLM set:
+  - 07765167423
+  - 2023-07-15
+  - 413 Melissa Fort, Loveview
+  - 9818 Lee Track, 73503, Kleinbury, KS
+  - Carly Powell-Simpson
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 1
+  Only in dataset (FN): 1
+Adjusted counts → TP: 4 | FP: 1 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Name",
+            "text": "Carly Powell-Simpson"
+        },
+        {
+            "label": "Address",
+            "text": "9818 Lee Track, 73503, Kleinbury, KS"
+        },
+        {
+            "label": "Address",
+            "text": "413 Melissa Fort, Loveview"
+        },
+        {
+            "label": "Phone Number",
+            "text": "07765167423"
+        },
+        {
+            "label": "Date",
+            "text": "2023-07-15"
+        }
+    ]
+}
+
+--- Audit #88 | Dataset line: 156 ---
+Input:
+  **No Claim Certificate**
+
+**Policyholder Name:** Ricky Brown
+**License Plate:** B45065775
+**Medical Record Number:** M8746063
+**Policy Period:** 2022-01-01 to 2022-12-31
+**Claims History:** No claims made during the policy period.
+Dataset set:
+  - B45065775
+  - M8746063
+  - Ricky Brown
+LLM set:
+  - 2022-01-01 to 2022-12-31
+  - B45065775
+  - M8746063
+  - Ricky Brown
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 0
+Adjusted counts → TP: 3 | FP: 1 | FN: 0
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full or partial name",
+            "text": "Ricky Brown"
+        },
+        {
+            "label": "License Plate",
+            "text": "B45065775"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "M8746063"
+        },
+        {
+            "label": "Policy Period",
+            "text": "2022-01-01 to 2022-12-31"
+        }
+    ]
+}
+
+--- Audit #89 | Dataset line: 157 ---
+Input:
+  CAS Number: 162.190.208.125, Chemical Name: 95.209.237.15, Molecular Formula: 207 413 469, Structural Diagram: ZZ 04 21 87 T, Date of Synthesis: 1958-10-02, Medical Record Numbers: MRN-348084, MRN-66919.
+Dataset set:
+  - 162.190.208.125
+  - 1958-10-02
+  - 207 413 469
+  - 95.209.237.15
+  - MRN-348084
+  - MRN-66919
+  - ZZ 04 21 87 T
+LLM set:
+  - 162.190.208.125
+  - 1958-10-02
+  - 95.209.237.15
+  - MRN-348084
+  - MRN-66919
+Diff (strict):
+  In both (TP): 5
+  Only in LLM (FP): 0
+  Only in dataset (FN): 2
+Adjusted counts → TP: 5 | FP: 0 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "IP Address",
+            "text": "162.190.208.125"
+        },
+        {
+            "label": "IP Address",
+            "text": "95.209.237.15"
+        },
+        {
+            "label": "Date",
+            "text": "1958-10-02"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "MRN-348084"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "MRN-66919"
+        }
+    ]
+}
+
+--- Audit #90 | Dataset line: 159 ---
+Input:
+  **Bank Statement for February 2018**
+
+- **Account Number**: 6568906975267054
+- **Routing Number**: 537717020
+- **SSN**: 794-00-3396
+- **Date of Birth**: 26.10.1981
+
+| Date       | Description | Debit | Credit | Balance |
+|------------|-------------|-------|--------|---------|
+| 2018-02-11 | Paycheck    | 0.00  | 1500.00| 1500.00 |
+| 2018-02-15 | Groceries   | 120.50| 0.00   | 1379.50 |
+Dataset set:
+  - 2018-02-11
+  - 26.10.1981
+  - 537717020
+  - 6568906975267054
+  - 794-00-3396
+LLM set:
+  - 26.10.1981
+  - 537717020
+  - 6568906975267054
+  - 794-00-3396
+Diff (strict):
+  In both (TP): 4
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 4 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Account Number",
+            "text": "6568906975267054"
+        },
+        {
+            "label": "Routing Number",
+            "text": "537717020"
+        },
+        {
+            "label": "SSN",
+            "text": "794-00-3396"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "26.10.1981"
+        }
+    ]
+}
+
+--- Audit #91 | Dataset line: 160 ---
+Input:
+  **Incident Report**
+
+**Incident Date:** 09.07.2007
+**Time:** 07:13 PM (local)
+**Customer ID:** ECOM-878135
+**Medical Record Number:** I166953
+**Incident Description:** A data breach occurred at 0616 hours, exposing sensitive customer information.
+Dataset set:
+  - 0616 hours
+  - 07:13 PM
+  - 09.07.2007
+  - ECOM-878135
+  - I166953
+LLM set:
+  - 07:13 PM (local)
+  - 09.07.2007
+  - ECOM-878135
+  - I166953
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 3 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Incident Date",
+            "text": "09.07.2007"
+        },
+        {
+            "label": "Time",
+            "text": "07:13 PM (local)"
+        },
+        {
+            "label": "Customer ID",
+            "text": "ECOM-878135"
+        },
+        {
+            "label": "Medical Record Number",
+            "text": "I166953"
+        }
+    ]
+}
+
+--- Audit #92 | Dataset line: 162 ---
+Input:
+  ID,AnimalType,Breed,Age,Weight,Location,HealthStatus
+71-868445-38,Cow,Holstein,5,650 lbs,North Field,Healthy
+80-757670-87,Pig,Yorkshire,3,350 lbs,South Barn,Excellent
+MRN-43994,Sheep,Merino,2,180 lbs,East Pasture,Good
+Z337082,Chicken,Rhode Island Red,1,3 lbs,Coop,Very Good
+828-35-2027,Horse,Quarter Horse,8,1200 lbs,West Stables,Stable
+jeffreylynch@example.org,Goat,Nubian,4,150 lbs,South Hill,Fine
+Dataset set:
+  - 71-868445-38
+  - 80-757670-87
+  - 828-35-2027
+  - MRN-43994
+  - Z337082
+  - jeffreylynch@example.org
+LLM set:
+  - 1
+  - 1200 lbs
+  - 150 lbs
+  - 180 lbs
+  - 2
+  - 3
+  - 3 lbs
+  - 350 lbs
+  - 4
+  - 5
+  - 650 lbs
+  - 8
+  - Chicken
+  - Coop
+  - Cow
+  - East Pasture
+  - Excellent
+  - Fine
+  - Goat
+  - Good
+  - Healthy
+  - Holstein
+  - Horse
+  - Merino
+  - North Field
+  - Nubian
+  - Pig
+  - Quarter Horse
+  - Rhode Island Red
+  - Sheep
+  - South Barn
+  - South Hill
+  - Very Good
+  - West Stables
+  - Yorkshire
+  - jeffreylynch@example.org
+Diff (strict):
+  In both (TP): 1
+  Only in LLM (FP): 35
+  Only in dataset (FN): 5
+Adjusted counts → TP: 1 | FP: 35 | FN: 5
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Email",
+            "text": "jeffreylynch@example.org"
+        },
+        {
+            "label": "AnimalType",
+            "text": "Cow"
+        },
+        {
+            "label": "Breed",
+            "text": "Holstein"
+        },
+        {
+            "label": "Age",
+            "text": "5"
+        },
+        {
+            "label": "Weight",
+            "text": "650 lbs"
+        },
+        {
+            "label": "Location",
+            "text": "North Field"
+        },
+        {
+            "label": "HealthStatus",
+            "text": "Healthy"
+        },
+        {
+            "label": "AnimalType",
+            "text": "Pig"
+        },
+        {
+            "label": "Breed",
+            "text": "Yorkshire"
+        },
+        {
+            "label": "Age",
+            "text": "3"
+        },
+        {
+            "label": "Weight",
+            "text": "350 lbs"
+        },
+        {
+            "label": "Location",
+            "text": "South Barn"
+        },
+        {
+            "label": "HealthStatus",
+            "text": "Excellent"
+        },
+        {
+            "label": "AnimalType",
+            "text": "Sheep"
+        },
+        {
+            "label": "Breed",
+            "text": "Merino"
+        },
+        {
+            "label": "Age",
+            "text": "2"
+        },
+        {
+            "label": "Weight",
+            "text": "180 lbs"
+        },
+        {
+            "label": "Location",
+            "text": "East Pasture"
+        },
+        {
+            "label": "HealthStatus",
+            "text": "Good"
+        },
+        {
+            "label": "AnimalType",
+            "text": "Chicken"
+        },
+        {
+            "label": "Breed",
+            "text": "Rhode Island Red"
+        },
+        {
+            "label": "Age",
+            "text": "1"
+        },
+        {
+            "label": "Weight",
+            "text": "3 lbs"
+        },
+        {
+            "label": "Location",
+            "text": "Coop... [truncated]
+
+--- Audit #93 | Dataset line: 163 ---
+Input:
+  Title transferred from Angela Knight-Boyd, SSN 881-59-4669 to new owner, SSN 491-38-1574 on 2022-01-15. License plate R08359153.
+Dataset set:
+  - 491-38-1574
+  - 881-59-4669
+  - Angela
+  - Knight-Boyd
+  - R08359153
+LLM set:
+  - 2022-01-15
+  - 491-38-1574
+  - 881-59-4669
+  - R08359153
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 3 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "SSN",
+            "text": "881-59-4669"
+        },
+        {
+            "label": "SSN",
+            "text": "491-38-1574"
+        },
+        {
+            "label": "Date",
+            "text": "2022-01-15"
+        },
+        {
+            "label": "License Plate",
+            "text": "R08359153"
+        }
+    ]
+}
+
+--- Audit #94 | Dataset line: 166 ---
+Input:
+  Customer Name: Lisa Brett Alvarez-Franklin\nAddress: 5213 Johnson Trace, East Robertport, Florida\nAccount Numbers: A27417008072, ACCT-3637328949
+Dataset set:
+  - 5213 Johnson Trace, East Robertport, Florida
+  - A27417008072
+  - ACCT-3637328949
+  - Alvarez-Franklin
+  - Brett
+  - Lisa
+LLM set:
+  - 5213 Johnson Trace, East Robertport, Florida
+  - A27417008072
+  - ACCT-3637328949
+  - Lisa Brett Alvarez-Franklin
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 3
+Adjusted counts → TP: 3 | FP: 1 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full name",
+            "text": "Lisa Brett Alvarez-Franklin"
+        },
+        {
+            "label": "Address",
+            "text": "5213 Johnson Trace, East Robertport, Florida"
+        },
+        {
+            "label": "Account number",
+            "text": "A27417008072"
+        },
+        {
+            "label": "Account number",
+            "text": "ACCT-3637328949"
+        }
+    ]
+}
+
+--- Audit #95 | Dataset line: 169 ---
+Input:
+  As a CID-871648, I'm pleased to share my experience with your service. I received a call from +4429 2018 0186 regarding my order, and the representative was very helpful. They even sent updates to veronica15@example.net to keep me informed. The package arrived at 0 Yvonne cape, North Henry, just as expected.
+Dataset set:
+  - +4429 2018 0186
+  - 0 Yvonne cape, North Henry
+  - CID-871648
+  - veronica15@example.net
+LLM set:
+  - +4429 2018 0186
+  - 0 Yvonne cape, North Henry
+  - veronica15@example.net
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 0
+  Only in dataset (FN): 1
+Adjusted counts → TP: 3 | FP: 0 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Phone number", "text": "+4429 2018 0186"
+        },
+        {
+            "label": "Email", "text": "veronica15@example.net"
+        },
+        {
+            "label": "Address", "text": "0 Yvonne cape, North Henry"
+        }
+    ]
+}
+
+--- Audit #96 | Dataset line: 171 ---
+Input:
+  **Service Bulletin SOW5-HU33-OTIA**
+**Issue Date: Monday, March 09, 2020**
+**Affected Part/Serial Number: 868-21-3843**
+**Description:** On 10/13/2003, a manufacturing defect was discovered in the affected part.
+**Corrective Action:** Replace the affected part with a new one, V3933039.
+**Revision History:** Initial issue on 03/09/2020.
+Dataset set:
+  - 10/13/2003
+  - 868-21-3843
+  - Monday, March 09, 2020
+  - SOW5-HU33-OTIA
+  - V3933039
+LLM set:
+  - 03/09/2020
+  - 10/13/2003
+  - Monday, March 09, 2020
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 3
+Adjusted counts → TP: 2 | FP: 1 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Date",
+            "text": "Monday, March 09, 2020"
+        },
+        {
+            "label": "Date",
+            "text": "10/13/2003"
+        },
+        {
+            "label": "Date",
+            "text": "03/09/2020"
+        }
+    ]
+}
+
+--- Audit #97 | Dataset line: 172 ---
+Input:
+  **Maintenance Request ID: MRN-613884**
+**Priority: High**
+**Due Date: 2014.03.03**
+**Description: Equipment F8649845 requires immediate maintenance.**
+Dataset set:
+  - 2014.03.03
+  - F8649845
+  - MRN-613884
+LLM set:
+  - 2014.03.03
+  - Equipment F8649845
+  - MRN-613884
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 1
+Adjusted counts → TP: 2 | FP: 1 | FN: 1
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Maintenance Request ID",
+            "text": "MRN-613884"
+        },
+        {
+            "label": "Due Date",
+            "text": "2014.03.03"
+        },
+        {
+            "label": "Equipment",
+            "text": "Equipment F8649845"
+        }
+    ]
+}
+
+--- Audit #98 | Dataset line: 173 ---
+Input:
+  **Identity Verification Document**
+- Full Name: 0127 David Burgs
+- Date of Birth: 1988-09-23
+- Address: 667 Jones Stravenue, Wardchester
+- Biometric Identifiers: P43237419701, BIO-1693560391
+Dataset set:
+  - 0127 David Burgs
+  - 1988-09-23
+  - 667 Jones Stravenue, Wardchester
+  - BIO-1693560391
+  - P43237419701
+LLM set:
+  - 0127 David Burgs
+  - 1988-09-23
+  - 667 Jones Stravenue, Wardchester
+  - P43237419701, BIO-1693560391
+Diff (strict):
+  In both (TP): 3
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 3 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full Name",
+            "text": "0127 David Burgs"
+        },
+        {
+            "label": "Date of Birth",
+            "text": "1988-09-23"
+        },
+        {
+            "label": "Address",
+            "text": "667 Jones Stravenue, Wardchester"
+        },
+        {
+            "label": "Biometric Identifiers",
+            "text": "P43237419701, BIO-1693560391"
+        }
+    ]
+}
+
+--- Audit #99 | Dataset line: 175 ---
+Input:
+  Vaccination Record for Omar Price-Lowe, DOB: 1974-01-11, MRN: MED21176607 & MRN-716082.
+Dataset set:
+  - 1974-01-11
+  - MED21176607
+  - MRN-716082
+  - Omar
+  - Price-Lowe
+LLM set:
+  - 1974-01-11
+  - 716082
+  - MED21176607
+  - Omar Price-Lowe
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 2
+  Only in dataset (FN): 3
+Adjusted counts → TP: 2 | FP: 2 | FN: 3
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "name",
+            "text": "Omar Price-Lowe"
+        },
+        {
+            "label": "date_of_birth",
+            "text": "1974-01-11"
+        },
+        {
+            "label": "medical_record_number",
+            "text": "MED21176607"
+        },
+        {
+            "label": "medical_record_number",
+            "text": "716082"
+        }
+    ]
+}
+
+--- Audit #100 | Dataset line: 176 ---
+Input:
+  **Marriage Certificate**
+
+**Issued to:** Richard Kramer-Wallace
+
+**Date of Marriage:** 1988.12.12
+
+**Medical Record Number:** MED86653675
+Dataset set:
+  - 1988.12.12
+  - Kramer-Wallace
+  - MED86653675
+  - Richard
+LLM set:
+  - 1988.12.12
+  - MED86653675
+  - Richard Kramer-Wallace
+Diff (strict):
+  In both (TP): 2
+  Only in LLM (FP): 1
+  Only in dataset (FN): 2
+Adjusted counts → TP: 2 | FP: 1 | FN: 2
+
+Raw LLM output:
+{
+    "entities": [
+        {
+            "label": "Full or partial name",
+            "text": "Richard Kramer-Wallace"
+        },
+        {
+            "label": "Date of marriage",
+            "text": "1988.12.12"
+        },
+        {
+            "label": "Medical record number",
+            "text": "MED86653675"
+        }
+    ]
+}
+
+... and 100 more not shown.
+===================================
+

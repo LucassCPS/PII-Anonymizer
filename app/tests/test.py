@@ -6,6 +6,8 @@ import re
 from tqdm import tqdm
 import sys
 
+from collections import Counter
+
 def format_time(seconds):
     minutes = seconds / 60
     hours = minutes / 60
@@ -118,6 +120,8 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
     audits = []
 
+    missed_pii_class_counter = Counter()
+
     pbar = tqdm(
         total=total_rows,
         desc="Executando testes",
@@ -139,7 +143,7 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
                 break
 
             dataset_json = data_conversion_handler.string_list_to_json(row.entities)
-            dataset_set = data_conversion_handler.dataset_json_to_set(dataset_json)
+            dataset_set, dataset_map = data_conversion_handler.dataset_json_to_map_and_set(dataset_json)
             total_dataset_pii += len(dataset_set)
 
             llm_str, call_time = call_llm(client, model, system_prompt, row.text, temp)
@@ -157,6 +161,17 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
             tp, fp, fn = resolve_segmentation_errors(dataset_set, llm_set)
             tp_sum += tp; fp_sum += fp; fn_sum += fn
+
+            if fn > 0:
+                dataset_set_str = {str(x) for x in dataset_set}
+                llm_set_str = {str(x) for x in llm_set}
+                
+                _, _, only_in_dataset = metrics.compare_sets(dataset_set_str, llm_set_str)
+                
+                for fn_item in only_in_dataset:
+                    if fn_item in dataset_map:
+                        missed_pii_class_counter[dataset_map[fn_item]] += 1
+
 
             if (fp > 0 or fn > 0) and len(audits) < max_audits:
                 audit = build_audit_from_artifacts(
@@ -195,6 +210,8 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
 
         "invalid_response_lines": invalid_responses,
         "invalid_response_texts": invalid_response_line_texts,
+
+        "missed_pii_class_breakdown": dict(missed_pii_class_counter),
 
         "tp": int(tp_sum),
         "fp": int(fp_sum),

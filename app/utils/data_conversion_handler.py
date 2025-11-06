@@ -15,12 +15,22 @@ def string_list_to_json(string_list):
     return json_data
 
 # converts the dataset json to a set data structure
-def dataset_json_to_set(data):
+def dataset_json_to_map_and_set(data):
     if not isinstance(data, list):
-        raise ValueError("Input must be a list of dictionaries.")
+            raise ValueError("Input must be a list of dictionaries.")
+        
+    entities_set = set()
+    entities_map = {}
     
-    entities = {item["entity"] for item in data if isinstance(item, dict) and "entity" in item}
-    return entities
+    for item in data:
+        if isinstance(item, dict) and "entity" in item and "types" in item and isinstance(item["types"], list) and item["types"]:
+            entity_value = str(item["entity"])
+            entity_type = item["types"][0]
+            
+            entities_set.add(entity_value)
+            entities_map[entity_value] = entity_type
+                
+    return entities_set, entities_map
 
 # converts the llm response json to a set data structure
 def llm_json_to_set(data):
