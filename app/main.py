@@ -18,10 +18,10 @@ OUTPUT_DIR = "reports"
 OUTPUT_FILENAME_BASE = "report.txt"
 
 RUN_FULL_TEST = True
-TEST_NUM_ROWS = 1
+TEST_NUM_ROWS = 1000
 
 RUN_MODEL_AUDITION = True
-AUDITION_NUM_ROWS = 1
+AUDITION_NUM_ROWS = 1000
 
 def get_file_name(prompt_type, audit=False):
     model_name = MODEL.split('/')[-1] if '/' in MODEL else MODEL
