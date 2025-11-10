@@ -1,11 +1,11 @@
 import re
 from collections import defaultdict, deque
-from typing import Dict, List, Any
+from typing import Dict
 
-def _normalize_label(label: str) -> str:
+def _normalize_label(label):
     return (label or "").strip().upper()
 
-def _build_label_queues(entities: List[Dict[str, Any]]) -> Dict[str, deque]:
+def _build_label_queues(entities):
     buckets: Dict[str, deque] = defaultdict(deque)
 
     def sort_key(e):
@@ -24,7 +24,7 @@ def _build_label_queues(entities: List[Dict[str, Any]]) -> Dict[str, deque]:
         buckets[label].append(text)
     return buckets
 
-def reidentify_text(anonymized_text: str, entities_json: Dict[str, Any]) -> str:
+def reidentify_text(anonymized_text, entities_json):
     if not anonymized_text:
         return anonymized_text
 

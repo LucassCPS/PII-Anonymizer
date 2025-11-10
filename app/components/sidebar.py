@@ -41,7 +41,6 @@ def render_sidebar(default_system_prompt: str):
             model_anon_id = cache["models"][selected_label_anon]
             model_anon_name = selected_label_anon
 
-            #st.markdown("---")
             selected_label_resp = st.selectbox(
                 "Modelo 2: **Elaboração da Resposta**",
                 options=list(cache["models"].keys()),

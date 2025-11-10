@@ -29,10 +29,3 @@ def load_env_and_models(env_path: str):
                 models[k] = v
 
     return base_url, api_key, models, env_vars
-
-def load_models():
-    models = {}    
-    for k, v in os.environ.items():
-        if k.startswith("MODEL_") and v:
-            models[k] = v
-    return models
