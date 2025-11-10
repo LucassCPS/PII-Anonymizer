@@ -14,13 +14,6 @@ class ModelEnum(Enum):
     LLAMA32_3B= "MODEL_LLAMA32_3B_Q4"
     LLAMA32_1B= "MODEL_LLAMA32_1B_Q8"
 
-def load_models():
-    models = {}    
-    for k, v in os.environ.items():
-        if k.startswith("MODEL_") and v:
-            models[k] = v
-    return models
-
 def load_model(model_enum: ModelEnum):
     model_key = model_enum.value
     model_value = os.getenv(model_key)
