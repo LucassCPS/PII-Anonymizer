@@ -101,7 +101,7 @@ def build_audit_from_artifacts(idx_1based, input_text, dataset_set, llm_str, llm
         }
     }
 
-def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model, max_audits=200):
+def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model):
     df = pd.read_parquet(dataset_path)
     total_rows = min(num_rows_dataset, len(df))
 
@@ -173,7 +173,7 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
                         missed_pii_class_counter[dataset_map[fn_item]] += 1
 
 
-            if (fp > 0 or fn > 0) and len(audits) < max_audits:
+            if (fp > 0 or fn > 0):
                 audit = build_audit_from_artifacts(
                     idx_1based=i,
                     input_text=row.text,

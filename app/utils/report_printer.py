@@ -66,8 +66,9 @@ def print_audits(report: dict, max_items: int = 10, show_raw: bool = True, max_c
         print("===================================\n")
         return
 
-    to_show = min(max_items, total)
-    print(f"Showing first {to_show} audits:\n")
+    #to_show = min(max_items, total)
+    to_show = total
+    print(f"Showing {to_show} audits:\n")
 
     for k in range(to_show):
         a = audits[k]

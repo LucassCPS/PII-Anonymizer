@@ -17,7 +17,7 @@ DATASET_FILE = "gretelaigretel_pii_masking_en_v1.parquet"
 OUTPUT_DIR = "reports"
 OUTPUT_FILENAME_BASE = "report.txt"
 
-RUN_FULL_TEST = True
+RUN_FULL_TEST = False
 TEST_NUM_ROWS = 1000
 
 RUN_MODEL_AUDITION = True
@@ -67,7 +67,7 @@ def run_audit_for_model(client, dataset_path):
         with open(output_path, 'w', encoding='utf-8') as f:
             sys.stdout = f
             report_printer.print_report(report, prompt_type)
-            report_printer.print_audits(report, max_items=100, show_raw=True, max_chars=2000)
+            report_printer.print_audits(report, max_items=1000, show_raw=True, max_chars=2000)
         sys.stdout = original_stdout
 
         print(f"Audit report saved at: {output_path.resolve()}")
