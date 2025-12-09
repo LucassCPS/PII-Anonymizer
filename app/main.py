@@ -8,7 +8,6 @@ import json
 import re
 
 
-
 DEFAULT_SYSTEM_PROMPT, PROMPT_TYPE = prompts.get_zero_shot_prompt()
 DEFAULT_THIRD_PARTY_PROMPT = prompts.get_third_party_prompt()
 
@@ -61,7 +60,7 @@ div.stButton > button { width: 100%; margin: 0; }
 </style>
 """, unsafe_allow_html=True)
 
-# Inicializações de estado
+# Page states
 if "system_prompt" not in st.session_state:
     st.session_state.system_prompt = DEFAULT_SYSTEM_PROMPT
 if "history" not in st.session_state:
@@ -259,10 +258,9 @@ if analyze_clicked:
         messages_resp = [
             {"role": "system", "content": DEFAULT_THIRD_PARTY_PROMPT},
             {"role": "user", "content": anon_text},
-        ]
-        
+        ]        
 
-        ## Resposta do Terceiro
+        ## Third-party responses
         placeholder_forwarded.text_area(
             "Resposta do Terceiro",
             value=st.session_state.forwarded_output_content,
@@ -285,8 +283,7 @@ if analyze_clicked:
             disabled=True 
         )
         
-
-        ## Resposta Reidentificada
+        ## Reidentified response
         try:
             reidentified_text = reidentifier.reidentify_text(
                 anonymized_text=response_from_third,

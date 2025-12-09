@@ -6,7 +6,7 @@ DEFAULT_DO_STREAM = True
 DEFAULT_MAX_TOKENS = 0
 DEFAULT_TEMPERATURE = 0.0
 
-def render_sidebar(default_system_prompt: str):
+def render_sidebar(default_system_prompt):
     with st.sidebar:
         st.header("Configurações do Modelo")
 
