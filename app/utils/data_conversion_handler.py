@@ -51,6 +51,7 @@ def llm_json_to_set(data):
     
 def clean_llm_response(response):
     cleaned_str = response.strip()
+    default_response = '{ "entities": [] }'
 
     match = re.search(r'\{.*\}', cleaned_str, re.DOTALL)
     if match:
@@ -63,8 +64,8 @@ def clean_llm_response(response):
             if 'entities' not in data or not isinstance(data['entities'], list):
                  if isinstance(data, list):
                      return json.dumps({"entities": data})
-                 return '{ "entities": [] }'
+                 return default_response
             return json.dumps(data, separators=(',', ':'))       
         except json.JSONDecodeError:
-            return '{ "entities": [] }'
-    return '{ "entities": [] }'
+            return default_response
+    return default_response

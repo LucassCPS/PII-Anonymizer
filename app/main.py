@@ -28,11 +28,9 @@ def get_file_name(prompt_type, audit=False):
     safe_model_name = model_name.replace(':', '-').replace('.', '_')
     safe_prompt_type = prompt_type.replace('-', '_').replace(' ', '_')
 
-    dynamic_filename = ""
+    dynamic_filename = f"{safe_model_name}_temp{TEMPERATURE}_{safe_prompt_type}.txt"
     if audit:
         dynamic_filename = f"AUDIT_{safe_model_name}_temp{TEMPERATURE}_{safe_prompt_type}.txt"
-    else:
-        dynamic_filename = f"{safe_model_name}_temp{TEMPERATURE}_{safe_prompt_type}.txt"
     
     return dynamic_filename
 

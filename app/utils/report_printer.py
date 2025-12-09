@@ -76,9 +76,16 @@ def print_audits(report: dict, max_items: int = 10, show_raw: bool = True, max_c
         print("Input:")
         print(f"  {a['input_text']}")
 
+        dataset_map = a.get("dataset_map", {})
+
         print("Dataset set:")
         for item in a["dataset_set"]:
-            print(f"  - {item}")
+            pii_type = dataset_map.get(item)
+            if isinstance(pii_type, (list, tuple)) and pii_type:
+                pii_type_str = pii_type[0]
+            else:
+                pii_type_str = pii_type if pii_type is not None else "unknown"
+            print(f"  - {item} (type: {pii_type_str})")
 
         print("LLM set:")
         if a["llm_set"]:

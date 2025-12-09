@@ -73,9 +73,11 @@ def call_llm(client, model, system_prompt, input_text, temp):
     except Exception:
         return '{ "entities": [] }', 0.0
 
-def build_audit_from_artifacts(idx_1based, input_text, dataset_set, llm_str, llm_set):
+def build_audit_from_artifacts(idx_1based, input_text, dataset_map, dataset_set, llm_str, llm_set):
     dataset_set_str = {str(x) for x in dataset_set}
     llm_set_str = {str(x) for x in llm_set}
+
+    dataset_map_str = {str(k): v for k, v in dataset_map.items()}
 
     in_both, only_in_llm, only_in_dataset = metrics.compare_sets(dataset_set_str, llm_set_str)
     tp_adj, fp_adj, fn_adj = resolve_segmentation_errors(dataset_set_str, llm_set_str)
@@ -84,6 +86,7 @@ def build_audit_from_artifacts(idx_1based, input_text, dataset_set, llm_str, llm
         "idx": int(idx_1based),
         "input_text": input_text,
 
+        "dataset_map": dataset_map_str,
         "dataset_set": sorted(dataset_set_str),
         "llm_str": llm_str,
         "llm_set": sorted(llm_set_str),
@@ -178,6 +181,7 @@ def full_test(client, dataset_path, num_rows_dataset, temp, system_prompt, model
                     idx_1based=i,
                     input_text=row.text,
                     dataset_set=dataset_set,
+                    dataset_map=dataset_map,
                     llm_str=llm_str,
                     llm_set=llm_set
                 )
